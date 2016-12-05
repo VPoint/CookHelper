@@ -36,11 +36,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
         system = system.getInstance();
         Intent i = getIntent();
-        Integer indx = Integer.parseInt(i.getStringExtra("recipe_id"));
-        recipe = system.getHasA(indx);
-
-        populateInfo(recipe);
-
+        if(i.hasExtra("recipe_id")) {
+            int index = i.getIntExtra("recipe_id", 0);
+            System.out.println(index + "was carried over");
+            recipe = system.getHasA(index);
+            recipe.setRecipeSystem(system);
+            populateInfo(recipe);
+        }
+        //populateInfo(system.getHasA(0));
         playRecipeStep();
         editRecipe();
         deleteRecipe();
@@ -96,12 +99,13 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
         title.setText(r.getTitle());
         //image.setImageDrawable(null);
-        calories.setText(r.getCalories());
-        type.setText(r.getRecipeType(0).getName());
-        category.setText(r.getCategory(0).getName());
-        cookTime.setText("" + r.getCookingTime());
-        //ingrContent.setText(r.getUsedIn().toString());
-        recipeStep.setText(r.getRecipeSteps().toString());
+        calories.setText("Calories: " +r.getCalories());
+        type.setText("Type: " + r.getRecipeType(0).getName());
+        category.setText("Category: " +r.getCategory(0).getName());
+        cookTime.setText("Time Needed: " + r.getCookingTime() + " min");
+        ingrContent.setText("" + r.getUsedIn().toString());
+        recipeStep.setText("" + r.getRecipeSteps().toString());
+        rating.setRating(r.getRating());
     }
 
     public void playRecipeStep(){
@@ -127,9 +131,16 @@ public class ViewRecipeActivity extends AppCompatActivity {
             public void onClick(View view){
                 Intent editRecipe = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
                 editRecipe.putExtra("recipe_id", system.indexOfHasA(recipe));
-                startActivity(editRecipe);
+                startActivityForResult(editRecipe, 100);
             }
         });
+    }
+
+    protected void onActivityResult( int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 100){
+            recreate();
+        }
     }
 
     public void deleteRecipe(){
@@ -141,9 +152,9 @@ public class ViewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //delete Recipe
-                Intent editRecipe = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
-                editRecipe.putExtra("recipe_id", system.indexOfHasA(recipe));
-                startActivity(editRecipe);
+                system.removeHasA(recipe);
+                recipe.delete();
+                finish();
             }
         });
     }

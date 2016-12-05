@@ -25,8 +25,9 @@ public class EditRecipeActivity extends AppCompatActivity {
         Intent i = getIntent();
 
         if(i.hasExtra("recipe_id")) {
-            Integer indx = Integer.parseInt(i.getStringExtra("recipe_id"));
-            recipe = system.getHasA(indx);
+            int index = i.getIntExtra("recipe_id", 0);
+            recipe = system.getHasA(index);
+            recipe.setRecipeSystem(system);
             populateInfo(recipe);
         }
 
@@ -47,16 +48,16 @@ public class EditRecipeActivity extends AppCompatActivity {
         EditText recStep = (EditText) findViewById(R.id.addRecipeStepInput);
         RatingBar rating = (RatingBar) findViewById(R.id.addRating);
 
-        title.setText(r.getTitle());
-        desc.setText(r.getDescription());
+        title.setText("" + r.getTitle());
+        desc.setText("" + r.getDescription());
         cooking.setText(r.getCookingTime() + "");
-        serving.setText(r.getServing());
-        type.setText(r.getRecipeType(0).getName());
-        category.setText(r.getCategory(0).getName());
-        calories.setText(r.getCalories());
+        serving.setText("" + r.getServing());
+        type.setText("" + r.getRecipeType(0).getName());
+        category.setText("" + r.getCategory(0).getName());
+        calories.setText("" + r.getCalories());
         rating.setRating(r.getRating());
-        ingred.setText(r.getUsedIn(0).getName());
-        recStep.setText(r.getRecipeStep(0).getDescription());
+        ingred.setText("" + r.getUsedIn(0).getName());
+        recStep.setText("" + r.getRecipeStep(0).getDescription());
     }
 
     private Recipe retrieveRecipeInfo(){
@@ -73,12 +74,11 @@ public class EditRecipeActivity extends AppCompatActivity {
 
         //Recipe(aTitle,aDescription, double aCookingTime, aImage, int aServing, int aCalories, RecipeSystem aRecipeSystem, Ingredient... allUsedIn
         Recipe temp = new Recipe(title.getText()+"", desc.getText()+"", Double.parseDouble(cooking.getText()+""), "",
-                Integer.parseInt(serving.getText() + ""), Integer.parseInt(calories.getText() + ""), system, null);
+                Integer.parseInt(serving.getText() + ""), Integer.parseInt(calories.getText() + ""), system, new Ingredient(ingred.getText()+"", system));
         temp.addCategory(new Category(category.getText()+"", system));
         temp.addRecipeType(new RecipeType(type.getText()+"", system));
         //temp.addRecipeStep(0);
         temp.setRating(rating.getRating());
-        temp.addUsedIn(new Ingredient(ingred.getText()+"", system));
         temp.addRecipeStep(0, recStep.getText()+"",10, false);
         temp.setId(system.indexOfHasA(temp));
         return temp;
@@ -96,10 +96,14 @@ public class EditRecipeActivity extends AppCompatActivity {
                     system.addHasAAt(retrieveRecipeInfo(), indx);
                 } else {
                     recipe = retrieveRecipeInfo();
+                    system.addHasA(recipe);
                 }
+
                 Intent viewRecipe = new Intent(EditRecipeActivity.this, ViewRecipeActivity.class);
                 viewRecipe.putExtra("recipe_id", system.indexOfHasA(recipe));
-                startActivity(viewRecipe);
+                setResult(100, viewRecipe);
+                //startActivity(viewRecipe);
+                finish();
             }
         });
     }

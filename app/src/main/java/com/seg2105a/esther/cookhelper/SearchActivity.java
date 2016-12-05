@@ -51,6 +51,18 @@ public class SearchActivity extends AppCompatActivity {
         String[] tagline = new String[system.numberOfHasA()];
         //Converting Array to ArrayList
         final List<Recipe> list = system.getRecipes();
+
+        Intent i = getIntent();
+        if(i.hasExtra("type")) {
+            String type = i.getStringExtra("type");
+            String queryBasic = i.getStringExtra("query");
+            if (queryBasic.contains(",") || queryBasic.contains(";") || queryBasic.contains("!") ) {
+
+            } else {
+                system.in
+            }
+        }
+
         for (int i = 0; i < values.length; ++i) {
             values[i] = list.get(i).getTitle();
             tagline[i] = list.get(i).getCategory(0).toString() + " , " + list.get(i).getRecipeType(0).toString();

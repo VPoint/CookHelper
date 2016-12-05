@@ -65,16 +65,33 @@ public class MainActivity extends AppCompatActivity {
         system.addIngredient("cheese");
         system.addIngredient("tomatos");
 
-        system.addHasA("Tomato Salsa", "There needs to be something here..", 4.5, "", 6, 900, system.getIngredient(0));
+        system.addHasA("Chili Salsa", "There needs to be something here..", 4.5, "", 6, 900, system.getIngredient(0));
         system.getHasA(0).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
         system.getHasA(0).addCategory(system.getCategory(1));
         system.getHasA(0).addRecipeType(system.getRecipeType(2));
+        system.getHasA(0).setRating(3);
         //
         //system.addRecipe("Pasta","khjhkhjkhjkh jkhjkhjkhkjhhkj hjkhkjkh", 40.2, "");
         //system.addRecipe("Pizza","khjhkhldskjf sdkjfljsd fsldkmksdklffsdlf dkhkjkh", 90909.2, "");
         //system.addRecipe("Pastry","khjhkhjkhjkh aaasaasnnsadad adadka da a da hjkhkjkh", 8.2, "");
 
         //feature = system.getRecipe(0).addCategory(system.getCategory(1));
+        Button search = (Button) findViewById(R.id.searchButton);
+        Button searchADV = (Button) findViewById(R.id.advancedSearchButton);
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchHome();
+            }
+        });
+
+        searchADV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                advSearchHome();
+            }
+        });
 
         changeSwitch();
         //search();
@@ -182,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void search(View v) {
+    public void searchHome() {
         EditText query = (EditText) findViewById(R.id.searchBox);
         Spinner type = (Spinner) findViewById(R.id.searchType);
 
@@ -193,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goSearch);
     }
 
-    public void advSearch(View v) {
+    public void advSearchHome() {
         EditText queryCategory = (EditText) findViewById(R.id.categoryQuery);
         EditText queryIngredient = (EditText) findViewById(R.id.ingredientQuery);
         EditText queryType = (EditText) findViewById(R.id.typeQuery);

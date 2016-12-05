@@ -8,8 +8,10 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
@@ -95,15 +97,40 @@ public class EditAttributeActivity extends AppCompatActivity {
 
             }
         });
+
+        save();
     }
 
     public void save(){
         // this changes the data in the business logic & therefore the database....
+        Button saveButton = (Button) findViewById(R.id.addAttribute);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText input = (EditText) findViewById(R.id.attributeInput);
+                switch(type){
+                    case "type":
+                        system.addRecipeType(input.getText()+"");
+                        recreate();
+                        break;
 
-    }
+                    case "category":
+                        system.addCategory(input.getText()+"");
+                        recreate();
+                        break;
 
-    public void selectAttribute(){
-        // searches database for recipes having attribute with selected name and returns to the search results activity
+                    case "ingredient":
+                        system.addIngredient(input.getText()+"");
+                        recreate();
+                        break;
+
+                    default:
+                        system.addCategory(input.getText()+"");
+                        recreate();
+                        break;
+                }
+            }
+        });
 
     }
 }

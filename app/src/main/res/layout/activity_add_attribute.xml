@@ -27,7 +27,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/addAttribute"
         android:textColor="@color/white_text"
-        android:backgroundTint="@color/colorPrimary" />
+        android:backgroundTint="@color/colorPrimary"
+        android:onClick="save (EditAttributeActivity)" />
 
     <ListView
         android:layout_width="match_parent"
