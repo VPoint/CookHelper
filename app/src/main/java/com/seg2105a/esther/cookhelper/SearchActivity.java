@@ -103,4 +103,22 @@ public class SearchActivity extends AppCompatActivity {
         });
 
     }
+
+    private void changeSwitch(){
+        // this should inflate the advanced search page with all the components
+        Switch advancedSearch = (Switch) findViewById(R.id.searchSwitch);
+        advancedSearch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+                LinearLayout advanced = (LinearLayout) findViewById(R.id.advancedSearch);
+                LinearLayout basic = (LinearLayout) findViewById(R.id.basicSearch);
+                if(isChecked){
+                    advanced.setVisibility(View.VISIBLE);
+                    basic.setVisibility(View.GONE);
+                } else {
+                    basic.setVisibility(View.VISIBLE);
+                    advanced.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
 }
