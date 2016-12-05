@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Switch;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -24,7 +26,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
 
         // Get ListView object from xml layout
-        ListView listView = (ListView) findViewById(R.id.listView);
+        ListView listView = (ListView) findViewById(R.id.recipeList);
         //Defining Array values to show in ListView
         String[] values = new String[] {
                 "Spaghetti","Lasagna","Meatballs","Pasta Sauce","Raviolli","Cheese Sauce","Item 07","Item 08"
@@ -48,30 +50,38 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        search();
+        //search();
         addRecipe();
+        changeSwitch();
     }
 
-    public void search(){
-        // this should * inflate the advanced search page with all the components
-        // go to the search result page with the information about what word to search for and in which scope
-        Button basicSearchButton = (Button) findViewById(R.id.searchButton);
-        basicSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goSearch = new Intent(SearchActivity.this, SearchActivity.class);
-                startActivity(goSearch);
+    private void changeSwitch(){
+        // this should inflate the advanced search page with all the components
+        Switch advancedSearch = (Switch) findViewById(R.id.searchSwitch);
+        advancedSearch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+                LinearLayout advanced = (LinearLayout) findViewById(R.id.advancedSearch);
+                LinearLayout basic = (LinearLayout) findViewById(R.id.basicSearch);
+                if(isChecked){
+                    advanced.setVisibility(View.VISIBLE);
+                    basic.setVisibility(View.GONE);
+                } else {
+                    basic.setVisibility(View.VISIBLE);
+                    advanced.setVisibility(View.GONE);
+                }
             }
         });
+    }
 
-        Button advSearchButton = (Button) findViewById(R.id.advancedSearchButton);
-        advSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goSearch = new Intent(SearchActivity.this, SearchActivity.class);
-                startActivity(goSearch);
-            }
-        });
+
+    public void search(View v) {
+        Intent goSearch = new Intent(SearchActivity.this, SearchActivity.class);
+        startActivity(goSearch);
+    }
+
+    public void advSearch(View v) {
+        Intent goAdvSearch = new Intent(SearchActivity.this, SearchActivity.class);
+        startActivity(goAdvSearch);
     }
 
 /*    public void recipeSelect(){

@@ -22,56 +22,46 @@ import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
     // Popup that displays the help menu on how to use CookHelper
+    private FloatingActionButton help;
+    private PopupWindow popUpWindow;
+    private LayoutInflater layoutInflater;
+    private LinearLayout linearLayout;
+
+    public Button search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         changeSwitch();
-        search();
+        //search();
         helpButton();
         recipeSelect();
     }
-
     private void helpButton(){
         // Jessica Zhan
-        FloatingActionButton help = (FloatingActionButton) findViewById(R.id.helpButton);
-        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear);
+
+        help = (FloatingActionButton) findViewById(R.id.helpButton);
+        linearLayout = (LinearLayout) findViewById(R.id.linear);
         help.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view){
-//                LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-//                ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.activity_help_popup, null);
-//                final PopupWindow popUpWindow = new PopupWindow(container,container.getHeight(),container.getWidth(),true);
-//                popUpWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 0,0);
-//
-//                //Tapping outside of popup window closes it
-//                container.setOnTouchListener(new View.OnTouchListener(){
-//
-//                    @Override
-//                    public boolean onTouch(View view, MotionEvent motionEvent){
-//                        popUpWindow.dismiss();
-//                        return true;
-//                    }
-//                });
-                PopupWindow popUpWindow = new PopupWindow(linearLayout);
-                if (!popUpWindow.isShowing()) {
-                    popUpWindow.showAtLocation(linearLayout, Gravity.BOTTOM, 10, 10);
-                    popUpWindow.update(50, 50, 320, 90);
-                } else {
-                    popUpWindow.dismiss();
-                }
-                LinearLayout containerLayout = new LinearLayout(getApplicationContext());
-                ViewGroup.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                containerLayout.setOrientation(LinearLayout.VERTICAL);
-                //containerLayout.addView(tvMsg, layoutParams);
-                //popUpWindow.setContentView(R.layout.activity_help_popup);
-                //linearLayout.addView(, layoutParams);
+                layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.activity_help_popup, null);
+                popUpWindow = new PopupWindow(container,880,1100,true);
+                popUpWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 100,400);
 
+                //Tapping outside of popup window closes it
+                container.setOnTouchListener(new View.OnTouchListener(){
+
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent){
+                        popUpWindow.dismiss();
+                        return true;
+                    }
+                });
             }
         });
     }
@@ -107,24 +97,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void search() {
-        // go to the search result page with the information about what word to search for and in which scope
-        Button basicSearchButton = (Button) findViewById(R.id.searchButton);
-        basicSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    public void search(View v) {
                 Intent goSearch = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(goSearch);
-            }
-        });
+    }
 
-        Button advSearchButton = (Button) findViewById(R.id.advancedSearchButton);
-        advSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    public void advSearch(View v) {
                 Intent goAdvSearch = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(goAdvSearch);
-            }
-        });
     }
 }

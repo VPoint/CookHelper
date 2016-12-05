@@ -8,7 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchSwitch"
-        android:layout_weight="0.82" />
+        android:layout_weight="0.82"
+        android:onClick="advSearch"
+        />
+
 
     <include
         android:layout_width="match_parent"
@@ -49,6 +52,8 @@
                 android:layout_height="match_parent"
                 android:entries="@array/search_type_array" />
 
+
+
         </LinearLayout>
 
         <Button
@@ -59,7 +64,8 @@
             android:backgroundTint="@color/colorPrimary"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@color/white_text"
-            android:text="Search" />
+            android:text="Search"
+            android:onClick="search"/>
 
 
     </LinearLayout>

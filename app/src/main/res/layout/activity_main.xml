@@ -98,6 +98,7 @@
                 layout="@layout/activity_search_layout"
                 android:layout_weight="0.82" />
 
+
         </LinearLayout>
     </ScrollView>
 
