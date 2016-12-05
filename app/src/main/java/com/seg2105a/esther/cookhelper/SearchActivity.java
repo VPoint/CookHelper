@@ -16,13 +16,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.ToggleButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
     private RecipeSystem system;
+    private Integer[] recipe_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +39,25 @@ public class SearchActivity extends AppCompatActivity {
 
         system = system.getInstance();
 
+
         // Get ListView object from xml layout
         ListView listView = (ListView) findViewById(R.id.recipeList);
         //Defining Array values to show in ListView
-        String[] values = new String[] {
-                "Spaghetti","Lasagna","Meatballs","Pasta Sauce","Raviolli","Cheese Sauce","Item 07","Item 08"
-        };
+//        String[] values = new String[] {
+//                "Spaghetti","Lasagna","Meatballs","Pasta Sauce","Raviolli","Cheese Sauce","Item 07","Item 08"
+//        };
+        String[] values = new String[system.numberOfHasA()];
+        recipe_id = new Integer[system.numberOfHasA()];
+        String[] tagline = new String[system.numberOfHasA()];
         //Converting Array to ArrayList
-        /*final ArrayList<String> list = new ArrayList<String>();
+        final List<Recipe> list = system.getRecipes();
         for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }*/
+            values[i] = list.get(i).getTitle();
+            tagline[i] = list.get(i).getCategory(0).toString() + " , " + list.get(i).getRecipeType(0).toString();
+            recipe_id[i] = list.get(i).getId();
+        }
         //Create an ArrayAdapter and Set it on the ListView
-        ArrayAdapter adapter = new RecipeAdapter(this, values);
+        ArrayAdapter adapter = new RecipeAdapter(this, values, tagline);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -52,6 +65,8 @@ public class SearchActivity extends AppCompatActivity {
                 final String item = (String) parent.getItemAtPosition(position);
                 //Do something with the string that you just got!
                 Intent viewRecipe = new Intent(SearchActivity.this, ViewRecipeActivity.class);
+
+                viewRecipe.putExtra("recipe_id" , recipe_id[position]);
                 startActivity(viewRecipe);
 
             }
@@ -116,14 +131,30 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-
     public void search(View v) {
-        Intent goSearch = new Intent(SearchActivity.this, SearchActivity.class);
+        EditText query = (EditText) findViewById(R.id.searchBox);
+        Spinner type = (Spinner) findViewById(R.id.searchType);
+
+        Intent goSearch = new Intent(getApplicationContext(), SearchActivity.class);
+
+        goSearch.putExtra("type", type.getSelectedItem().toString());
+        goSearch.putExtra("query", query.getText());
         startActivity(goSearch);
     }
 
     public void advSearch(View v) {
-        Intent goAdvSearch = new Intent(SearchActivity.this, SearchActivity.class);
+        EditText queryCategory = (EditText) findViewById(R.id.categoryQuery);
+        EditText queryIngredient = (EditText) findViewById(R.id.ingredientQuery);
+        EditText queryType = (EditText) findViewById(R.id.typeQuery);
+
+        ToggleButton toggleCategory = (ToggleButton) findViewById(R.id.toggleCategory);
+        ToggleButton toggleType = (ToggleButton) findViewById(R.id.toggleType);
+
+        Intent goAdvSearch = new Intent(getApplicationContext(), SearchActivity.class);
+
+        goAdvSearch.putExtra("queryCategory", queryCategory.getText() + "" + toggleCategory.getText());
+        goAdvSearch.putExtra("queryIngredient", queryIngredient.getText());
+        goAdvSearch.putExtra("queryType", queryType.getText() + "" + toggleType.getText());
         startActivity(goAdvSearch);
     }
 

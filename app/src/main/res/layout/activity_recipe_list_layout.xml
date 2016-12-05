@@ -33,9 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Category., Type"
-            android:id="@+id/itemIngredient"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/itemTag"
+            android:layout_gravity="center_horizontal"
+            android:text="Category, Type" />
 
     </LinearLayout>
 

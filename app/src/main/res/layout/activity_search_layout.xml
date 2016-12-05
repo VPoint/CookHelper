@@ -8,9 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchSwitch"
-        android:layout_weight="0.82"
-        android:onClick="advSearch"
-        />
+        android:layout_weight="0.82" />
 
 
     <include
@@ -65,7 +63,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@color/white_text"
             android:text="Search"
-            android:onClick="search"/>
+            android:onClick="search (SearchActivity)"/>
 
 
     </LinearLayout>

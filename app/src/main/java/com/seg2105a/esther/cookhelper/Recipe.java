@@ -25,6 +25,7 @@
         private int serving;
         private int id;
         private int calories;
+        private float rating;
 
         //Recipe Associations
         private RecipeSystem recipeSystem;
@@ -37,15 +38,15 @@
         // CONSTRUCTOR
         //------------------------
 
-        public Recipe(String aTitle, String aDescription, double aCookingTime, String aImage, int aServing, int aId, int aCalories, RecipeSystem aRecipeSystem, Ingredient... allUsedIn)
+        public Recipe(String aTitle, String aDescription, double aCookingTime, String aImage, int aServing, int aCalories, RecipeSystem aRecipeSystem, Ingredient... allUsedIn)
         {
             title = aTitle;
             description = aDescription;
             cookingTime = aCookingTime;
             image = aImage;
             serving = aServing;
-            id = aId;
             calories = aCalories;
+            rating = 0;
             boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
             if (!didAddRecipeSystem)
             {
@@ -738,6 +739,13 @@
             }
         }
 
+        public float getRating() {
+            return rating;
+        }
+
+        public void setRating(float rating) {
+            this.rating = rating;
+        }
 
         public String toString()
         {

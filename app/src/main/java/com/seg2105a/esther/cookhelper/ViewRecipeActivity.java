@@ -32,15 +32,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_recipe_view);
 
-        actionBar = getActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(
-                Color.parseColor("@color/PrimaryColor"));
-        actionBar.setBackgroundDrawable(colorDrawable);
-
         //loads the activity and populates the text view with information from the Recipe object
 
         system = system.getInstance();
+        Intent i = getIntent();
+        Integer indx = Integer.parseInt(i.getStringExtra("recipe_id"));
+        recipe = system.getHasA(indx);
 
+        populateInfo(recipe);
 
         playRecipeStep();
         editRecipe();
@@ -101,7 +100,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         type.setText(r.getRecipeType(0).getName());
         category.setText(r.getCategory(0).getName());
         cookTime.setText("" + r.getCookingTime());
-        ingrContent.setText(r.getUsedIn().toString());
+        //ingrContent.setText(r.getUsedIn().toString());
         recipeStep.setText(r.getRecipeSteps().toString());
     }
 

@@ -12,27 +12,27 @@
         android:text="Name of Category:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView17" />
+        android:id="@+id/attributeLabel" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editText7" />
+        android:id="@+id/attributeInput" />
 
     <Button
         android:text="Add Category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button9"
+        android:id="@+id/addAttribute"
         android:textColor="@color/white_text"
         android:backgroundTint="@color/colorPrimary" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/attributeList"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

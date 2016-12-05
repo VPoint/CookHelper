@@ -2,16 +2,9 @@
 /*This code was generated using the UMPLE 1.24.0-abedcd4 modeling language!*/
 package com.seg2105a.esther.cookhelper;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-import java.io.FileInputStream;
 import java.util.*;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
-
-
-import java.util.*;
 
 // line 2 "model.ump"
 // line 74 "model.ump"
@@ -26,7 +19,7 @@ public class RecipeSystem
   private Object database;
 
   //RecipeSystem Associations
-  private List<Recipe> hasA;
+  private List<Recipe> recipes;
   private List<Category> categories;
   private List<RecipeType> recipeTypes;
   private List<Ingredient> ingredients;
@@ -39,7 +32,7 @@ public class RecipeSystem
   protected RecipeSystem(Object aDatabase)
   {
     database = aDatabase;
-    hasA = new ArrayList<Recipe>();
+    recipes = new ArrayList<Recipe>();
     categories = new ArrayList<Category>();
     recipeTypes = new ArrayList<RecipeType>();
     ingredients = new ArrayList<Ingredient>();
@@ -71,31 +64,31 @@ public class RecipeSystem
 
   public Recipe getHasA(int index)
   {
-    Recipe aHasA = hasA.get(index);
+    Recipe aHasA = recipes.get(index);
     return aHasA;
   }
 
-  public List<Recipe> getHasA()
+  public List<Recipe> getRecipes()
   {
-    List<Recipe> newHasA = Collections.unmodifiableList(hasA);
+    List<Recipe> newHasA = Collections.unmodifiableList(recipes);
     return newHasA;
   }
 
   public int numberOfHasA()
   {
-    int number = hasA.size();
+    int number = recipes.size();
     return number;
   }
 
   public boolean hasHasA()
   {
-    boolean has = hasA.size() > 0;
+    boolean has = recipes.size() > 0;
     return has;
   }
 
   public int indexOfHasA(Recipe aHasA)
   {
-    int index = hasA.indexOf(aHasA);
+    int index = recipes.indexOf(aHasA);
     return index;
   }
 
@@ -194,15 +187,15 @@ public class RecipeSystem
     return 0;
   }
 
-  public Recipe addHasA(String aTitle, String aDescription, double aCookingTime, String aImage, int aServing, int aId, int aCalories, Ingredient... allUsedIn)
+  public Recipe addHasA(String aTitle, String aDescription, double aCookingTime, String aImage, int aServing, int aCalories, Ingredient... allUsedIn)
   {
-    return new Recipe(aTitle, aDescription, aCookingTime, aImage, aServing, aId, aCalories, this, allUsedIn);
+    return new Recipe(aTitle, aDescription, aCookingTime, aImage, aServing, aCalories, this, allUsedIn);
   }
 
   public boolean addHasA(Recipe aHasA)
   {
     boolean wasAdded = false;
-    if (hasA.contains(aHasA)) { return false; }
+    if (recipes.contains(aHasA)) { return false; }
     RecipeSystem existingRecipeSystem = aHasA.getRecipeSystem();
     boolean isNewRecipeSystem = existingRecipeSystem != null && !this.equals(existingRecipeSystem);
     if (isNewRecipeSystem)
@@ -211,7 +204,8 @@ public class RecipeSystem
     }
     else
     {
-      hasA.add(aHasA);
+      recipes.add(aHasA);
+      aHasA.setId(recipes.indexOf(aHasA));
     }
     wasAdded = true;
     return wasAdded;
@@ -223,7 +217,7 @@ public class RecipeSystem
     //Unable to remove aHasA, as it must always have a recipeSystem
     if (!this.equals(aHasA.getRecipeSystem()))
     {
-      hasA.remove(aHasA);
+      recipes.remove(aHasA);
       wasRemoved = true;
     }
     return wasRemoved;
@@ -236,8 +230,9 @@ public class RecipeSystem
     {
       if(index < 0 ) { index = 0; }
       if(index > numberOfHasA()) { index = numberOfHasA() - 1; }
-      hasA.remove(aHasA);
-      hasA.add(index, aHasA);
+      recipes.remove(aHasA);
+      recipes.add(index, aHasA);
+      aHasA.setId(index);
       wasAdded = true;
     }
     return wasAdded;
@@ -246,12 +241,13 @@ public class RecipeSystem
   public boolean addOrMoveHasAAt(Recipe aHasA, int index)
   {
     boolean wasAdded = false;
-    if(hasA.contains(aHasA))
+    if(recipes.contains(aHasA))
     {
       if(index < 0 ) { index = 0; }
       if(index > numberOfHasA()) { index = numberOfHasA() - 1; }
-      hasA.remove(aHasA);
-      hasA.add(index, aHasA);
+      recipes.remove(aHasA);
+      recipes.add(index, aHasA);
+      aHasA.setId(index);
       wasAdded = true;
     }
     else
@@ -479,9 +475,9 @@ public class RecipeSystem
 
   public void delete()
   {
-    for(int i=hasA.size(); i > 0; i--)
+    for(int i = recipes.size(); i > 0; i--)
     {
-      Recipe aHasA = hasA.get(i - 1);
+      Recipe aHasA = recipes.get(i - 1);
       aHasA.delete();
     }
     for(int i=categories.size(); i > 0; i--)
@@ -508,7 +504,7 @@ public class RecipeSystem
 
   // line 13 "model.ump"
   private Recipe fetchRecipe(){
-    return new Recipe("", "",0 , "", 0,0,0,this, null);
+    return new Recipe("", "",0 , "", 0,0,this, null);
   }
 
   // line 17 "model.ump"

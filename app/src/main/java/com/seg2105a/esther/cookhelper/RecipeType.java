@@ -214,10 +214,6 @@ public class RecipeType
 
   public String toString()
   {
-    String outputString = "";
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "recipeSystem = "+(getRecipeSystem()!=null?Integer.toHexString(System.identityHashCode(getRecipeSystem())):"null")
-            + outputString;
+    return getName();
   }
 }

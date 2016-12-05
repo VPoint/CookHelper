@@ -215,9 +215,6 @@ public class Category
 
   public String toString()
   {
-    String outputString = "";
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + outputString;
+    return getName();
   }
 }

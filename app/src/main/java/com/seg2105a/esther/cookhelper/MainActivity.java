@@ -48,11 +48,6 @@ public class MainActivity extends AppCompatActivity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
 
-        actionBar = getActionBar();
-        ColorDrawable colorDrawable = new ColorDrawable(
-                Color.parseColor("@color/PrimaryColor"));
-        actionBar.setBackgroundDrawable(colorDrawable);
-
         system = system.getInstance();
 
         system.addCategory("Mexican");
@@ -65,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
         system.addRecipeType("brunch");
         system.addRecipeType("appetizer");
 
+        system.addIngredient("kale");
+        system.addIngredient("candy");
+        system.addIngredient("cheese");
+        system.addIngredient("tomatos");
+
+        system.addHasA("Tomato Salsa", "There needs to be something here..", 4.5, "", 6, 900, system.getIngredient(0));
+        system.getHasA(0).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
+        system.getHasA(0).addCategory(system.getCategory(1));
+        system.getHasA(0).addRecipeType(system.getRecipeType(2));
         //
         //system.addRecipe("Pasta","khjhkhjkhjkh jkhjkhjkhkjhhkj hjkhkjkh", 40.2, "");
         //system.addRecipe("Pizza","khjhkhldskjf sdkjfljsd fsldkmksdklffsdlf dkhkjkh", 90909.2, "");
@@ -172,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 TextView feature = (TextView) findViewById(R.id.titleFeatured);
                 Intent recipeView = new Intent(getApplicationContext(), ViewRecipeActivity.class);
-                recipeView.putExtra("recipe_id", 00);
+                recipeView.putExtra("recipe_id", 0);
                 startActivity(recipeView);
             }
         });
