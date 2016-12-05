@@ -13,6 +13,8 @@ import android.view.View;
  * status bar and navigation/system bar) with user interaction.
  */
 public class RecipeStepActivity extends AppCompatActivity {
+    private Recipe recipe;
+    private RecipeSystem system;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -92,7 +94,7 @@ public class RecipeStepActivity extends AppCompatActivity {
         mVisible = true;
         //mControlsView = findViewById(R.id.fullscreen_content_controls);
         //mContentView = findViewById(R.id.fullscreen_content);
-
+        system = system.getInstance();
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {

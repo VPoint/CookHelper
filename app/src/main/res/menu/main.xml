@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+
+    <item android:title="Add Recipe"
+        android:id="@+id/addRecipe" />
+    <item android:title="Add Ingredient"
+        android:id="@+id/addIngredient" />
+    <item android:title="Add Category"
+        android:id="@+id/addCategory" />
+    <item android:title="Add Type"
+        android:id="@+id/addType" />
+</menu>

@@ -2,7 +2,13 @@
 /*This code was generated using the UMPLE 1.24.0-abedcd4 modeling language!*/
 
 package com.seg2105a.esther.cookhelper;
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
 
+
+
+// line 41 "model.ump"
+// line 84 "model.ump"
 public class RecipeStep
 {
 
@@ -11,28 +17,28 @@ public class RecipeStep
   //------------------------
 
   //RecipeStep Attributes
-  private String number;
+  private int number;
   private String description;
-  private String timeRequired;
+  private double timeRequired;
   private boolean completed;
 
   //RecipeStep Associations
-  private Recipe recipe;
+  private Recipe partOf;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public RecipeStep(String aNumber, String aDescription, String aTimeRequired, boolean aCompleted, Recipe aRecipe)
+  public RecipeStep(int aNumber, String aDescription, double aTimeRequired, boolean aCompleted, Recipe aPartOf)
   {
     number = aNumber;
     description = aDescription;
     timeRequired = aTimeRequired;
     completed = aCompleted;
-    boolean didAddRecipe = setRecipe(aRecipe);
-    if (!didAddRecipe)
+    boolean didAddPartOf = setPartOf(aPartOf);
+    if (!didAddPartOf)
     {
-      throw new RuntimeException("Unable to create recipeStep due to recipe");
+      throw new RuntimeException("Unable to create recipeStep due to partOf");
     }
   }
 
@@ -40,7 +46,7 @@ public class RecipeStep
   // INTERFACE
   //------------------------
 
-  public boolean setNumber(String aNumber)
+  public boolean setNumber(int aNumber)
   {
     boolean wasSet = false;
     number = aNumber;
@@ -56,7 +62,7 @@ public class RecipeStep
     return wasSet;
   }
 
-  public boolean setTimeRequired(String aTimeRequired)
+  public boolean setTimeRequired(double aTimeRequired)
   {
     boolean wasSet = false;
     timeRequired = aTimeRequired;
@@ -72,7 +78,7 @@ public class RecipeStep
     return wasSet;
   }
 
-  public String getNumber()
+  public int getNumber()
   {
     return number;
   }
@@ -82,7 +88,7 @@ public class RecipeStep
     return description;
   }
 
-  public String getTimeRequired()
+  public double getTimeRequired()
   {
     return timeRequired;
   }
@@ -92,42 +98,48 @@ public class RecipeStep
     return completed;
   }
 
-  public boolean isCompleted()
+  public Recipe getPartOf()
   {
-    return completed;
+    return partOf;
   }
 
-  public Recipe getRecipe()
-  {
-    return recipe;
-  }
-
-  public boolean setRecipe(Recipe aRecipe)
+  public boolean setPartOf(Recipe aPartOf)
   {
     boolean wasSet = false;
-    if (aRecipe == null)
+    //Must provide partOf to recipeStep
+    if (aPartOf == null)
     {
       return wasSet;
     }
 
-    Recipe existingRecipe = recipe;
-    recipe = aRecipe;
-    if (existingRecipe != null && !existingRecipe.equals(aRecipe))
+    if (partOf != null && partOf.numberOfRecipeSteps() <= Recipe.minimumNumberOfRecipeSteps())
     {
-      existingRecipe.removeRecipeStep(this);
+      return wasSet;
     }
-    recipe.addRecipeStep(this);
+
+    Recipe existingPartOf = partOf;
+    partOf = aPartOf;
+    if (existingPartOf != null && !existingPartOf.equals(aPartOf))
+    {
+      boolean didRemove = existingPartOf.removeRecipeStep(this);
+      if (!didRemove)
+      {
+        partOf = existingPartOf;
+        return wasSet;
+      }
+    }
+    partOf.addRecipeStep(this);
     wasSet = true;
     return wasSet;
   }
 
   public void delete()
   {
-    Recipe existingRecipe = recipe;
-    recipe = null;
-    if (existingRecipe != null)
+    Recipe existingPartOf = partOf;
+    partOf = null;
+    if (existingPartOf != null)
     {
-      existingRecipe.delete();
+      existingPartOf.delete();
     }
   }
 
@@ -139,7 +151,8 @@ public class RecipeStep
             "number" + ":" + getNumber()+ "," +
             "description" + ":" + getDescription()+ "," +
             "timeRequired" + ":" + getTimeRequired()+ "," +
-            "completed" + ":" + getCompleted()+ "]" +
-            "  " + outputString;
+            "completed" + ":" + getCompleted()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "partOf = "+(getPartOf()!=null?Integer.toHexString(System.identityHashCode(getPartOf())):"null")
+            + outputString;
   }
 }

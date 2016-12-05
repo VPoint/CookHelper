@@ -31,6 +31,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent viewRecipe = new Intent(EditRecipeActivity.this, ViewRecipeActivity.class);
                 startActivity(viewRecipe);
             }

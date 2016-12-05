@@ -10,16 +10,19 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class EditAttributeActivity extends AppCompatActivity {
+    private RecipeSystem system;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_attribute);
 
+        system = system.getInstance();
         // list all of the variables of this attribute type underneath the search bar
     }
 
     public void save(){
         // this changes the data in the business logic & therefore the database....
+
     }
 
     public void selectAttribute(){

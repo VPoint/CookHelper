@@ -2,8 +2,15 @@
 /*This code was generated using the UMPLE 1.24.0-abedcd4 modeling language!*/
 
 package com.seg2105a.esther.cookhelper;
+
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
+
+
 import java.util.*;
 
+// line 57 "model.ump"
+// line 94 "model.ump"
 public class RecipeType
 {
 
@@ -15,7 +22,7 @@ public class RecipeType
   private String name;
 
   //RecipeType Associations
-  private List<Recipe> recipes;
+  private List<Recipe> hasA;
   private RecipeSystem recipeSystem;
 
   //------------------------
@@ -25,9 +32,9 @@ public class RecipeType
   public RecipeType(String aName, RecipeSystem aRecipeSystem)
   {
     name = aName;
-    recipes = new ArrayList<Recipe>();
-    boolean didAddSystem = setSystem(aRecipeSystem);
-    if (!didAddSystem)
+    hasA = new ArrayList<Recipe>();
+    boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
+    if (!didAddRecipeSystem)
     {
       throw new RuntimeException("Unable to create recipeType due to recipeSystem");
     }
@@ -50,33 +57,33 @@ public class RecipeType
     return name;
   }
 
-  public Recipe getRecipe(int index)
+  public Recipe getHasA(int index)
   {
-    Recipe aRecipe = recipes.get(index);
-    return aRecipe;
+    Recipe aHasA = hasA.get(index);
+    return aHasA;
   }
 
-  public List<Recipe> getRecipes()
+  public List<Recipe> getHasA()
   {
-    List<Recipe> newRecipes = Collections.unmodifiableList(recipes);
-    return newRecipes;
+    List<Recipe> newHasA = Collections.unmodifiableList(hasA);
+    return newHasA;
   }
 
-  public int numberOfRecipes()
+  public int numberOfHasA()
   {
-    int number = recipes.size();
+    int number = hasA.size();
     return number;
   }
 
-  public boolean hasRecipes()
+  public boolean hasHasA()
   {
-    boolean has = recipes.size() > 0;
+    boolean has = hasA.size() > 0;
     return has;
   }
 
-  public int indexOfRecipe(Recipe aRecipe)
+  public int indexOfHasA(Recipe aHasA)
   {
-    int index = recipes.indexOf(aRecipe);
+    int index = hasA.indexOf(aHasA);
     return index;
   }
 
@@ -85,89 +92,89 @@ public class RecipeType
     return recipeSystem;
   }
 
-  public static int minimumNumberOfRecipes()
+  public static int minimumNumberOfHasA()
   {
     return 0;
   }
 
-  public boolean addRecipe(Recipe aRecipe)
+  public boolean addHasA(Recipe aHasA)
   {
     boolean wasAdded = false;
-    if (recipes.contains(aRecipe)) { return false; }
-    recipes.add(aRecipe);
-    if (aRecipe.indexOfRecipeType(this) != -1)
+    if (hasA.contains(aHasA)) { return false; }
+    hasA.add(aHasA);
+    if (aHasA.indexOfRecipeType(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aRecipe.addRecipeType(this);
+      wasAdded = aHasA.addRecipeType(this);
       if (!wasAdded)
       {
-        recipes.remove(aRecipe);
+        hasA.remove(aHasA);
       }
     }
     return wasAdded;
   }
 
-  public boolean removeRecipe(Recipe aRecipe)
+  public boolean removeHasA(Recipe aHasA)
   {
     boolean wasRemoved = false;
-    if (!recipes.contains(aRecipe))
+    if (!hasA.contains(aHasA))
     {
       return wasRemoved;
     }
 
-    int oldIndex = recipes.indexOf(aRecipe);
-    recipes.remove(oldIndex);
-    if (aRecipe.indexOfRecipeType(this) == -1)
+    int oldIndex = hasA.indexOf(aHasA);
+    hasA.remove(oldIndex);
+    if (aHasA.indexOfRecipeType(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aRecipe.removeRecipeType(this);
+      wasRemoved = aHasA.removeRecipeType(this);
       if (!wasRemoved)
       {
-        recipes.add(oldIndex,aRecipe);
+        hasA.add(oldIndex,aHasA);
       }
     }
     return wasRemoved;
   }
 
-  public boolean addRecipeAt(Recipe aRecipe, int index)
-  {  
-    boolean wasAdded = false;
-    if(addRecipe(aRecipe))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRecipes()) { index = numberOfRecipes() - 1; }
-      recipes.remove(aRecipe);
-      recipes.add(index, aRecipe);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveRecipeAt(Recipe aRecipe, int index)
+  public boolean addHasAAt(Recipe aHasA, int index)
   {
     boolean wasAdded = false;
-    if(recipes.contains(aRecipe))
+    if(addHasA(aHasA))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRecipes()) { index = numberOfRecipes() - 1; }
-      recipes.remove(aRecipe);
-      recipes.add(index, aRecipe);
+      if(index > numberOfHasA()) { index = numberOfHasA() - 1; }
+      hasA.remove(aHasA);
+      hasA.add(index, aHasA);
       wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addRecipeAt(aRecipe, index);
     }
     return wasAdded;
   }
 
-  public boolean setSystem(RecipeSystem aRecipeSystem)
+  public boolean addOrMoveHasAAt(Recipe aHasA, int index)
+  {
+    boolean wasAdded = false;
+    if(hasA.contains(aHasA))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfHasA()) { index = numberOfHasA() - 1; }
+      hasA.remove(aHasA);
+      hasA.add(index, aHasA);
+      wasAdded = true;
+    }
+    else
+    {
+      wasAdded = addHasAAt(aHasA, index);
+    }
+    return wasAdded;
+  }
+
+  public boolean setRecipeSystem(RecipeSystem aRecipeSystem)
   {
     boolean wasSet = false;
     if (aRecipeSystem == null)
@@ -188,15 +195,20 @@ public class RecipeType
 
   public void delete()
   {
-    ArrayList<Recipe> copyOfRecipes = new ArrayList<Recipe>(recipes);
-    recipes.clear();
-    for(Recipe aRecipe : copyOfRecipes)
+    ArrayList<Recipe> copyOfHasA = new ArrayList<Recipe>(hasA);
+    hasA.clear();
+    for(Recipe aHasA : copyOfHasA)
     {
-      aRecipe.removeRecipeType(this);
+      aHasA.removeRecipeType(this);
     }
     RecipeSystem placeholderRecipeSystem = recipeSystem;
     this.recipeSystem = null;
     placeholderRecipeSystem.removeRecipeType(this);
+  }
+
+  // line 62 "model.ump"
+  public Recipe[] getAllRecipes(){
+    return new Recipe[2];
   }
 
 
@@ -204,7 +216,8 @@ public class RecipeType
   {
     String outputString = "";
     return super.toString() + "["+
-            "name" + ":" + getName()+ "]" +
-            "  " + outputString;
+            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "recipeSystem = "+(getRecipeSystem()!=null?Integer.toHexString(System.identityHashCode(getRecipeSystem())):"null")
+            + outputString;
   }
 }

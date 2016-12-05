@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,11 +22,15 @@ import android.widget.PopupWindow;
 import android.widget.Switch;
 
 public class SearchActivity extends AppCompatActivity {
+    private RecipeSystem system;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_search_result);
+
+        system = system.getInstance();
 
         // Get ListView object from xml layout
         ListView listView = (ListView) findViewById(R.id.recipeList);
@@ -55,6 +62,42 @@ public class SearchActivity extends AppCompatActivity {
         changeSwitch();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.addCategory:
+                Intent addCategory = new Intent(getApplicationContext(), EditAttributeActivity.class);
+                addCategory.putExtra("typeAttr", "category");
+                startActivity(addCategory);
+                return true;
+            case R.id.addType:
+                Intent addType = new Intent(getApplicationContext(), EditAttributeActivity.class);
+                addType.putExtra("typeAttr", "type");
+                startActivity(addType);
+                return true;
+            case R.id.addIngredient:
+                Intent addIngr = new Intent(getApplicationContext(), EditAttributeActivity.class);
+                addIngr.putExtra("typeAttr", "ingredient");
+                startActivity(addIngr);
+                return true;
+            case R.id.addRecipe:
+                Intent addRecipe = new Intent(getApplicationContext(), EditRecipeActivity.class);
+                startActivity(addRecipe);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void changeSwitch(){
         // this should inflate the advanced search page with all the components
         Switch advancedSearch = (Switch) findViewById(R.id.searchSwitch);
@@ -84,13 +127,6 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(goAdvSearch);
     }
 
-/*    public void recipeSelect(){
-        // this is the action that represents the "Recipe" of the day being selected. The unique ID of the recipe is sent
-        // to the recipe view page directly
-        Intent addRecipe = new Intent(SearchActivity.this, EditRecipeActivity.class);
-        startActivity(addRecipe);
-    }*/
-
     public void addRecipe(){
         FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.addRecipeButton);
         addButton.setOnClickListener(new View.OnClickListener(){
@@ -102,23 +138,5 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void changeSwitch(){
-        // this should inflate the advanced search page with all the components
-        Switch advancedSearch = (Switch) findViewById(R.id.searchSwitch);
-        advancedSearch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
-                LinearLayout advanced = (LinearLayout) findViewById(R.id.advancedSearch);
-                LinearLayout basic = (LinearLayout) findViewById(R.id.basicSearch);
-                if(isChecked){
-                    advanced.setVisibility(View.VISIBLE);
-                    basic.setVisibility(View.GONE);
-                } else {
-                    basic.setVisibility(View.VISIBLE);
-                    advanced.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 }

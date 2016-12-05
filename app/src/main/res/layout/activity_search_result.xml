@@ -35,13 +35,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:fabSize="mini"
+            app:fabSize="normal"
             app:srcCompat="@android:drawable/ic_menu_add"
             android:id="@+id/addRecipeButton"
             android:foregroundGravity="bottom|right"
             android:layout_gravity="bottom|right"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="false"
             android:layout_alignParentRight="true" />
 
     </RelativeLayout>

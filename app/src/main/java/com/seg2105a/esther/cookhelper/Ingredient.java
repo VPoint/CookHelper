@@ -3,7 +3,14 @@
 
 package com.seg2105a.esther.cookhelper;
 import java.util.*;
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
 
+
+import java.util.*;
+
+// line 65 "model.ump"
+// line 99 "model.ump"
 public class Ingredient
 {
 
@@ -17,7 +24,6 @@ public class Ingredient
   //Ingredient Associations
   private RecipeSystem recipeSystem;
   private List<Recipe> recipes;
-  private List<RecipeStep> recipeSteps;
 
   //------------------------
   // CONSTRUCTOR
@@ -26,13 +32,12 @@ public class Ingredient
   public Ingredient(String aName, RecipeSystem aRecipeSystem)
   {
     name = aName;
-    boolean didAddSystem = setSystem(aRecipeSystem);
-    if (!didAddSystem)
+    boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
+    if (!didAddRecipeSystem)
     {
       throw new RuntimeException("Unable to create ingredient due to recipeSystem");
     }
     recipes = new ArrayList<Recipe>();
-    recipeSteps = new ArrayList<RecipeStep>();
   }
 
   //------------------------
@@ -87,37 +92,7 @@ public class Ingredient
     return index;
   }
 
-  public RecipeStep getRecipeStep(int index)
-  {
-    RecipeStep aRecipeStep = recipeSteps.get(index);
-    return aRecipeStep;
-  }
-
-  public List<RecipeStep> getRecipeSteps()
-  {
-    List<RecipeStep> newRecipeSteps = Collections.unmodifiableList(recipeSteps);
-    return newRecipeSteps;
-  }
-
-  public int numberOfRecipeSteps()
-  {
-    int number = recipeSteps.size();
-    return number;
-  }
-
-  public boolean hasRecipeSteps()
-  {
-    boolean has = recipeSteps.size() > 0;
-    return has;
-  }
-
-  public int indexOfRecipeStep(RecipeStep aRecipeStep)
-  {
-    int index = recipeSteps.indexOf(aRecipeStep);
-    return index;
-  }
-
-  public boolean setSystem(RecipeSystem aRecipeSystem)
+  public boolean setRecipeSystem(RecipeSystem aRecipeSystem)
   {
     boolean wasSet = false;
     if (aRecipeSystem == null)
@@ -146,23 +121,48 @@ public class Ingredient
     boolean wasAdded = false;
     if (recipes.contains(aRecipe)) { return false; }
     recipes.add(aRecipe);
-    wasAdded = true;
+    if (aRecipe.indexOfUsedIn(this) != -1)
+    {
+      wasAdded = true;
+    }
+    else
+    {
+      wasAdded = aRecipe.addUsedIn(this);
+      if (!wasAdded)
+      {
+        recipes.remove(aRecipe);
+      }
+    }
     return wasAdded;
   }
 
   public boolean removeRecipe(Recipe aRecipe)
   {
     boolean wasRemoved = false;
-    if (recipes.contains(aRecipe))
+    if (!recipes.contains(aRecipe))
     {
-      recipes.remove(aRecipe);
+      return wasRemoved;
+    }
+
+    int oldIndex = recipes.indexOf(aRecipe);
+    recipes.remove(oldIndex);
+    if (aRecipe.indexOfUsedIn(this) == -1)
+    {
       wasRemoved = true;
+    }
+    else
+    {
+      wasRemoved = aRecipe.removeUsedIn(this);
+      if (!wasRemoved)
+      {
+        recipes.add(oldIndex,aRecipe);
+      }
     }
     return wasRemoved;
   }
 
   public boolean addRecipeAt(Recipe aRecipe, int index)
-  {  
+  {
     boolean wasAdded = false;
     if(addRecipe(aRecipe))
     {
@@ -185,67 +185,10 @@ public class Ingredient
       recipes.remove(aRecipe);
       recipes.add(index, aRecipe);
       wasAdded = true;
-    } 
-    else 
+    }
+    else
     {
       wasAdded = addRecipeAt(aRecipe, index);
-    }
-    return wasAdded;
-  }
-
-  public static int minimumNumberOfRecipeSteps()
-  {
-    return 0;
-  }
-
-  public boolean addRecipeStep(RecipeStep aRecipeStep)
-  {
-    boolean wasAdded = false;
-    if (recipeSteps.contains(aRecipeStep)) { return false; }
-    recipeSteps.add(aRecipeStep);
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeRecipeStep(RecipeStep aRecipeStep)
-  {
-    boolean wasRemoved = false;
-    if (recipeSteps.contains(aRecipeStep))
-    {
-      recipeSteps.remove(aRecipeStep);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-
-  public boolean addRecipeStepAt(RecipeStep aRecipeStep, int index)
-  {  
-    boolean wasAdded = false;
-    if(addRecipeStep(aRecipeStep))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRecipeSteps()) { index = numberOfRecipeSteps() - 1; }
-      recipeSteps.remove(aRecipeStep);
-      recipeSteps.add(index, aRecipeStep);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveRecipeStepAt(RecipeStep aRecipeStep, int index)
-  {
-    boolean wasAdded = false;
-    if(recipeSteps.contains(aRecipeStep))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRecipeSteps()) { index = numberOfRecipeSteps() - 1; }
-      recipeSteps.remove(aRecipeStep);
-      recipeSteps.add(index, aRecipeStep);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addRecipeStepAt(aRecipeStep, index);
     }
     return wasAdded;
   }
@@ -255,8 +198,24 @@ public class Ingredient
     RecipeSystem placeholderRecipeSystem = recipeSystem;
     this.recipeSystem = null;
     placeholderRecipeSystem.removeIngredient(this);
+    ArrayList<Recipe> copyOfRecipes = new ArrayList<Recipe>(recipes);
     recipes.clear();
-    recipeSteps.clear();
+    for(Recipe aRecipe : copyOfRecipes)
+    {
+      if (aRecipe.numberOfUsedIn() <= Recipe.minimumNumberOfUsedIn())
+      {
+        aRecipe.delete();
+      }
+      else
+      {
+        aRecipe.removeUsedIn(this);
+      }
+    }
+  }
+
+  // line 70 "model.ump"
+  public Recipe[] getAllRecipes(){
+    return new Recipe[0];
   }
 
 
@@ -264,6 +223,8 @@ public class Ingredient
   {
     String outputString = "";
     return super.toString() + "["+
-            "name" + ":" + getName()+ "]" ;
+            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "recipeSystem = "+(getRecipeSystem()!=null?Integer.toHexString(System.identityHashCode(getRecipeSystem())):"null")
+            + outputString;
   }
 }

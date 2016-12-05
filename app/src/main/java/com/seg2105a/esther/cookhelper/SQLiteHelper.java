@@ -194,14 +194,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Recipe r = new Recipe();
-                r.setID(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                r.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
                 r.setTitle((cursor.getString(cursor.getColumnIndex(KEY_TITLE))));
                 r.setCookingTime(Double.parseDouble(cursor.getString(cursor.getColumnIndex(KEY_COOKINGTIME))));
                 r.setDescription((cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION))));
                 r.setImage((cursor.getString(cursor.getColumnIndex(KEY_IMAGE))));
                 r.setServing(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_SERVING))));
-                r.setRecipeStep((cursor.getString(cursor.getColumnIndex(KEY_RECIPESTEP))));
-                r.setCreatedAt(cursor.getString(cursor.getColumnIndex(KEY_CREATED_AT)));
+                //r.setRecipeStep((cursor.getString(cursor.getColumnIndex(KEY_RECIPESTEP))));
+                //r.setCreatedAt(cursor.getString(cursor.getColumnIndex(KEY_CREATED_AT)));
 
                 // adding to recipe list
                 recipes.add(r);
@@ -226,14 +226,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             c.moveToFirst();
 
         Recipe r = new Recipe();
-        r.setID(c.getInt(c.getColumnIndex(KEY_ID)));
+        r.setId(c.getInt(c.getColumnIndex(KEY_ID)));
         r.setTitle((c.getString(c.getColumnIndex(KEY_TITLE))));
         r.setCookingTime(Double.parseDouble(c.getString(c.getColumnIndex(KEY_COOKINGTIME))));
         r.setDescription((c.getString(c.getColumnIndex(KEY_DESCRIPTION))));
         r.setImage((c.getString(c.getColumnIndex(KEY_IMAGE))));
         r.setServing(Integer.parseInt(c.getString(c.getColumnIndex(KEY_SERVING))));
-        r.setRecipeStep((c.getString(c.getColumnIndex(KEY_RECIPESTEP))));
-        r.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+        //r.setRecipeStep((c.getString(c.getColumnIndex(KEY_RECIPESTEP))));
+        //r.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
         return r;
     }
