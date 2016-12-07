@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 /**
  * Created by Esther on 2016-11-29.
@@ -15,6 +16,7 @@ import android.widget.RatingBar;
 public class EditRecipeActivity extends AppCompatActivity {
     private RecipeSystem system;
     private Recipe recipe;
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +27,8 @@ public class EditRecipeActivity extends AppCompatActivity {
         Intent i = getIntent();
 
         if(i.hasExtra("recipe_id")) {
-            int index = i.getIntExtra("recipe_id", 0);
-            recipe = system.getHasA(index);
+            index = i.getIntExtra("recipe_id", 0);
+            recipe = system.getRecipe(index);
             recipe.setRecipeSystem(system);
             populateInfo(recipe);
         }
@@ -80,7 +82,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         //temp.addRecipeStep(0);
         temp.setRating(rating.getRating());
         temp.addRecipeStep(0, recStep.getText()+"",10, false);
-        temp.setId(system.indexOfHasA(temp));
+        temp.setId(system.indexOfRecipe(temp));
         return temp;
     }
 
@@ -90,19 +92,19 @@ public class EditRecipeActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recipe != null){
-                    int indx = system.indexOfHasA(recipe);
-                    system.removeHasA(recipe);
-                    system.addHasAAt(retrieveRecipeInfo(), indx);
+                if(recipe != null && index != -1){
+                    system.removeRecipe(recipe);
+                    recipe = retrieveRecipeInfo();
+                    system.addRecipeAt(recipe, index);
                 } else {
                     recipe = retrieveRecipeInfo();
-                    system.addHasA(recipe);
+                    system.addRecipe(recipe);
                 }
 
                 Intent viewRecipe = new Intent(EditRecipeActivity.this, ViewRecipeActivity.class);
-                viewRecipe.putExtra("recipe_id", system.indexOfHasA(recipe));
+                viewRecipe.putExtra("recipe_id", system.indexOfRecipe(recipe));
                 setResult(100, viewRecipe);
-                //startActivity(viewRecipe);
+                startActivity(viewRecipe);
                 finish();
             }
         });
@@ -116,6 +118,7 @@ public class EditRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent goHome = new Intent(EditRecipeActivity.this, MainActivity.class);
                 startActivity(goHome);
+                finish();
             }
         });
     }

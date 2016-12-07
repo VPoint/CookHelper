@@ -2,12 +2,8 @@ package com.seg2105a.esther.cookhelper;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -50,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         system = system.getInstance();
 
-        system.addCategory("Mexican");
-        system.addCategory("Canadian");
-        system.addCategory("Japanese");
-        system.addCategory("Italian");
+        system.addCategory("mexican");
+        system.addCategory("canadian");
+        system.addCategory("japanese");
+        system.addCategory("italian");
 
         system.addRecipeType("main dish");
         system.addRecipeType("dessert");
@@ -65,11 +61,23 @@ public class MainActivity extends AppCompatActivity {
         system.addIngredient("cheese");
         system.addIngredient("tomatos");
 
-        system.addHasA("Chili Salsa", "There needs to be something here..", 4.5, "", 6, 900, system.getIngredient(0));
-        system.getHasA(0).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
-        system.getHasA(0).addCategory(system.getCategory(1));
-        system.getHasA(0).addRecipeType(system.getRecipeType(2));
-        system.getHasA(0).setRating(3);
+        system.addRecipe("Chili Salsa", "There needs to be something here..", 4.5, "", 6, 900, system.getIngredient(0));
+        system.getRecipe(0).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
+        system.getRecipe(0).addCategory(system.getCategory(1));
+        system.getRecipe(0).addRecipeType(system.getRecipeType(2));
+        system.getRecipe(0).setRating(3);
+
+        system.addRecipe("Pasta", "There needs to be something here..", 7.2, "", 234, 99838, system.getIngredient(3));
+        system.getRecipe(1).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
+        system.getRecipe(1).addCategory(system.getCategory(0));
+        system.getRecipe(1).addRecipeType(system.getRecipeType(3));
+        system.getRecipe(1).setRating(43/5);
+
+        system.addRecipe("Cake", "There needs to be something here..", 33.4, "", 1234, 77, system.getIngredient(1));
+        system.getRecipe(2).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
+        system.getRecipe(2).addCategory(system.getCategory(0));
+        system.getRecipe(2).addRecipeType(system.getRecipeType(2));
+        system.getRecipe(2).setRating(1);
         //
         //system.addRecipe("Pasta","khjhkhjkhjkh jkhjkhjkhkjhhkj hjkhkjkh", 40.2, "");
         //system.addRecipe("Pizza","khjhkhldskjf sdkjfljsd fsldkmksdklffsdlf dkhkjkh", 90909.2, "");
@@ -85,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 searchHome();
             }
         });
-
         searchADV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +104,28 @@ public class MainActivity extends AppCompatActivity {
         //search();
         helpButton();
         recipeSelect();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Instead ERROR trap the Search Activity
+        //Toast.makeText(getApplicationContext(), "And... WE'RE BACK", Toast.LENGTH_LONG).show();
+        Button search = (Button) findViewById(R.id.searchButton);
+        Button searchADV = (Button) findViewById(R.id.advancedSearchButton);
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchHome();
+            }
+        });
+        searchADV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                advSearchHome();
+            }
+        });
     }
 
     @Override
@@ -195,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent recipeView = new Intent(getApplicationContext(), ViewRecipeActivity.class);
                 recipeView.putExtra("recipe_id", 0);
                 startActivity(recipeView);
+                finish();
             }
         });
     }
@@ -206,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         Intent goSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
         goSearch.putExtra("type", type.getSelectedItem().toString());
-        goSearch.putExtra("query", query.getText());
+        goSearch.putExtra("query", query.getText() + "");
         startActivity(goSearch);
     }
 
@@ -221,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         Intent goAdvSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
         goAdvSearch.putExtra("queryCategory", queryCategory.getText() + "" + toggleCategory.getText());
-        goAdvSearch.putExtra("queryIngredient", queryIngredient.getText());
+        goAdvSearch.putExtra("queryIngredient", queryIngredient.getText() + "");
         goAdvSearch.putExtra("queryType", queryType.getText() + "" + toggleType.getText());
         startActivity(goAdvSearch);
     }

@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -39,29 +40,86 @@ public class SearchActivity extends AppCompatActivity {
 
         system = system.getInstance();
 
+        Button search = (Button) findViewById(R.id.searchButton);
+        Button searchADV = (Button) findViewById(R.id.advancedSearchButton);
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
+        searchADV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                advSearch();
+            }
+        });
         // Get ListView object from xml layout
         ListView listView = (ListView) findViewById(R.id.recipeList);
         //Defining Array values to show in ListView
 //        String[] values = new String[] {
 //                "Spaghetti","Lasagna","Meatballs","Pasta Sauce","Raviolli","Cheese Sauce","Item 07","Item 08"
 //        };
-        String[] values = new String[system.numberOfHasA()];
-        recipe_id = new Integer[system.numberOfHasA()];
-        String[] tagline = new String[system.numberOfHasA()];
         //Converting Array to ArrayList
-        final List<Recipe> list = system.getRecipes();
+        List<Recipe> list = system.getRecipes();
+        int dx;
+        Intent intent = getIntent();
 
-        Intent i = getIntent();
-        if(i.hasExtra("type")) {
-            String type = i.getStringExtra("type");
-            String queryBasic = i.getStringExtra("query");
-            if (queryBasic.contains(",") || queryBasic.contains(";") || queryBasic.contains("!") ) {
+        if (intent.hasExtra("query") && !intent.getStringExtra("query").isEmpty()) {
+            Toast.makeText(getApplicationContext(), intent.getStringExtra("query"), Toast.LENGTH_LONG).show();
+            String type = intent.getStringExtra("type");
+            String queryBasic = intent.getStringExtra("query");
+            switch(type){
+                case "By Type":
+                    dx = system.findRecipeType(queryBasic);
+                    if (dx == -1) {
+                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        list = system.getRecipeType(dx).getHasA();
+                    }
+                    break;
 
-            } else {
-                system.in
+                case "By Category":
+                    dx = system.findCategory(queryBasic);
+                    if (dx == -1) {
+                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        list = system.getCategory(dx).getHasA();
+                    }
+                    break;
+
+                case "By Ingredient":
+                    dx = system.findIngredient(queryBasic);
+                    if (dx == -1) {
+                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        list = system.getIngredient(dx).getRecipes();
+                    }
+                    break;
+
+                default:
+                    dx = system.findCategory(queryBasic);
+                    if (dx == -1) {
+                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        list = system.getCategory(dx).getHasA();
+                    }
+                    break;
             }
+        } else if (false){
+
+        } else {
+            list = system.getRecipes();
         }
+
+        String[] values = new String[list.size()];
+        recipe_id = new Integer[list.size()];
+        String[] tagline = new String[list.size()];
 
         for (int i = 0; i < values.length; ++i) {
             values[i] = list.get(i).getTitle();
@@ -80,7 +138,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 viewRecipe.putExtra("recipe_id" , recipe_id[position]);
                 startActivity(viewRecipe);
-
+                finish();
             }
         });
 
@@ -143,18 +201,19 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    public void search(View v) {
+    public void search() {
         EditText query = (EditText) findViewById(R.id.searchBox);
         Spinner type = (Spinner) findViewById(R.id.searchType);
 
         Intent goSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
         goSearch.putExtra("type", type.getSelectedItem().toString());
-        goSearch.putExtra("query", query.getText());
+        goSearch.putExtra("query", query.getText()+ "");
         startActivity(goSearch);
+        finish();
     }
 
-    public void advSearch(View v) {
+    public void advSearch() {
         EditText queryCategory = (EditText) findViewById(R.id.categoryQuery);
         EditText queryIngredient = (EditText) findViewById(R.id.ingredientQuery);
         EditText queryType = (EditText) findViewById(R.id.typeQuery);
@@ -165,9 +224,10 @@ public class SearchActivity extends AppCompatActivity {
         Intent goAdvSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
         goAdvSearch.putExtra("queryCategory", queryCategory.getText() + "" + toggleCategory.getText());
-        goAdvSearch.putExtra("queryIngredient", queryIngredient.getText());
+        goAdvSearch.putExtra("queryIngredient", queryIngredient.getText() + "");
         goAdvSearch.putExtra("queryType", queryType.getText() + "" + toggleType.getText());
         startActivity(goAdvSearch);
+        finish();
     }
 
     public void addRecipe(){
@@ -178,6 +238,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view){
                 Intent addRecipe = new Intent(SearchActivity.this, EditRecipeActivity.class);
                 startActivity(addRecipe);
+                finish();
             }
         });
 

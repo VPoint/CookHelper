@@ -310,9 +310,9 @@
             recipeSystem = aRecipeSystem;
             if (existingRecipeSystem != null && !existingRecipeSystem.equals(aRecipeSystem))
             {
-                existingRecipeSystem.removeHasA(this);
+                existingRecipeSystem.removeRecipe(this);
             }
-            recipeSystem.addHasA(this);
+            recipeSystem.addRecipe(this);
             wasSet = true;
             return wasSet;
         }
@@ -711,7 +711,7 @@
         {
             RecipeSystem placeholderRecipeSystem = recipeSystem;
             this.recipeSystem = null;
-            placeholderRecipeSystem.removeHasA(this);
+            placeholderRecipeSystem.removeRecipe(this);
             while (recipeSteps.size() > 0)
             {
                 RecipeStep aRecipeStep = recipeSteps.get(recipeSteps.size() - 1);

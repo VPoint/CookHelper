@@ -2,8 +2,6 @@ package com.seg2105a.esther.cookhelper;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +12,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 /**
  * Created by Esther on 2016-11-29.
@@ -38,12 +35,11 @@ public class ViewRecipeActivity extends AppCompatActivity {
         Intent i = getIntent();
         if(i.hasExtra("recipe_id")) {
             int index = i.getIntExtra("recipe_id", 0);
-            System.out.println(index + "was carried over");
-            recipe = system.getHasA(index);
+            recipe = system.getRecipe(index);
             recipe.setRecipeSystem(system);
             populateInfo(recipe);
         }
-        //populateInfo(system.getHasA(0));
+        //populateInfo(system.getRecipe(0));
         playRecipeStep();
         editRecipe();
         deleteRecipe();
@@ -116,7 +112,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent recipeStep = new Intent(ViewRecipeActivity.this, RecipeStepActivity.class);
-                recipeStep.putExtra("recipe_id", system.indexOfHasA(recipe));
+                recipeStep.putExtra("recipe_id", system.indexOfRecipe(recipe));
                 startActivity(recipeStep);
             }
         });
@@ -130,8 +126,9 @@ public class ViewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent editRecipe = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
-                editRecipe.putExtra("recipe_id", system.indexOfHasA(recipe));
+                editRecipe.putExtra("recipe_id", system.indexOfRecipe(recipe));
                 startActivityForResult(editRecipe, 100);
+                finish();
             }
         });
     }
@@ -152,8 +149,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //delete Recipe
-                system.removeHasA(recipe);
-                recipe.delete();
+                system.removeRecipe(recipe);
+                Toast.makeText(getApplicationContext(), "Your recipe has been safely deleted.", Toast.LENGTH_LONG).show();
                 finish();
             }
         });

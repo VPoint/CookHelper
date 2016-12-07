@@ -94,6 +94,7 @@ public class EditAttributeActivity extends AppCompatActivity {
                 goSearch.putExtra("type", type);
                 goSearch.putExtra("query", item);
                 startActivity(goSearch);
+                finish();
 
             }
         });
