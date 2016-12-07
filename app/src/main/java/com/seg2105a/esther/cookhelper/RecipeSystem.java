@@ -2,6 +2,8 @@
 /*This code was generated using the UMPLE 1.24.0-abedcd4 modeling language!*/
 package com.seg2105a.esther.cookhelper;
 
+import android.widget.Toast;
+
 import java.util.*;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
@@ -497,19 +499,13 @@ public class RecipeSystem
     }
   }
 
-  // line 9 "model.ump"
-  private String parseQuery(){
-    return "";
-  }
-
-  // line 13 "model.ump"
-  private Recipe fetchRecipe(){
-    return new Recipe("", "",0 , "", 0,0,this, null);
-  }
-
-  // line 17 "model.ump"
-  private void sendToDatabase(){
-
+  private String[] parseQuery(String str){
+      // seperates the query inputted by the user into parsable parts
+      // if AND, OR and NOT are written out, it is treated differently from the symbols
+      str = str.toUpperCase();
+      str = str.replace(",", " AND ").replace(";", " OR ").replace("!", " NOT ");
+      str = str.replace("(", "").replace(")", "");
+      return str.split(" ");
   }
 
   public int findIngredient(String n){
@@ -519,7 +515,7 @@ public class RecipeSystem
     List<Ingredient> in = getIngredients();
     int ingr;
     for ( ingr = 0; ingr < in.size(); ingr++){
-      if(in.get(ingr).getName().contains(n.toLowerCase())){
+      if(in.get(ingr).getName().equals(n.toLowerCase().trim())){
         return ingr;
       }
     }
@@ -533,7 +529,7 @@ public class RecipeSystem
     List<RecipeType> in = getRecipeTypes();
     int ingr;
     for ( ingr = 0; ingr < in.size(); ingr++){
-      if(in.get(ingr).getName().contains(n.toLowerCase())){
+      if(in.get(ingr).getName().equals(n.toLowerCase().trim())){
         return ingr;
       }
     }
@@ -547,25 +543,139 @@ public class RecipeSystem
     List<Category> in = getCategories();
     int ingr;
     for ( ingr = 0; ingr < in.size(); ingr++){
-      if(in.get(ingr).getName().contains(n.toLowerCase())){
+      if(in.get(ingr).getName().equals(n.toLowerCase().trim())){
         return ingr;
       }
     }
     return -1;
   }
 
-  // line 21 "model.ump"
-  private Recipe[] formatFromDatabase(){
-    return new Recipe[2];
+  private List<Recipe> searchItem(String queryBasic, String type){
+      List<Recipe> list = new ArrayList<Recipe>();
+      int dx = -1;
+      switch(type) {
+          case "By Type":
+              dx = findRecipeType(queryBasic);
+              if (dx == -1) {
+                  return new ArrayList<Recipe>();
+              } else {
+                  list = getRecipeType(dx).getHasA();
+              }
+              break;
+
+          case "By Category":
+              dx = findCategory(queryBasic);
+              if (dx == -1) {
+                  return new ArrayList<Recipe>();
+              } else {
+                  list = getCategory(dx).getHasA();
+              }
+              break;
+
+          case "By Ingredient":
+              dx = findIngredient(queryBasic);
+              if (dx == -1) {
+                  return new ArrayList<Recipe>();
+              } else {
+                  list = getIngredient(dx).getRecipes();
+              }
+              break;
+
+          default:
+              dx = findCategory(queryBasic);
+              if (dx == -1) {
+                  return new ArrayList<Recipe>();
+              } else {
+                  list = getCategory(dx).getHasA();
+              }
+              break;
+      }
+
+      return list;
   }
 
-  // line 25 "model.ump"
-  public void search(String query){
+    private List<Recipe> searchType(String[] q, String type){
+        List<Recipe> recipeResult = new ArrayList<Recipe>();
+        if (q.length == 1) {
+            recipeResult = searchItem(q[0], type);
+        } else {
+            int i = 0;
+            while(i < q.length - 1){
+                switch(q[i]){
+                    case "AND":
+                        recipeResult.retainAll(searchItem(q[i + 1],type));
+                        i = i+2;
+                        break;
 
+                    case "OR":
+                        recipeResult.removeAll(searchItem(q[i + 1],type));
+                        recipeResult.addAll(searchItem(q[i + 1],type));
+                        i = i+2;
+                        break;
 
-  }
+                    case "NOT":
+                        if(i == 0) {recipeResult = getRecipes(); }
+                        recipeResult.removeAll(searchItem(q[i + 1],type));
+                        i = i+2;
+                        break;
 
-  // line 28 "model.ump"
+                    default:
+                        recipeResult.addAll(searchItem(q[i],type));
+                        i++;
+                        break;
+                }
+            }
+        }
+        return recipeResult;
+    }
+    public List<Recipe> searchQuery(String queryCategory, String queryType, String queryIngredient){
+        List<Recipe> recipeResult = new ArrayList<Recipe>();
+        String connectors = "";
+        if(queryCategory != null && !queryCategory.isEmpty()){
+             String[] q = parseQuery(queryCategory);
+            recipeResult = searchType(q, "By Category");
+             connectors = q[q.length - 1];
+        }
+
+        if(queryType != null && !queryType.isEmpty()){
+            String[] q = parseQuery(queryType);
+            switch(connectors){
+                case "AND":
+                    recipeResult.retainAll(searchType(q, "By Type"));
+                    break;
+
+                case "OR":
+                    recipeResult.removeAll(searchType(q, "By Type"));
+                    recipeResult.addAll(searchType(q, "By Type"));
+                    break;
+
+                default:
+                    recipeResult = searchType(q, "By Type");
+                    break;
+            }
+            connectors = q[q.length - 1];
+        }
+
+        if(queryIngredient != null && !queryIngredient.isEmpty()){
+            String[] q = parseQuery(queryIngredient);
+            switch(connectors){
+                case "AND":
+                    recipeResult.retainAll(searchType(q, "By Type"));
+                    break;
+
+                case "OR":
+                    recipeResult.removeAll(searchType(q, "By Type"));
+                    recipeResult.addAll(searchType(q, "By Type"));
+                    break;
+
+                default:
+                    recipeResult = searchType(q, "By Type");
+                    break;
+            }
+        }
+        return recipeResult;
+    }
+
   public Recipe[] orderRecipes(Recipe [] rArray){
     return new Recipe[2];
   }

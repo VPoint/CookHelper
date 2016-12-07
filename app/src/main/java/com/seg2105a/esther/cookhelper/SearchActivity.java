@@ -62,15 +62,44 @@ public class SearchActivity extends AppCompatActivity {
 //                "Spaghetti","Lasagna","Meatballs","Pasta Sauce","Raviolli","Cheese Sauce","Item 07","Item 08"
 //        };
         //Converting Array to ArrayList
-        List<Recipe> list = system.getRecipes();
-        int dx;
+        List<Recipe> list;
         Intent intent = getIntent();
 
         if (intent.hasExtra("query") && !intent.getStringExtra("query").isEmpty()) {
             Toast.makeText(getApplicationContext(), intent.getStringExtra("query"), Toast.LENGTH_LONG).show();
             String type = intent.getStringExtra("type");
             String queryBasic = intent.getStringExtra("query");
-            switch(type){
+
+            switch(type) {
+                case "By Type":
+                    list = system.searchQuery(null, queryBasic, null);
+                    if(list.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+
+                case "By Category":
+                    list = system.searchQuery(queryBasic, null, null);
+                    if(list.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+
+                case "By Ingredient":
+                    list = system.searchQuery(null, null, queryBasic);
+                    if(list.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+
+                default:
+                    list = system.searchQuery(null, null, null);
+                    if(list.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+            }
+/*            switch(type){
                 case "By Type":
                     dx = system.findRecipeType(queryBasic);
                     if (dx == -1) {
@@ -110,9 +139,20 @@ public class SearchActivity extends AppCompatActivity {
                         list = system.getCategory(dx).getHasA();
                     }
                     break;
-            }
-        } else if (false){
+            }*/
+        } else if ((intent.hasExtra("queryCategory") && intent.hasExtra("queryIngredient") && intent.hasExtra("queryType")) &&
+                (!intent.getStringExtra("queryCategory").isEmpty() || !intent.getStringExtra("queryIngredient").isEmpty() ||
+                 !intent.getStringExtra("queryType").isEmpty())){
+            String queryCategory = intent.getStringExtra("queryCategory");;
+            String queryType = intent.getStringExtra("queryType");;
+            String queryIngredient = intent.getStringExtra("queryIngredient");;
 
+            Toast.makeText(getApplicationContext(), queryCategory + " : " + queryType + " : " + queryIngredient, Toast.LENGTH_LONG).show();
+
+            list = system.searchQuery(queryCategory, queryType, queryIngredient);
+            if(list.isEmpty()){
+                Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+            }
         } else {
             list = system.getRecipes();
         }
@@ -223,9 +263,9 @@ public class SearchActivity extends AppCompatActivity {
 
         Intent goAdvSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
-        goAdvSearch.putExtra("queryCategory", queryCategory.getText() + "" + toggleCategory.getText());
+        goAdvSearch.putExtra("queryCategory", queryCategory.getText() + " " + toggleCategory.getText());
         goAdvSearch.putExtra("queryIngredient", queryIngredient.getText() + "");
-        goAdvSearch.putExtra("queryType", queryType.getText() + "" + toggleType.getText());
+        goAdvSearch.putExtra("queryType", queryType.getText() + " " + toggleType.getText());
         startActivity(goAdvSearch);
         finish();
     }
