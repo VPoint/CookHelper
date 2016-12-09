@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,11 +58,7 @@ public class SearchActivity extends AppCompatActivity {
         });
         // Get ListView object from xml layout
         ListView listView = (ListView) findViewById(R.id.recipeList);
-        //Defining Array values to show in ListView
-//        String[] values = new String[] {
-//                "Spaghetti","Lasagna","Meatballs","Pasta Sauce","Raviolli","Cheese Sauce","Item 07","Item 08"
-//        };
-        //Converting Array to ArrayList
+
         List<Recipe> list;
         Intent intent = getIntent();
 
@@ -99,47 +96,6 @@ public class SearchActivity extends AppCompatActivity {
                     }
                     break;
             }
-/*            switch(type){
-                case "By Type":
-                    dx = system.findRecipeType(queryBasic);
-                    if (dx == -1) {
-                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        list = system.getRecipeType(dx).getHasA();
-                    }
-                    break;
-
-                case "By Category":
-                    dx = system.findCategory(queryBasic);
-                    if (dx == -1) {
-                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        list = system.getCategory(dx).getHasA();
-                    }
-                    break;
-
-                case "By Ingredient":
-                    dx = system.findIngredient(queryBasic);
-                    if (dx == -1) {
-                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        list = system.getIngredient(dx).getRecipes();
-                    }
-                    break;
-
-                default:
-                    dx = system.findCategory(queryBasic);
-                    if (dx == -1) {
-                        Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        list = system.getCategory(dx).getHasA();
-                    }
-                    break;
-            }*/
         } else if ((intent.hasExtra("queryCategory") && intent.hasExtra("queryIngredient") && intent.hasExtra("queryType")) &&
                 (!intent.getStringExtra("queryCategory").isEmpty() || !intent.getStringExtra("queryIngredient").isEmpty() ||
                  !intent.getStringExtra("queryType").isEmpty())){
@@ -263,6 +219,11 @@ public class SearchActivity extends AppCompatActivity {
 
         Intent goAdvSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
+        if(queryCategory.getText().toString().equals("") && queryIngredient.getText().toString().equals("")
+                && queryType.getText().toString().equals("")){
+            startActivity(goAdvSearch);
+            finish();
+        }
         goAdvSearch.putExtra("queryCategory", queryCategory.getText() + " " + toggleCategory.getText());
         goAdvSearch.putExtra("queryIngredient", queryIngredient.getText() + "");
         goAdvSearch.putExtra("queryType", queryType.getText() + " " + toggleType.getText());

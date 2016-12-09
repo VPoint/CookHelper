@@ -84,6 +84,7 @@ public class EditAttributeActivity extends AppCompatActivity {
         //Create an ArrayAdapter and Set it on the ListView
         ArrayAdapter adapter = new BasicListAdapter(this, values);
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
@@ -100,6 +101,31 @@ public class EditAttributeActivity extends AppCompatActivity {
         });
 
         save();
+    }
+
+    public void delete(String name){
+        // This method deletes an attribute, but was never implemetented due to some problems with the layout
+        switch(type){
+            case "type":
+                system.removeRecipeType(system.getRecipeType(system.findRecipeType(name)));
+                recreate();
+                break;
+
+            case "category":
+                system.removeCategory(system.getCategory(system.findCategory(name)));
+                recreate();
+                break;
+
+            case "ingredient":
+                system.removeIngredient(system.getIngredient(system.findIngredient(name)));
+                recreate();
+                break;
+
+            default:
+                system.removeCategory(system.getCategory(system.findCategory(name)));
+                recreate();
+                break;
+        }
     }
 
     public void save(){

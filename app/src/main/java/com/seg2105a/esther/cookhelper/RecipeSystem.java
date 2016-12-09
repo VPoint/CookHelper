@@ -2,8 +2,6 @@
 /*This code was generated using the UMPLE 1.24.0-abedcd4 modeling language!*/
 package com.seg2105a.esther.cookhelper;
 
-import android.widget.Toast;
-
 import java.util.*;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
@@ -217,8 +215,7 @@ public class RecipeSystem
   {
     boolean wasRemoved = false;
     //Unable to remove aRecipe, as it must always have a recipeSystem
-    if (!this.equals(aRecipe.getRecipeSystem())){}
-    else{
+    if (this.equals(aRecipe.getRecipeSystem())){
       recipes.remove(aRecipe);
       wasRemoved = true;
     }
@@ -272,7 +269,7 @@ public class RecipeSystem
   public boolean addCategory(Category aCategory)
   {
     boolean wasAdded = false;
-    if (categories.contains(aCategory)) { return false; }
+    if (categories.contains(aCategory) || findCategory(aCategory.getName()) > -1) { return false; }
     RecipeSystem existingRecipeSystem = aCategory.getRecipeSystem();
     boolean isNewRecipeSystem = existingRecipeSystem != null && !this.equals(existingRecipeSystem);
     if (isNewRecipeSystem)
@@ -291,7 +288,7 @@ public class RecipeSystem
   {
     boolean wasRemoved = false;
     //Unable to remove aCategory, as it must always have a recipeSystem
-    if (!this.equals(aCategory.getRecipeSystem()))
+    if (this.equals(aCategory.getRecipeSystem()))
     {
       categories.remove(aCategory);
       wasRemoved = true;
@@ -316,7 +313,7 @@ public class RecipeSystem
   public boolean addOrMoveCategoryAt(Category aCategory, int index)
   {
     boolean wasAdded = false;
-    if(categories.contains(aCategory))
+    if(categories.contains(aCategory) || findCategory(aCategory.getName()) > -1)
     {
       if(index < 0 ) { index = 0; }
       if(index > numberOfCategories()) { index = numberOfCategories() - 1; }
@@ -344,7 +341,7 @@ public class RecipeSystem
   public boolean addRecipeType(RecipeType aRecipeType)
   {
     boolean wasAdded = false;
-    if (recipeTypes.contains(aRecipeType)) { return false; }
+    if (recipeTypes.contains(aRecipeType) || findRecipeType(aRecipeType.getName()) > -1) { return false; }
     RecipeSystem existingRecipeSystem = aRecipeType.getRecipeSystem();
     boolean isNewRecipeSystem = existingRecipeSystem != null && !this.equals(existingRecipeSystem);
     if (isNewRecipeSystem)
@@ -363,7 +360,7 @@ public class RecipeSystem
   {
     boolean wasRemoved = false;
     //Unable to remove aRecipeType, as it must always have a recipeSystem
-    if (!this.equals(aRecipeType.getRecipeSystem()))
+    if (this.equals(aRecipeType.getRecipeSystem()))
     {
       recipeTypes.remove(aRecipeType);
       wasRemoved = true;
@@ -388,7 +385,7 @@ public class RecipeSystem
   public boolean addOrMoveRecipeTypeAt(RecipeType aRecipeType, int index)
   {
     boolean wasAdded = false;
-    if(recipeTypes.contains(aRecipeType))
+    if(recipeTypes.contains(aRecipeType) || findRecipeType(aRecipeType.getName()) > -1)
     {
       if(index < 0 ) { index = 0; }
       if(index > numberOfRecipeTypes()) { index = numberOfRecipeTypes() - 1; }
@@ -416,7 +413,7 @@ public class RecipeSystem
   public boolean addIngredient(Ingredient aIngredient)
   {
     boolean wasAdded = false;
-    if (ingredients.contains(aIngredient)) { return false; }
+    if (ingredients.contains(aIngredient) || findIngredient(aIngredient.getName()) > -1) { return false; }
     RecipeSystem existingRecipeSystem = aIngredient.getRecipeSystem();
     boolean isNewRecipeSystem = existingRecipeSystem != null && !this.equals(existingRecipeSystem);
     if (isNewRecipeSystem)
@@ -435,7 +432,7 @@ public class RecipeSystem
   {
     boolean wasRemoved = false;
     //Unable to remove aIngredient, as it must always have a recipeSystem
-    if (!this.equals(aIngredient.getRecipeSystem()))
+    if (this.equals(aIngredient.getRecipeSystem()))
     {
       ingredients.remove(aIngredient);
       wasRemoved = true;
@@ -460,7 +457,7 @@ public class RecipeSystem
   public boolean addOrMoveIngredientAt(Ingredient aIngredient, int index)
   {
     boolean wasAdded = false;
-    if(ingredients.contains(aIngredient))
+    if(ingredients.contains(aIngredient)|| findIngredient(aIngredient.getName()) > -1)
     {
       if(index < 0 ) { index = 0; }
       if(index > numberOfIngredients()) { index = numberOfIngredients() - 1; }
@@ -559,7 +556,7 @@ public class RecipeSystem
               if (dx == -1) {
                   return new ArrayList<Recipe>();
               } else {
-                  list = getRecipeType(dx).getHasA();
+                  list = getRecipeType(dx).getRecipe();
               }
               break;
 
@@ -568,7 +565,7 @@ public class RecipeSystem
               if (dx == -1) {
                   return new ArrayList<Recipe>();
               } else {
-                  list = getCategory(dx).getHasA();
+                  list = getCategory(dx).getRecipe();
               }
               break;
 
@@ -586,7 +583,7 @@ public class RecipeSystem
               if (dx == -1) {
                   return new ArrayList<Recipe>();
               } else {
-                  list = getCategory(dx).getHasA();
+                  list = getCategory(dx).getRecipe();
               }
               break;
       }
@@ -675,11 +672,6 @@ public class RecipeSystem
         }
         return recipeResult;
     }
-
-  public Recipe[] orderRecipes(Recipe [] rArray){
-    return new Recipe[2];
-  }
-
 
   public String toString()
   {

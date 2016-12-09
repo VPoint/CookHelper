@@ -61,7 +61,7 @@
             android:backgroundTint="@color/colorPrimary"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@color/white_text"
-            android:text="Search"
+            android:text="@string/search"
             android:onClick="search (SearchActivity)"/>
 
 

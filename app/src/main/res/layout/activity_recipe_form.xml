@@ -245,36 +245,6 @@
             </GridLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1">
-
-                <TextView
-                    android:text="Add Image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/addImageLabel" />
-
-                <EditText
-                    android:layout_width="163dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/addImageInput"
-                    android:layout_weight="0.38" />
-
-                <Button
-                    android:id="@+id/browseButton"
-                    android:layout_width="68dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:text="Browse"
-                    android:textColor="@color/white_text"
-                    android:textSize="8sp" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

@@ -6,9 +6,6 @@ import java.util.*;
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
 
-
-import java.util.*;
-
 // line 49 "model.ump"
 // line 89 "model.ump"
 public class Category
@@ -22,7 +19,7 @@ public class Category
   private String name;
 
   //Category Associations
-  private List<Recipe> hasA;
+  private List<Recipe> recipe;
   private RecipeSystem recipeSystem;
 
   //------------------------
@@ -31,8 +28,8 @@ public class Category
 
   public Category(String aName, RecipeSystem aRecipeSystem)
   {
-    name = aName;
-    hasA = new ArrayList<Recipe>();
+    name = aName.toLowerCase();
+    recipe = new ArrayList<Recipe>();
     boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
     if (!didAddRecipeSystem)
     {
@@ -47,7 +44,7 @@ public class Category
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    name = aName;
+    name = aName.toLowerCase();
     wasSet = true;
     return wasSet;
   }
@@ -57,33 +54,33 @@ public class Category
     return name;
   }
 
-  public Recipe getHasA(int index)
+  public Recipe getRecipe(int index)
   {
-    Recipe aHasA = hasA.get(index);
-    return aHasA;
+    Recipe aRecipe = recipe.get(index);
+    return aRecipe;
   }
 
-  public List<Recipe> getHasA()
+  public List<Recipe> getRecipe()
   {
-    List<Recipe> newHasA = Collections.unmodifiableList(hasA);
-    return newHasA;
+    List<Recipe> newRecipe = Collections.unmodifiableList(recipe);
+    return newRecipe;
   }
 
-  public int numberOfHasA()
+  public int numberOfRecipe()
   {
-    int number = hasA.size();
+    int number = recipe.size();
     return number;
   }
 
-  public boolean hasHasA()
+  public boolean hasRecipe()
   {
-    boolean has = hasA.size() > 0;
+    boolean has = recipe.size() > 0;
     return has;
   }
 
-  public int indexOfHasA(Recipe aHasA)
+  public int indexOfRecipe(Recipe aRecipe)
   {
-    int index = hasA.indexOf(aHasA);
+    int index = recipe.indexOf(aRecipe);
     return index;
   }
 
@@ -92,84 +89,84 @@ public class Category
     return recipeSystem;
   }
 
-  public static int minimumNumberOfHasA()
+  public static int minimumNumberOfRecipe()
   {
     return 0;
   }
 
-  public boolean addHasA(Recipe aHasA)
+  public boolean addRecipe(Recipe aRecipe)
   {
     boolean wasAdded = false;
-    if (hasA.contains(aHasA)) { return false; }
-    hasA.add(aHasA);
-    if (aHasA.indexOfCategory(this) != -1)
+    if (recipe.contains(aRecipe)) { return false; }
+    recipe.add(aRecipe);
+    if (aRecipe.indexOfCategory(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aHasA.addCategory(this);
+      wasAdded = aRecipe.addCategory(this);
       if (!wasAdded)
       {
-        hasA.remove(aHasA);
+        recipe.remove(aRecipe);
       }
     }
     return wasAdded;
   }
 
-  public boolean removeHasA(Recipe aHasA)
+  public boolean removeRecipe(Recipe aRecipe)
   {
     boolean wasRemoved = false;
-    if (!hasA.contains(aHasA))
+    if (!recipe.contains(aRecipe))
     {
       return wasRemoved;
     }
 
-    int oldIndex = hasA.indexOf(aHasA);
-    hasA.remove(oldIndex);
-    if (aHasA.indexOfCategory(this) == -1)
+    int oldIndex = recipe.indexOf(aRecipe);
+    recipe.remove(oldIndex);
+    if (aRecipe.indexOfCategory(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aHasA.removeCategory(this);
+      wasRemoved = aRecipe.removeCategory(this);
       if (!wasRemoved)
       {
-        hasA.add(oldIndex,aHasA);
+        recipe.add(oldIndex,aRecipe);
       }
     }
     return wasRemoved;
   }
 
-  public boolean addHasAAt(Recipe aHasA, int index)
+  public boolean addRecipeAt(Recipe aRecipe, int index)
   {
     boolean wasAdded = false;
-    if(addHasA(aHasA))
+    if(addRecipe(aRecipe))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfHasA()) { index = numberOfHasA() - 1; }
-      hasA.remove(aHasA);
-      hasA.add(index, aHasA);
+      if(index > numberOfRecipe()) { index = numberOfRecipe() - 1; }
+      recipe.remove(aRecipe);
+      recipe.add(index, aRecipe);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveHasAAt(Recipe aHasA, int index)
+  public boolean addOrMoveRecipeAt(Recipe aRecipe, int index)
   {
     boolean wasAdded = false;
-    if(hasA.contains(aHasA))
+    if(recipe.contains(aRecipe))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfHasA()) { index = numberOfHasA() - 1; }
-      hasA.remove(aHasA);
-      hasA.add(index, aHasA);
+      if(index > numberOfRecipe()) { index = numberOfRecipe() - 1; }
+      recipe.remove(aRecipe);
+      recipe.add(index, aRecipe);
       wasAdded = true;
     }
     else
     {
-      wasAdded = addHasAAt(aHasA, index);
+      wasAdded = addRecipeAt(aRecipe, index);
     }
     return wasAdded;
   }
@@ -195,21 +192,15 @@ public class Category
 
   public void delete()
   {
-    ArrayList<Recipe> copyOfHasA = new ArrayList<Recipe>(hasA);
-    hasA.clear();
-    for(Recipe aHasA : copyOfHasA)
+    ArrayList<Recipe> copyOfRecipe = new ArrayList<Recipe>(recipe);
+    recipe.clear();
+    for(Recipe aRecipe : copyOfRecipe)
     {
-      aHasA.removeCategory(this);
+      aRecipe.removeCategory(this);
     }
     RecipeSystem placeholderRecipeSystem = recipeSystem;
     this.recipeSystem = null;
     placeholderRecipeSystem.removeCategory(this);
-  }
-
-  // line 54 "model.ump"
-  public Recipe[] getAllRecipes(){
-    Recipe[] rArray = new Recipe[7];
-    return rArray;
   }
 
 

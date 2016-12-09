@@ -18,11 +18,6 @@
         <activity android:name=".EditAttributeActivity" />
         <activity android:name=".EditRecipeActivity" />
         <activity android:name=".ViewRecipeActivity" />
-        <activity
-            android:name=".RecipeStepActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_recipe_step"
-            android:theme="@style/FullscreenTheme"></activity>
 
     </application>
 

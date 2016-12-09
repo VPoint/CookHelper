@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by Esther on 2016-11-29.
  */
@@ -58,7 +60,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         category.setText("" + r.getCategory(0).getName());
         calories.setText("" + r.getCalories());
         rating.setRating(r.getRating());
-        ingred.setText("" + r.getUsedIn(0).getName());
+        ingred.setText("" + r.getIngredient(0).getName());
         recStep.setText("" + r.getRecipeStep(0).getDescription());
     }
 
@@ -74,14 +76,31 @@ public class EditRecipeActivity extends AppCompatActivity {
         EditText recStep = (EditText) findViewById(R.id.addRecipeStepInput);
         RatingBar rating = (RatingBar) findViewById(R.id.addRating);
 
-        //Recipe(aTitle,aDescription, double aCookingTime, aImage, int aServing, int aCalories, RecipeSystem aRecipeSystem, Ingredient... allUsedIn
+        //Recipe(aTitle,aDescription, double aCookingTime, aImage, int aServing, int aCalories, RecipeSystem aRecipeSystem, Ingredient... allIngredient
+        String[] ingredients = ingred.getText().toString().split(",");
+        String[] recipeSteps = recStep.getText().toString().split(",");
+
         Recipe temp = new Recipe(title.getText()+"", desc.getText()+"", Double.parseDouble(cooking.getText()+""), "",
-                Integer.parseInt(serving.getText() + ""), Integer.parseInt(calories.getText() + ""), system, new Ingredient(ingred.getText()+"", system));
+                Integer.parseInt(serving.getText() + ""), Integer.parseInt(calories.getText() + ""), system,new Ingredient(ingredients[0], system));
         temp.addCategory(new Category(category.getText()+"", system));
         temp.addRecipeType(new RecipeType(type.getText()+"", system));
         //temp.addRecipeStep(0);
         temp.setRating(rating.getRating());
+
+        int inc = 1;
+        while(inc < ingredients.length){
+            temp.addIngredient(new Ingredient(ingredients[inc].trim(), system));
+            inc++;
+        }
+
+        int incr = 0;
+        while(incr < ingredients.length){
+            temp.addRecipeStep(incr, recipeSteps[incr], 8, false);
+            inc++;
+        }
+
         temp.addRecipeStep(0, recStep.getText()+"",10, false);
+
         temp.setId(system.indexOfRecipe(temp));
         return temp;
     }
@@ -100,10 +119,9 @@ public class EditRecipeActivity extends AppCompatActivity {
                     recipe = retrieveRecipeInfo();
                     system.addRecipe(recipe);
                 }
-
+                Toast.makeText(getApplicationContext(), "Your recipe was saved.", Toast.LENGTH_LONG).show();
                 Intent viewRecipe = new Intent(EditRecipeActivity.this, ViewRecipeActivity.class);
                 viewRecipe.putExtra("recipe_id", system.indexOfRecipe(recipe));
-                setResult(100, viewRecipe);
                 startActivity(viewRecipe);
                 finish();
             }

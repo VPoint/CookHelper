@@ -146,13 +146,6 @@ public class RecipeStep
 
   public String toString()
   {
-    String outputString = "";
-    return super.toString() + "["+
-            "number" + ":" + getNumber()+ "," +
-            "description" + ":" + getDescription()+ "," +
-            "timeRequired" + ":" + getTimeRequired()+ "," +
-            "completed" + ":" + getCompleted()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "partOf = "+(getPartOf()!=null?Integer.toHexString(System.identityHashCode(getPartOf())):"null")
-            + outputString;
+    return getNumber()+ " : " + getDescription();
   }
 }

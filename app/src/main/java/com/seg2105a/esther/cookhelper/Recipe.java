@@ -32,13 +32,13 @@
         private List<RecipeStep> recipeSteps;
         private List<Category> categories;
         private List<RecipeType> recipeTypes;
-        private List<Ingredient> usedIn;
+        private List<Ingredient> Ingredient;
 
         //------------------------
         // CONSTRUCTOR
         //------------------------
 
-        public Recipe(String aTitle, String aDescription, double aCookingTime, String aImage, int aServing, int aCalories, RecipeSystem aRecipeSystem, Ingredient... allUsedIn)
+        public Recipe(String aTitle, String aDescription, double aCookingTime, String aImage, int aServing, int aCalories, RecipeSystem aRecipeSystem, Ingredient... allIngredient)
         {
             title = aTitle;
             description = aDescription;
@@ -50,16 +50,16 @@
             boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
             if (!didAddRecipeSystem)
             {
-                throw new RuntimeException("Unable to create hasA due to recipeSystem");
+                throw new RuntimeException("Unable to create Recipe due to recipeSystem");
             }
             recipeSteps = new ArrayList<RecipeStep>();
             categories = new ArrayList<Category>();
             recipeTypes = new ArrayList<RecipeType>();
-            usedIn = new ArrayList<Ingredient>();
-            boolean didAddUsedIn = setUsedIn(allUsedIn);
-            if (!didAddUsedIn)
+            Ingredient = new ArrayList<Ingredient>();
+            boolean didAddIngredient = setIngredient(allIngredient);
+            if (!didAddIngredient)
             {
-                throw new RuntimeException("Unable to create Recipe, must have at least 1 usedIn");
+                throw new RuntimeException("Unable to create Recipe, must have at least 1 Ingredient");
             }
         }
 
@@ -75,7 +75,7 @@
             recipeSteps = new ArrayList<RecipeStep>();
             categories = new ArrayList<Category>();
             recipeTypes = new ArrayList<RecipeType>();
-            usedIn = new ArrayList<Ingredient>();
+            Ingredient = new ArrayList<Ingredient>();
         }
 
         //------------------------
@@ -268,33 +268,33 @@
             return index;
         }
 
-        public Ingredient getUsedIn(int index)
+        public Ingredient getIngredient(int index)
         {
-            Ingredient aUsedIn = usedIn.get(index);
-            return aUsedIn;
+            Ingredient aIngredient = Ingredient.get(index);
+            return aIngredient;
         }
 
-        public List<Ingredient> getUsedIn()
+        public List<Ingredient> getIngredient()
         {
-            List<Ingredient> newUsedIn = Collections.unmodifiableList(usedIn);
-            return newUsedIn;
+            List<Ingredient> newIngredient = Collections.unmodifiableList(Ingredient);
+            return newIngredient;
         }
 
-        public int numberOfUsedIn()
+        public int numberOfIngredient()
         {
-            int number = usedIn.size();
+            int number = Ingredient.size();
             return number;
         }
 
-        public boolean hasUsedIn()
+        public boolean hasIngredient()
         {
-            boolean has = usedIn.size() > 0;
+            boolean has = Ingredient.size() > 0;
             return has;
         }
 
-        public int indexOfUsedIn(Ingredient aUsedIn)
+        public int indexOfIngredient(Ingredient aIngredient)
         {
-            int index = usedIn.indexOf(aUsedIn);
+            int index = Ingredient.indexOf(aIngredient);
             return index;
         }
 
@@ -419,13 +419,13 @@
             boolean wasAdded = false;
             if (categories.contains(aCategory)) { return false; }
             categories.add(aCategory);
-            if (aCategory.indexOfHasA(this) != -1)
+            if (aCategory.indexOfRecipe(this) != -1)
             {
                 wasAdded = true;
             }
             else
             {
-                wasAdded = aCategory.addHasA(this);
+                wasAdded = aCategory.addRecipe(this);
                 if (!wasAdded)
                 {
                     categories.remove(aCategory);
@@ -444,13 +444,13 @@
 
             int oldIndex = categories.indexOf(aCategory);
             categories.remove(oldIndex);
-            if (aCategory.indexOfHasA(this) == -1)
+            if (aCategory.indexOfRecipe(this) == -1)
             {
                 wasRemoved = true;
             }
             else
             {
-                wasRemoved = aCategory.removeHasA(this);
+                wasRemoved = aCategory.removeRecipe(this);
                 if (!wasRemoved)
                 {
                     categories.add(oldIndex,aCategory);
@@ -501,13 +501,13 @@
             boolean wasAdded = false;
             if (recipeTypes.contains(aRecipeType)) { return false; }
             recipeTypes.add(aRecipeType);
-            if (aRecipeType.indexOfHasA(this) != -1)
+            if (aRecipeType.indexOfRecipe(this) != -1)
             {
                 wasAdded = true;
             }
             else
             {
-                wasAdded = aRecipeType.addHasA(this);
+                wasAdded = aRecipeType.addRecipe(this);
                 if (!wasAdded)
                 {
                     recipeTypes.remove(aRecipeType);
@@ -526,13 +526,13 @@
 
             int oldIndex = recipeTypes.indexOf(aRecipeType);
             recipeTypes.remove(oldIndex);
-            if (aRecipeType.indexOfHasA(this) == -1)
+            if (aRecipeType.indexOfRecipe(this) == -1)
             {
                 wasRemoved = true;
             }
             else
             {
-                wasRemoved = aRecipeType.removeHasA(this);
+                wasRemoved = aRecipeType.removeRecipe(this);
                 if (!wasRemoved)
                 {
                     recipeTypes.add(oldIndex,aRecipeType);
@@ -573,136 +573,136 @@
             return wasAdded;
         }
 
-        public boolean isNumberOfUsedInValid()
+        public boolean isNumberOfIngredientValid()
         {
-            boolean isValid = numberOfUsedIn() >= minimumNumberOfUsedIn();
+            boolean isValid = numberOfIngredient() >= minimumNumberOfIngredient();
             return isValid;
         }
 
-        public static int minimumNumberOfUsedIn()
+        public static int minimumNumberOfIngredient()
         {
             return 1;
         }
 
-        public boolean addUsedIn(Ingredient aUsedIn)
+        public boolean addIngredient(Ingredient aIngredient)
         {
             boolean wasAdded = false;
-            if (usedIn.contains(aUsedIn)) { return false; }
-            usedIn.add(aUsedIn);
-            if (aUsedIn.indexOfRecipe(this) != -1)
+            if (Ingredient.contains(aIngredient)) { return false; }
+            Ingredient.add(aIngredient);
+            if (aIngredient.indexOfRecipe(this) != -1)
             {
                 wasAdded = true;
             }
             else
             {
-                wasAdded = aUsedIn.addRecipe(this);
+                wasAdded = aIngredient.addRecipe(this);
                 if (!wasAdded)
                 {
-                    usedIn.remove(aUsedIn);
+                    Ingredient.remove(aIngredient);
                 }
             }
             return wasAdded;
         }
 
-        public boolean removeUsedIn(Ingredient aUsedIn)
+        public boolean removeIngredient(Ingredient aIngredient)
         {
             boolean wasRemoved = false;
-            if (!usedIn.contains(aUsedIn))
+            if (!Ingredient.contains(aIngredient))
             {
                 return wasRemoved;
             }
 
-            if (numberOfUsedIn() <= minimumNumberOfUsedIn())
+            if (numberOfIngredient() <= minimumNumberOfIngredient())
             {
                 return wasRemoved;
             }
 
-            int oldIndex = usedIn.indexOf(aUsedIn);
-            usedIn.remove(oldIndex);
-            if (aUsedIn.indexOfRecipe(this) == -1)
+            int oldIndex = Ingredient.indexOf(aIngredient);
+            Ingredient.remove(oldIndex);
+            if (aIngredient.indexOfRecipe(this) == -1)
             {
                 wasRemoved = true;
             }
             else
             {
-                wasRemoved = aUsedIn.removeRecipe(this);
+                wasRemoved = aIngredient.removeRecipe(this);
                 if (!wasRemoved)
                 {
-                    usedIn.add(oldIndex,aUsedIn);
+                    Ingredient.add(oldIndex,aIngredient);
                 }
             }
             return wasRemoved;
         }
 
-        public boolean setUsedIn(Ingredient... newUsedIn)
+        public boolean setIngredient(Ingredient... newIngredient)
         {
             boolean wasSet = false;
-            ArrayList<Ingredient> verifiedUsedIn = new ArrayList<Ingredient>();
-            for (Ingredient aUsedIn : newUsedIn)
+            ArrayList<Ingredient> verifiedIngredient = new ArrayList<Ingredient>();
+            for (Ingredient aIngredient : newIngredient)
             {
-                if (verifiedUsedIn.contains(aUsedIn))
+                if (verifiedIngredient.contains(aIngredient))
                 {
                     continue;
                 }
-                verifiedUsedIn.add(aUsedIn);
+                verifiedIngredient.add(aIngredient);
             }
 
-            if (verifiedUsedIn.size() != newUsedIn.length || verifiedUsedIn.size() < minimumNumberOfUsedIn())
+            if (verifiedIngredient.size() != newIngredient.length || verifiedIngredient.size() < minimumNumberOfIngredient())
             {
                 return wasSet;
             }
 
-            ArrayList<Ingredient> oldUsedIn = new ArrayList<Ingredient>(usedIn);
-            usedIn.clear();
-            for (Ingredient aNewUsedIn : verifiedUsedIn)
+            ArrayList<Ingredient> oldIngredient = new ArrayList<Ingredient>(Ingredient);
+            Ingredient.clear();
+            for (Ingredient aNewIngredient : verifiedIngredient)
             {
-                usedIn.add(aNewUsedIn);
-                if (oldUsedIn.contains(aNewUsedIn))
+                Ingredient.add(aNewIngredient);
+                if (oldIngredient.contains(aNewIngredient))
                 {
-                    oldUsedIn.remove(aNewUsedIn);
+                    oldIngredient.remove(aNewIngredient);
                 }
                 else
                 {
-                    aNewUsedIn.addRecipe(this);
+                    aNewIngredient.addRecipe(this);
                 }
             }
 
-            for (Ingredient anOldUsedIn : oldUsedIn)
+            for (Ingredient anOldIngredient : oldIngredient)
             {
-                anOldUsedIn.removeRecipe(this);
+                anOldIngredient.removeRecipe(this);
             }
             wasSet = true;
             return wasSet;
         }
 
-        public boolean addUsedInAt(Ingredient aUsedIn, int index)
+        public boolean addIngredientAt(Ingredient aIngredient, int index)
         {
             boolean wasAdded = false;
-            if(addUsedIn(aUsedIn))
+            if(addIngredient(aIngredient))
             {
                 if(index < 0 ) { index = 0; }
-                if(index > numberOfUsedIn()) { index = numberOfUsedIn() - 1; }
-                usedIn.remove(aUsedIn);
-                usedIn.add(index, aUsedIn);
+                if(index > numberOfIngredient()) { index = numberOfIngredient() - 1; }
+                Ingredient.remove(aIngredient);
+                Ingredient.add(index, aIngredient);
                 wasAdded = true;
             }
             return wasAdded;
         }
 
-        public boolean addOrMoveUsedInAt(Ingredient aUsedIn, int index)
+        public boolean addOrMoveIngredientAt(Ingredient aIngredient, int index)
         {
             boolean wasAdded = false;
-            if(usedIn.contains(aUsedIn))
+            if(Ingredient.contains(aIngredient))
             {
                 if(index < 0 ) { index = 0; }
-                if(index > numberOfUsedIn()) { index = numberOfUsedIn() - 1; }
-                usedIn.remove(aUsedIn);
-                usedIn.add(index, aUsedIn);
+                if(index > numberOfIngredient()) { index = numberOfIngredient() - 1; }
+                Ingredient.remove(aIngredient);
+                Ingredient.add(index, aIngredient);
                 wasAdded = true;
             }
             else
             {
-                wasAdded = addUsedInAt(aUsedIn, index);
+                wasAdded = addIngredientAt(aIngredient, index);
             }
             return wasAdded;
         }
@@ -723,19 +723,19 @@
             categories.clear();
             for(Category aCategory : copyOfCategories)
             {
-                aCategory.removeHasA(this);
+                aCategory.removeRecipe(this);
             }
             ArrayList<RecipeType> copyOfRecipeTypes = new ArrayList<RecipeType>(recipeTypes);
             recipeTypes.clear();
             for(RecipeType aRecipeType : copyOfRecipeTypes)
             {
-                aRecipeType.removeHasA(this);
+                aRecipeType.removeRecipe(this);
             }
-            ArrayList<Ingredient> copyOfUsedIn = new ArrayList<Ingredient>(usedIn);
-            usedIn.clear();
-            for(Ingredient aUsedIn : copyOfUsedIn)
+            ArrayList<Ingredient> copyOfIngredient = new ArrayList<Ingredient>(Ingredient);
+            Ingredient.clear();
+            for(Ingredient aIngredient : copyOfIngredient)
             {
-                aUsedIn.removeRecipe(this);
+                aIngredient.removeRecipe(this);
             }
         }
 

@@ -14,6 +14,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by Esther on 2016-11-29.
  */
@@ -39,8 +43,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
             recipe.setRecipeSystem(system);
             populateInfo(recipe);
         }
-        //populateInfo(system.getRecipe(0));
-        playRecipeStep();
+
         editRecipe();
         deleteRecipe();
     }
@@ -89,6 +92,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
         TextView type = (TextView) findViewById(R.id.recipeType);
         TextView category = (TextView) findViewById(R.id.recipeCategory);
         TextView cookTime = (TextView) findViewById(R.id.recipeCookingTime);
+        TextView serving = (TextView) findViewById(R.id.recipeServing);
+        TextView description = (TextView) findViewById(R.id.descriptionContent);
         TextView ingrContent = (TextView) findViewById(R.id.ingredientContent);
         TextView recipeStep = (TextView) findViewById(R.id.recipeStepContent);
         RatingBar rating = (RatingBar) findViewById(R.id.recipeRatingBar);
@@ -99,23 +104,24 @@ public class ViewRecipeActivity extends AppCompatActivity {
         type.setText("Type: " + r.getRecipeType(0).getName());
         category.setText("Category: " +r.getCategory(0).getName());
         cookTime.setText("Time Needed: " + r.getCookingTime() + " min");
-        ingrContent.setText("" + r.getUsedIn().toString());
-        recipeStep.setText("" + r.getRecipeSteps().toString());
+        serving.setText("Serves: " + r.getServing());
+        description.setText(r.getDescription());
+
+        ingrContent.setText(displayList(r.getIngredient()));
+        recipeStep.setText(displayList(r.getRecipeSteps()));
         rating.setRating(r.getRating());
     }
 
-    public void playRecipeStep(){
-        //goes to the RecipeStep
-        FloatingActionButton playButton = (FloatingActionButton) findViewById(R.id.playButton);
-        playButton.setOnClickListener(new View.OnClickListener(){
+    private String displayList(List l){
+        int inc = 0;
+        String output = "";
 
-            @Override
-            public void onClick(View view){
-                Intent recipeStep = new Intent(ViewRecipeActivity.this, RecipeStepActivity.class);
-                recipeStep.putExtra("recipe_id", system.indexOfRecipe(recipe));
-                startActivity(recipeStep);
-            }
-        });
+        while(inc < l.size()){
+            output += l.get(inc).toString()+ "\n";
+            inc++;
+        }
+
+        return output;
     }
 
     public void editRecipe(){
@@ -131,13 +137,6 @@ public class ViewRecipeActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    protected void onActivityResult( int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 100){
-            recreate();
-        }
     }
 
     public void deleteRecipe(){

@@ -58,7 +58,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="161dp"
                     android:layout_marginStart="161dp"
-                    android:layout_marginTop="85dp" />
+                    android:layout_marginTop="85dp"
+                    android:visibility="invisible" />
 
                 <GridLayout
                     android:layout_width="match_parent"
@@ -113,6 +114,12 @@
                         android:layout_column="2" />
 
                     <TextView
+                        android:text="Serves: __________"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/recipeServing" />
+
+                    <TextView
                         android:text="Type : ____________"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -151,6 +158,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="21dp"
                     android:layout_marginEnd="21dp" />
+
             </RelativeLayout>
 
             <LinearLayout
@@ -167,55 +175,56 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:layout_weight="0.06">
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <TextView
+                    android:text="Description:"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
+                    android:id="@+id/descriptionLabel" />
 
-                    <TextView
-                        android:text="Ingredients:"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/ingredientLabel"
-                        android:layout_below="@+id/recipeType"
-                        android:layout_alignLeft="@+id/recipeType"
-                        android:layout_alignStart="@+id/recipeType" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/descriptionContent" />
 
-                    <TextView
-                        android:text=".........................."
-                        android:layout_width="match_parent"
-                        android:layout_height="72dp"
-                        android:layout_below="@+id/recipeStepLabel"
-                        android:layout_alignLeft="@+id/recipeStepLabel"
-                        android:layout_alignStart="@+id/recipeStepLabel"
-                        android:id="@+id/ingredientContent"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                <TextView
+                    android:text="Ingredients:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ingredientLabel"
+                    android:layout_below="@+id/recipeType"
+                    android:layout_alignLeft="@+id/recipeType"
+                    android:layout_alignStart="@+id/recipeType" />
 
-                    <TextView
-                        android:text="Recipe Steps"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/recipeStepLabel"
-                        android:layout_below="@+id/ingredientLabel"
-                        android:layout_alignLeft="@+id/ingredientLabel"
-                        android:layout_alignStart="@+id/ingredientLabel"/>
+                <TextView
+                    android:text=".........................."
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_below="@+id/recipeStepLabel"
+                    android:layout_alignLeft="@+id/recipeStepLabel"
+                    android:layout_alignStart="@+id/recipeStepLabel"
+                    android:id="@+id/ingredientContent"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
 
-                    <TextView
-                        android:text="................"
-                        android:layout_width="match_parent"
-                        android:layout_height="98dp"
-                        android:layout_below="@+id/ingredientLabel"
-                        android:layout_alignLeft="@+id/ingredientLabel"
-                        android:layout_alignStart="@+id/ingredientLabel"
-                        android:id="@+id/recipeStepContent"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                <TextView
+                    android:text="Recipe Steps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recipeStepLabel"
+                    android:layout_below="@+id/ingredientLabel"
+                    android:layout_alignLeft="@+id/ingredientLabel"
+                    android:layout_alignStart="@+id/ingredientLabel"/>
 
-                </LinearLayout>
+                <TextView
+                    android:text="................"
+                    android:layout_width="match_parent"
+                    android:layout_height="98dp"
+                    android:layout_below="@+id/ingredientLabel"
+                    android:layout_alignLeft="@+id/ingredientLabel"
+                    android:layout_alignStart="@+id/ingredientLabel"
+                    android:id="@+id/recipeStepContent"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
 
                 <RatingBar
                     android:layout_width="wrap_content"

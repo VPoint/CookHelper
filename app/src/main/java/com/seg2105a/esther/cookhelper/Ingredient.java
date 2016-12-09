@@ -31,7 +31,7 @@ public class Ingredient
 
   public Ingredient(String aName, RecipeSystem aRecipeSystem)
   {
-    name = aName;
+    name = aName.toLowerCase();
     boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
     if (!didAddRecipeSystem)
     {
@@ -47,7 +47,7 @@ public class Ingredient
   public boolean setName(String aName)
   {
     boolean wasSet = false;
-    name = aName;
+    name = aName.toLowerCase();
     wasSet = true;
     return wasSet;
   }
@@ -121,13 +121,13 @@ public class Ingredient
     boolean wasAdded = false;
     if (recipes.contains(aRecipe)) { return false; }
     recipes.add(aRecipe);
-    if (aRecipe.indexOfUsedIn(this) != -1)
+    if (aRecipe.indexOfIngredient(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aRecipe.addUsedIn(this);
+      wasAdded = aRecipe.addIngredient(this);
       if (!wasAdded)
       {
         recipes.remove(aRecipe);
@@ -146,13 +146,13 @@ public class Ingredient
 
     int oldIndex = recipes.indexOf(aRecipe);
     recipes.remove(oldIndex);
-    if (aRecipe.indexOfUsedIn(this) == -1)
+    if (aRecipe.indexOfIngredient(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aRecipe.removeUsedIn(this);
+      wasRemoved = aRecipe.removeIngredient(this);
       if (!wasRemoved)
       {
         recipes.add(oldIndex,aRecipe);
@@ -202,22 +202,16 @@ public class Ingredient
     recipes.clear();
     for(Recipe aRecipe : copyOfRecipes)
     {
-      if (aRecipe.numberOfUsedIn() <= Recipe.minimumNumberOfUsedIn())
+      if (aRecipe.numberOfIngredient() <= Recipe.minimumNumberOfIngredient())
       {
         aRecipe.delete();
       }
       else
       {
-        aRecipe.removeUsedIn(this);
+        aRecipe.removeIngredient(this);
       }
     }
   }
-
-  // line 70 "model.ump"
-  public Recipe[] getAllRecipes(){
-    return new Recipe[0];
-  }
-
 
   public String toString()
   {
