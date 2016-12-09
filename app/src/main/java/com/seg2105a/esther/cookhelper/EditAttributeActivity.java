@@ -92,7 +92,7 @@ public class EditAttributeActivity extends AppCompatActivity {
                 //Do something with the string that you just got!
                 Intent goSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
-                goSearch.putExtra("type", type);
+                goSearch.putExtra("type", "By " + type.toUpperCase().charAt(0) + type.substring(1));
                 goSearch.putExtra("query", item);
                 startActivity(goSearch);
                 finish();

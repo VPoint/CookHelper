@@ -63,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.hasExtra("query") && !intent.getStringExtra("query").isEmpty()) {
-            Toast.makeText(getApplicationContext(), intent.getStringExtra("query"), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), intent.getStringExtra("query"), Toast.LENGTH_LONG).show();
             String type = intent.getStringExtra("type");
             String queryBasic = intent.getStringExtra("query");
 
@@ -72,6 +72,7 @@ public class SearchActivity extends AppCompatActivity {
                     list = system.searchQuery(null, queryBasic, null);
                     if(list.isEmpty()){
                         Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                     break;
 
@@ -79,6 +80,7 @@ public class SearchActivity extends AppCompatActivity {
                     list = system.searchQuery(queryBasic, null, null);
                     if(list.isEmpty()){
                         Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                     break;
 
@@ -86,6 +88,7 @@ public class SearchActivity extends AppCompatActivity {
                     list = system.searchQuery(null, null, queryBasic);
                     if(list.isEmpty()){
                         Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                     break;
 
@@ -93,6 +96,7 @@ public class SearchActivity extends AppCompatActivity {
                     list = system.searchQuery(null, null, null);
                     if(list.isEmpty()){
                         Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                        finish();
                     }
                     break;
             }
@@ -103,11 +107,15 @@ public class SearchActivity extends AppCompatActivity {
             String queryType = intent.getStringExtra("queryType");;
             String queryIngredient = intent.getStringExtra("queryIngredient");;
 
-            Toast.makeText(getApplicationContext(), queryCategory + " : " + queryType + " : " + queryIngredient, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), queryCategory + " : " + queryType + " : " + queryIngredient, Toast.LENGTH_LONG).show();
 
             list = system.searchQuery(queryCategory, queryType, queryIngredient);
-            if(list.isEmpty()){
+            if(list.isEmpty() && !queryCategory.equals(" AND") && !queryCategory.equals(" OR")
+                    && !queryType.equals(" AND") && !queryType.equals(" OR")){
                 Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
+                finish();
+            } else if(list.isEmpty()){
+                list = system.getRecipes();
             }
         } else {
             list = system.getRecipes();
@@ -219,11 +227,6 @@ public class SearchActivity extends AppCompatActivity {
 
         Intent goAdvSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
-        if(queryCategory.getText().toString().equals("") && queryIngredient.getText().toString().equals("")
-                && queryType.getText().toString().equals("")){
-            startActivity(goAdvSearch);
-            finish();
-        }
         goAdvSearch.putExtra("queryCategory", queryCategory.getText() + " " + toggleCategory.getText());
         goAdvSearch.putExtra("queryIngredient", queryIngredient.getText() + "");
         goAdvSearch.putExtra("queryType", queryType.getText() + " " + toggleType.getText());

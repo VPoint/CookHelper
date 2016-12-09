@@ -594,6 +594,9 @@ public class RecipeSystem
     private List<Recipe> searchType(String[] q, String type){
         List<Recipe> recipeResult = new ArrayList<Recipe>();
         if (q.length == 1) {
+          if(q[0] == "AND" || q[0] == "OR" || q[0] == "NOT"){
+            return recipeResult;
+          }
             recipeResult = searchItem(q[0], type);
         } else {
             int i = 0;

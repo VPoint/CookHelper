@@ -35,7 +35,6 @@ public class EditRecipeActivity extends AppCompatActivity {
             populateInfo(recipe);
         }
 
-        browseImages();
         cancel();
         save();
     }
@@ -94,12 +93,10 @@ public class EditRecipeActivity extends AppCompatActivity {
         }
 
         int incr = 0;
-        while(incr < ingredients.length){
+        while(incr < recipeSteps.length){
             temp.addRecipeStep(incr, recipeSteps[incr], 8, false);
-            inc++;
+            incr++;
         }
-
-        temp.addRecipeStep(0, recStep.getText()+"",10, false);
 
         temp.setId(system.indexOfRecipe(temp));
         return temp;
@@ -137,20 +134,6 @@ public class EditRecipeActivity extends AppCompatActivity {
                 Intent goHome = new Intent(EditRecipeActivity.this, MainActivity.class);
                 startActivity(goHome);
                 finish();
-            }
-        });
-    }
-
-    public void browseImages() {
-        // looks in file system for any images the useer wants to use, saves in database using the Recipe ID....
-        Button browseButton = (Button) findViewById(R.id.browseButton);
-        browseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // open gallery intent and select one image
-                // save path in edit text
-                //Intent goSearch = new Intent(EditRecipeActivity.this, SearchActivity.class);
-                //startActivity(goSearch);
             }
         });
     }
