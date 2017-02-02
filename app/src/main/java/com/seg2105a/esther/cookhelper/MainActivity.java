@@ -68,20 +68,16 @@ public class MainActivity extends AppCompatActivity {
         system.getRecipe(0).setRating(3);
 
         system.addRecipe("Pasta", "There needs to be something here..", 7.2, "", 234, 99838, system.getIngredient(3));
-        system.getRecipe(1).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
+        system.getRecipe(1).addRecipeStep(0, "Test Stuff Up", 6.0, false);
         system.getRecipe(1).addCategory(system.getCategory(0));
         system.getRecipe(1).addRecipeType(system.getRecipeType(3));
         system.getRecipe(1).setRating(43/5);
 
         system.addRecipe("Cake", "There needs to be something here..", 33.4, "", 1234, 77, system.getIngredient(1));
-        system.getRecipe(2).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
+        system.getRecipe(2).addRecipeStep(0, "Eat Stuff Up", 6.0, false);
         system.getRecipe(2).addCategory(system.getCategory(0));
         system.getRecipe(2).addRecipeType(system.getRecipeType(2));
         system.getRecipe(2).setRating(1);
-        //
-        //system.addRecipe("Pasta","khjhkhjkhjkh jkhjkhjkhkjhhkj hjkhkjkh", 40.2, "");
-        //system.addRecipe("Pizza","khjhkhldskjf sdkjfljsd fsldkmksdklffsdlf dkhkjkh", 90909.2, "");
-        //system.addRecipe("Pastry","khjhkhjkhjkh aaasaasnnsadad adadka da a da hjkhkjkh", 8.2, "");
 
         //feature = system.getRecipe(0).addCategory(system.getCategory(1));
         Button search = (Button) findViewById(R.id.searchButton);

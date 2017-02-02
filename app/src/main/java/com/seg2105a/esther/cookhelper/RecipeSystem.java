@@ -3,20 +3,13 @@
 package com.seg2105a.esther.cookhelper;
 
 import java.util.*;
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
 
-// line 2 "model.ump"
-// line 74 "model.ump"
 public class RecipeSystem
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
-
-  //RecipeSystem Attributes
-  private Object database;
 
   //RecipeSystem Associations
   private List<Recipe> recipes;
@@ -29,9 +22,7 @@ public class RecipeSystem
   //------------------------
   private static RecipeSystem instance = null;
 
-  protected RecipeSystem(Object aDatabase)
-  {
-    database = aDatabase;
+  protected RecipeSystem(){
     recipes = new ArrayList<Recipe>();
     categories = new ArrayList<Category>();
     recipeTypes = new ArrayList<RecipeType>();
@@ -40,7 +31,7 @@ public class RecipeSystem
 
   public static RecipeSystem getInstance() {
     if(instance == null){
-      instance = new RecipeSystem(null);
+      instance = new RecipeSystem();
     }
     return instance;
   }
@@ -49,137 +40,88 @@ public class RecipeSystem
   // INTERFACE
   //------------------------
 
-  public boolean setDatabase(Object aDatabase)
-  {
-    boolean wasSet = false;
-    database = aDatabase;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public Object getDatabase()
-  {
-    return database;
-  }
-
   public Recipe getRecipe(int index)
   {
-    Recipe aRecipe = recipes.get(index);
-    return aRecipe;
+    return recipes.get(index);
   }
 
-  public List<Recipe> getRecipes()
-  {
-    List<Recipe> newRecipe= Collections.unmodifiableList(recipes);
-    return newRecipe;
+  public List<Recipe> getRecipes(){
+    return Collections.unmodifiableList(recipes);
   }
 
-  public int numberOfRecipes()
-  {
-    int number = recipes.size();
-    return number;
+  public int numberOfRecipes(){
+    return recipes.size();
   }
 
-  public boolean hasRecipes()
-  {
-    boolean has = recipes.size() > 0;
-    return has;
+  public boolean hasRecipes() {
+    return recipes.size() > 0;
   }
 
-  public int indexOfRecipe(Recipe aRecipe)
-  {
-    int index = recipes.indexOf(aRecipe);
-    return index;
+  public int indexOfRecipe(Recipe aRecipe){
+    return recipes.indexOf(aRecipe);
   }
 
-  public Category getCategory(int index)
-  {
-    Category aCategory = categories.get(index);
-    return aCategory;
+  public Category getCategory(int index) {
+    return categories.get(index);
   }
 
-  public List<Category> getCategories()
-  {
-    List<Category> newCategories = Collections.unmodifiableList(categories);
-    return newCategories;
+  public List<Category> getCategories()  {
+    return Collections.unmodifiableList(categories);
   }
 
-  public int numberOfCategories()
-  {
-    int number = categories.size();
-    return number;
+  public int numberOfCategories() {
+    return categories.size();
   }
 
-  public boolean hasCategories()
-  {
-    boolean has = categories.size() > 0;
-    return has;
+  public boolean hasCategories() {
+    return categories.size() > 0;
   }
 
-  public int indexOfCategory(Category aCategory)
-  {
-    int index = categories.indexOf(aCategory);
-    return index;
+  public int indexOfCategory(Category aCategory){
+    return categories.indexOf(aCategory);
   }
 
   public RecipeType getRecipeType(int index)
   {
-    RecipeType aRecipeType = recipeTypes.get(index);
-    return aRecipeType;
+    return recipeTypes.get(index);
   }
 
-  public List<RecipeType> getRecipeTypes()
-  {
-    List<RecipeType> newRecipeTypes = Collections.unmodifiableList(recipeTypes);
-    return newRecipeTypes;
+  public List<RecipeType> getRecipeTypes() {
+    return Collections.unmodifiableList(recipeTypes);
   }
 
-  public int numberOfRecipeTypes()
-  {
-    int number = recipeTypes.size();
-    return number;
+  public int numberOfRecipeTypes() {
+    return recipeTypes.size();
   }
 
-  public boolean hasRecipeTypes()
-  {
-    boolean has = recipeTypes.size() > 0;
-    return has;
+  public boolean hasRecipeTypes() {
+    return recipeTypes.size() > 0;
   }
 
-  public int indexOfRecipeType(RecipeType aRecipeType)
-  {
-    int index = recipeTypes.indexOf(aRecipeType);
-    return index;
+  public int indexOfRecipeType(RecipeType aRecipeType) {
+    return recipeTypes.indexOf(aRecipeType);
   }
 
-  public Ingredient getIngredient(int index)
-  {
-    Ingredient aIngredient = ingredients.get(index);
-    return aIngredient;
+  public Ingredient getIngredient(int index) {
+    return ingredients.get(index);
   }
 
-  public List<Ingredient> getIngredients()
-  {
-    List<Ingredient> newIngredients = Collections.unmodifiableList(ingredients);
-    return newIngredients;
+  public List<Ingredient> getIngredients() {
+    return Collections.unmodifiableList(ingredients);
   }
 
   public int numberOfIngredients()
   {
-    int number = ingredients.size();
-    return number;
+    return ingredients.size();
   }
 
   public boolean hasIngredients()
   {
-    boolean has = ingredients.size() > 0;
-    return has;
+    return ingredients.size() > 0;
   }
 
-  public int indexOfIngredient(Ingredient aIngredient)
-  {
-    int index = ingredients.indexOf(aIngredient);
-    return index;
+  public int indexOfIngredient(Ingredient aIngredient) {
+    return ingredients.indexOf(aIngredient);
   }
 
   public static int minimumNumberOfRecipe()
@@ -187,23 +129,20 @@ public class RecipeSystem
     return 0;
   }
 
-  public Recipe addRecipe(String aTitle, String aDescription, double aCookingTime, String aImage, int aServing, int aCalories, Ingredient... allUsedIn)
-  {
-    return new Recipe(aTitle, aDescription, aCookingTime, aImage, aServing, aCalories, this, allUsedIn);
+  public Recipe addRecipe(String aTitle, String aDescription, double aCookingTime, String aImage, int aServing, int aCalories, Ingredient... allUsedIn) {
+      Recipe r = new Recipe(aTitle, aDescription, aCookingTime, aImage, aServing, aCalories, this, allUsedIn);
+      addRecipe(r);
+      return r;
   }
 
-  public boolean addRecipe(Recipe aRecipe)
-  {
+  public boolean addRecipe(Recipe aRecipe) {
     boolean wasAdded = false;
     if (recipes.contains(aRecipe)) { return false; }
     RecipeSystem existingRecipeSystem = aRecipe.getRecipeSystem();
     boolean isNewRecipeSystem = existingRecipeSystem != null && !this.equals(existingRecipeSystem);
-    if (isNewRecipeSystem)
-    {
+    if (isNewRecipeSystem) {
       aRecipe.setRecipeSystem(this);
-    }
-    else
-    {
+    } else {
       recipes.add(aRecipe);
       aRecipe.setId(recipes.indexOf(aRecipe));
     }
@@ -222,8 +161,7 @@ public class RecipeSystem
     return wasRemoved;
   }
 
-  public boolean addRecipeAt(Recipe aRecipe, int index)
-  {
+  public boolean addRecipeAt(Recipe aRecipe, int index) {
     boolean wasAdded = false;
     if(addRecipe(aRecipe))
     {
@@ -237,8 +175,7 @@ public class RecipeSystem
     return wasAdded;
   }
 
-  public boolean addOrMoveRecipeAt(Recipe aRecipe, int index)
-  {
+  public boolean addOrMoveRecipeAt(Recipe aRecipe, int index) {
     boolean wasAdded = false;
     if(recipes.contains(aRecipe))
     {
@@ -261,13 +198,13 @@ public class RecipeSystem
     return 0;
   }
 
-  public Category addCategory(String aName)
-  {
-    return new Category(aName, this);
+  public Category addCategory(String aName) {
+      Category c = new Category(aName, this);
+      addCategory(c);
+      return c;
   }
 
-  public boolean addCategory(Category aCategory)
-  {
+  public boolean addCategory(Category aCategory) {
     boolean wasAdded = false;
     if (categories.contains(aCategory) || findCategory(aCategory.getName()) > -1) { return false; }
     RecipeSystem existingRecipeSystem = aCategory.getRecipeSystem();
@@ -284,20 +221,17 @@ public class RecipeSystem
     return wasAdded;
   }
 
-  public boolean removeCategory(Category aCategory)
-  {
+  public boolean removeCategory(Category aCategory) {
     boolean wasRemoved = false;
     //Unable to remove aCategory, as it must always have a recipeSystem
-    if (this.equals(aCategory.getRecipeSystem()))
-    {
+    if (this.equals(aCategory.getRecipeSystem())) {
       categories.remove(aCategory);
       wasRemoved = true;
     }
     return wasRemoved;
   }
 
-  public boolean addCategoryAt(Category aCategory, int index)
-  {
+  public boolean addCategoryAt(Category aCategory, int index) {
     boolean wasAdded = false;
     if(addCategory(aCategory))
     {
@@ -310,19 +244,15 @@ public class RecipeSystem
     return wasAdded;
   }
 
-  public boolean addOrMoveCategoryAt(Category aCategory, int index)
-  {
+  public boolean addOrMoveCategoryAt(Category aCategory, int index) {
     boolean wasAdded = false;
-    if(categories.contains(aCategory) || findCategory(aCategory.getName()) > -1)
-    {
+    if(categories.contains(aCategory) || findCategory(aCategory.getName()) > -1) {
       if(index < 0 ) { index = 0; }
       if(index > numberOfCategories()) { index = numberOfCategories() - 1; }
       categories.remove(aCategory);
       categories.add(index, aCategory);
       wasAdded = true;
-    }
-    else
-    {
+    } else {
       wasAdded = addCategoryAt(aCategory, index);
     }
     return wasAdded;
@@ -333,46 +263,39 @@ public class RecipeSystem
     return 0;
   }
 
-  public RecipeType addRecipeType(String aName)
-  {
-    return new RecipeType(aName, this);
+  public RecipeType addRecipeType(String aName) {
+      RecipeType rt = new RecipeType(aName, this);
+      addRecipeType(rt);
+      return rt;
   }
 
-  public boolean addRecipeType(RecipeType aRecipeType)
-  {
+  public boolean addRecipeType(RecipeType aRecipeType) {
     boolean wasAdded = false;
     if (recipeTypes.contains(aRecipeType) || findRecipeType(aRecipeType.getName()) > -1) { return false; }
     RecipeSystem existingRecipeSystem = aRecipeType.getRecipeSystem();
     boolean isNewRecipeSystem = existingRecipeSystem != null && !this.equals(existingRecipeSystem);
-    if (isNewRecipeSystem)
-    {
+    if (isNewRecipeSystem) {
       aRecipeType.setRecipeSystem(this);
-    }
-    else
-    {
+    } else {
       recipeTypes.add(aRecipeType);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeRecipeType(RecipeType aRecipeType)
-  {
+  public boolean removeRecipeType(RecipeType aRecipeType) {
     boolean wasRemoved = false;
     //Unable to remove aRecipeType, as it must always have a recipeSystem
-    if (this.equals(aRecipeType.getRecipeSystem()))
-    {
+    if (this.equals(aRecipeType.getRecipeSystem())) {
       recipeTypes.remove(aRecipeType);
       wasRemoved = true;
     }
     return wasRemoved;
   }
 
-  public boolean addRecipeTypeAt(RecipeType aRecipeType, int index)
-  {
+  public boolean addRecipeTypeAt(RecipeType aRecipeType, int index) {
     boolean wasAdded = false;
-    if(addRecipeType(aRecipeType))
-    {
+    if(addRecipeType(aRecipeType)) {
       if(index < 0 ) { index = 0; }
       if(index > numberOfRecipeTypes()) { index = numberOfRecipeTypes() - 1; }
       recipeTypes.remove(aRecipeType);
@@ -382,19 +305,15 @@ public class RecipeSystem
     return wasAdded;
   }
 
-  public boolean addOrMoveRecipeTypeAt(RecipeType aRecipeType, int index)
-  {
+  public boolean addOrMoveRecipeTypeAt(RecipeType aRecipeType, int index) {
     boolean wasAdded = false;
-    if(recipeTypes.contains(aRecipeType) || findRecipeType(aRecipeType.getName()) > -1)
-    {
+    if(recipeTypes.contains(aRecipeType) || findRecipeType(aRecipeType.getName()) > -1) {
       if(index < 0 ) { index = 0; }
       if(index > numberOfRecipeTypes()) { index = numberOfRecipeTypes() - 1; }
       recipeTypes.remove(aRecipeType);
       recipeTypes.add(index, aRecipeType);
       wasAdded = true;
-    }
-    else
-    {
+    } else {
       wasAdded = addRecipeTypeAt(aRecipeType, index);
     }
     return wasAdded;
@@ -405,46 +324,39 @@ public class RecipeSystem
     return 0;
   }
 
-  public Ingredient addIngredient(String aName)
-  {
-    return new Ingredient(aName, this);
+  public Ingredient addIngredient(String aName) {
+      Ingredient i = new Ingredient(aName, this);
+      addIngredient(i);
+      return i;
   }
 
-  public boolean addIngredient(Ingredient aIngredient)
-  {
+  public boolean addIngredient(Ingredient aIngredient) {
     boolean wasAdded = false;
     if (ingredients.contains(aIngredient) || findIngredient(aIngredient.getName()) > -1) { return false; }
     RecipeSystem existingRecipeSystem = aIngredient.getRecipeSystem();
     boolean isNewRecipeSystem = existingRecipeSystem != null && !this.equals(existingRecipeSystem);
-    if (isNewRecipeSystem)
-    {
-      aIngredient.setRecipeSystem(this);
-    }
-    else
-    {
+    if (isNewRecipeSystem) {
+        aIngredient.setRecipeSystem(this);
+    } else {
       ingredients.add(aIngredient);
     }
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeIngredient(Ingredient aIngredient)
-  {
+  public boolean removeIngredient(Ingredient aIngredient) {
     boolean wasRemoved = false;
     //Unable to remove aIngredient, as it must always have a recipeSystem
-    if (this.equals(aIngredient.getRecipeSystem()))
-    {
+    if (this.equals(aIngredient.getRecipeSystem())) {
       ingredients.remove(aIngredient);
       wasRemoved = true;
     }
     return wasRemoved;
   }
 
-  public boolean addIngredientAt(Ingredient aIngredient, int index)
-  {
+  public boolean addIngredientAt(Ingredient aIngredient, int index) {
     boolean wasAdded = false;
-    if(addIngredient(aIngredient))
-    {
+    if(addIngredient(aIngredient)) {
       if(index < 0 ) { index = 0; }
       if(index > numberOfIngredients()) { index = numberOfIngredients() - 1; }
       ingredients.remove(aIngredient);
@@ -454,43 +366,34 @@ public class RecipeSystem
     return wasAdded;
   }
 
-  public boolean addOrMoveIngredientAt(Ingredient aIngredient, int index)
-  {
+  public boolean addOrMoveIngredientAt(Ingredient aIngredient, int index) {
     boolean wasAdded = false;
-    if(ingredients.contains(aIngredient)|| findIngredient(aIngredient.getName()) > -1)
-    {
+    if(ingredients.contains(aIngredient)|| findIngredient(aIngredient.getName()) > -1) {
       if(index < 0 ) { index = 0; }
       if(index > numberOfIngredients()) { index = numberOfIngredients() - 1; }
       ingredients.remove(aIngredient);
       ingredients.add(index, aIngredient);
       wasAdded = true;
-    }
-    else
-    {
+    } else {
       wasAdded = addIngredientAt(aIngredient, index);
     }
     return wasAdded;
   }
 
-  public void delete()
-  {
-    for(int i = recipes.size(); i > 0; i--)
-    {
+  public void delete() {
+    for(int i = recipes.size(); i > 0; i--) {
       Recipe aRecipe = recipes.get(i - 1);
       aRecipe.delete();
     }
-    for(int i=categories.size(); i > 0; i--)
-    {
+    for(int i=categories.size(); i > 0; i--) {
       Category aCategory = categories.get(i - 1);
       aCategory.delete();
     }
-    for(int i=recipeTypes.size(); i > 0; i--)
-    {
+    for(int i=recipeTypes.size(); i > 0; i--) {
       RecipeType aRecipeType = recipeTypes.get(i - 1);
       aRecipeType.delete();
     }
-    for(int i=ingredients.size(); i > 0; i--)
-    {
+    for(int i=ingredients.size(); i > 0; i--) {
       Ingredient aIngredient = ingredients.get(i - 1);
       aIngredient.delete();
     }
@@ -594,7 +497,7 @@ public class RecipeSystem
     private List<Recipe> searchType(String[] q, String type){
         List<Recipe> recipeResult = new ArrayList<Recipe>();
         if (q.length == 1) {
-          if(q[0] == "AND" || q[0] == "OR" || q[0] == "NOT"){
+          if(q[0] == "AND" || q[0] == "OR"){
             return recipeResult;
           }
             recipeResult = searchItem(q[0], type);
@@ -675,12 +578,4 @@ public class RecipeSystem
         }
         return recipeResult;
     }
-
-  public String toString()
-  {
-    String outputString = "";
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "database" + "=" + (getDatabase() != null ? !getDatabase().equals(this)  ? getDatabase().toString().replaceAll("  ","    ") : "this" : "null")
-            + outputString;
-  }
 }
