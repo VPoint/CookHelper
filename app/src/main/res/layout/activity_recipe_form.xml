@@ -257,7 +257,7 @@
 
                 <RatingBar
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="46dp"
                     android:id="@+id/addRating"
                     android:numStars="5" />
             </LinearLayout>
@@ -331,6 +331,36 @@
                     android:textColor="@color/common_google_signin_btn_text_dark_default"
                     android:backgroundTint="@color/colorPrimary" />-->
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                           android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:text="Add Image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/addImageLabel" />
+
+                            <EditText
+                                android:layout_width="163dp"
+                                android:layout_height="wrap_content"
+                               android:inputType="textPersonName"
+                                android:ems="10"
+                               android:id="@+id/addImageInput"
+                                android:layout_weight="0.38" />
+
+                            <Button
+                                android:id="@+id/browseButton"
+                                android:layout_width="68dp"
+                               android:layout_height="wrap_content"
+                               android:backgroundTint="@color/colorPrimary"
+                                android:text="Browse"
+                               android:textColor="@color/white_text"
+                                android:textSize="8sp" />
             </LinearLayout>
 
             <LinearLayout
