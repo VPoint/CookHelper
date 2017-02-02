@@ -3,11 +3,7 @@
 
 package com.seg2105a.esther.cookhelper;
 import java.util.*;
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
 
-// line 49 "model.ump"
-// line 89 "model.ump"
 public class Category
 {
 

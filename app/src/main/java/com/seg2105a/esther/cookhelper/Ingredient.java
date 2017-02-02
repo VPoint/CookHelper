@@ -9,8 +9,6 @@ import java.util.*;
 
 import java.util.*;
 
-// line 65 "model.ump"
-// line 99 "model.ump"
 public class Ingredient
 {
 

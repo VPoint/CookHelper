@@ -3,14 +3,8 @@
 
 package com.seg2105a.esther.cookhelper;
 
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-fcfceb9 modeling language!*/
-
-
 import java.util.*;
 
-// line 57 "model.ump"
-// line 94 "model.ump"
 public class RecipeType
 {
 
