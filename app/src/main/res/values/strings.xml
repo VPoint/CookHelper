@@ -7,6 +7,9 @@
         <item>By Type</item>
     </string-array>
 
+    <string name="title_activity_recipe_step">RecipeStepActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name = "feature_title">Recipe of the Day</string>
     <string name = "search">Search</string>
 </resources>
