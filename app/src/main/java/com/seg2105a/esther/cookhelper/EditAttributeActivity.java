@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Esther on 2016-11-29.
  *
- * Generic Attribute page, changes depending on incoming data.
+ * Generic Attribute page, changes depending on incoming data. Allows the user to add and delete attributes...
  */
 
 public class EditAttributeActivity extends AppCompatActivity {
