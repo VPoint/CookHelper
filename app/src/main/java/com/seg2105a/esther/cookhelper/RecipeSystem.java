@@ -535,12 +535,12 @@ public class RecipeSystem
         List<Recipe> recipeResult = new ArrayList<Recipe>();
         String connectors = "";
         if(queryCategory != null && !queryCategory.isEmpty()){
-             String[] q = parseQuery(queryCategory);
+            String[] q = parseQuery(queryCategory);
             recipeResult = searchType(q, "By Category");
-             connectors = q[q.length - 1];
+            connectors = q[q.length - 1];
         }
 
-        if(queryType != null && !queryType.isEmpty()){
+        if(queryType != null && !queryType.replace("AND","").isEmpty() && !queryType.replace("OR","").isEmpty()){
             String[] q = parseQuery(queryType);
             switch(connectors){
                 case "AND":
@@ -563,16 +563,16 @@ public class RecipeSystem
             String[] q = parseQuery(queryIngredient);
             switch(connectors){
                 case "AND":
-                    recipeResult.retainAll(searchType(q, "By Type"));
+                    recipeResult.retainAll(searchType(q, "By Ingredient"));
                     break;
 
                 case "OR":
-                    recipeResult.removeAll(searchType(q, "By Type"));
-                    recipeResult.addAll(searchType(q, "By Type"));
+                    recipeResult.removeAll(searchType(q, "By Ingredient"));
+                    recipeResult.addAll(searchType(q, "By Ingredient"));
                     break;
 
                 default:
-                    recipeResult = searchType(q, "By Type");
+                    recipeResult = searchType(q, "By Ingredient");
                     break;
             }
         }

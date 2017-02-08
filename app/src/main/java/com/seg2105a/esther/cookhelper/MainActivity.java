@@ -247,8 +247,8 @@ public class MainActivity extends AppCompatActivity {
         Intent goAdvSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
         goAdvSearch.putExtra("queryCategory", queryCategory.getText() + " " + toggleCategory.getText());
-        goAdvSearch.putExtra("queryIngredient", queryIngredient.getText() + "");
         goAdvSearch.putExtra("queryType", queryType.getText() + " " + toggleType.getText());
+        goAdvSearch.putExtra("queryIngredient", queryIngredient.getText() + "");
         startActivity(goAdvSearch);
     }
 }

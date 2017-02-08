@@ -12,25 +12,31 @@
         android:layout_height="wrap_content"
         android:id="@+id/categoryLabel" />
 
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/categoryQuery" />
+        android:layout_height="wrap_content">
 
-    <ToggleButton
-        android:text="ToggleButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toggleCategory"
-        android:textOff="AND"
-        android:textOn="OR"
-        style="@style/AppTheme"
-        android:textColor="@color/white_text"
-        android:backgroundTint="@color/colorPrimary"
-        android:checked="false"
-        android:buttonTint="@color/white_text" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/categoryQuery" />
+
+        <ToggleButton
+            android:text="ToggleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toggleCategory"
+            android:textOff="AND"
+            android:textOn="OR"
+            style="@style/AppTheme"
+            android:textColor="@color/white_text"
+            android:backgroundTint="@color/colorPrimary"
+            android:checked="false"
+            android:buttonTint="@color/white_text" />
+    </LinearLayout>
 
     <TextView
         android:text="Type:"
@@ -38,24 +44,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/typeLabel" />
 
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/typeQuery" />
+        android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/typeQuery" />
 
-    <ToggleButton
-        android:text="ToggleButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toggleType"
-        android:textOff="AND"
-        android:textOn="OR"
-        android:checked="true"
-        style="@style/AppTheme"
-        android:textColor="@color/white_text"
-        android:backgroundTint="?android:attr/colorPrimary" />
+            <ToggleButton
+                android:text="ToggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/toggleType"
+                android:textOff="AND"
+                android:textOn="OR"
+                android:checked="true"
+                style="@style/AppTheme"
+                android:textColor="@color/white_text"
+                android:backgroundTint="?android:attr/colorPrimary" />
+    </LinearLayout>
 
     <TextView
         android:text="Ingredient:"
