@@ -4,97 +4,31 @@
 package com.seg2105a.esther.cookhelper;
 import java.util.*;
 
-public class Category
-{
+public class Category extends Attribute {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //Category Attributes
-  private String name;
-
-  //Category Associations
-  private List<Recipe> recipe;
-  private RecipeSystem recipeSystem;
-
+  
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
   public Category(String aName, RecipeSystem aRecipeSystem)
   {
-    name = aName.toLowerCase();
-    recipe = new ArrayList<Recipe>();
-    boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
-    if (!didAddRecipeSystem)
-    {
-      throw new RuntimeException("Unable to create category due to recipeSystem");
-    }
+    super(aName, aRecipeSystem);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName.toLowerCase();
-    wasSet = true;
-    return wasSet;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public Recipe getRecipe(int index)
-  {
-    Recipe aRecipe = recipe.get(index);
-    return aRecipe;
-  }
-
-  public List<Recipe> getRecipe()
-  {
-    List<Recipe> newRecipe = Collections.unmodifiableList(recipe);
-    return newRecipe;
-  }
-
-  public int numberOfRecipe()
-  {
-    int number = recipe.size();
-    return number;
-  }
-
-  public boolean hasRecipe()
-  {
-    boolean has = recipe.size() > 0;
-    return has;
-  }
-
-  public int indexOfRecipe(Recipe aRecipe)
-  {
-    int index = recipe.indexOf(aRecipe);
-    return index;
-  }
-
-  public RecipeSystem getRecipeSystem()
-  {
-    return recipeSystem;
-  }
-
-  public static int minimumNumberOfRecipe()
-  {
-    return 0;
-  }
-
   public boolean addRecipe(Recipe aRecipe)
   {
     boolean wasAdded = false;
-    if (recipe.contains(aRecipe)) { return false; }
-    recipe.add(aRecipe);
+    if (recipes.contains(aRecipe)) { return false; }
+    recipes.add(aRecipe);
     if (aRecipe.indexOfCategory(this) != -1)
     {
       wasAdded = true;
@@ -104,7 +38,7 @@ public class Category
       wasAdded = aRecipe.addCategory(this);
       if (!wasAdded)
       {
-        recipe.remove(aRecipe);
+        recipes.remove(aRecipe);
       }
     }
     return wasAdded;
@@ -113,13 +47,13 @@ public class Category
   public boolean removeRecipe(Recipe aRecipe)
   {
     boolean wasRemoved = false;
-    if (!recipe.contains(aRecipe))
+    if (!recipes.contains(aRecipe))
     {
       return wasRemoved;
     }
 
-    int oldIndex = recipe.indexOf(aRecipe);
-    recipe.remove(oldIndex);
+    int oldIndex = recipes.indexOf(aRecipe);
+    recipes.remove(oldIndex);
     if (aRecipe.indexOfCategory(this) == -1)
     {
       wasRemoved = true;
@@ -129,42 +63,10 @@ public class Category
       wasRemoved = aRecipe.removeCategory(this);
       if (!wasRemoved)
       {
-        recipe.add(oldIndex,aRecipe);
+        recipes.add(oldIndex,aRecipe);
       }
     }
     return wasRemoved;
-  }
-
-  public boolean addRecipeAt(Recipe aRecipe, int index)
-  {
-    boolean wasAdded = false;
-    if(addRecipe(aRecipe))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRecipe()) { index = numberOfRecipe() - 1; }
-      recipe.remove(aRecipe);
-      recipe.add(index, aRecipe);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveRecipeAt(Recipe aRecipe, int index)
-  {
-    boolean wasAdded = false;
-    if(recipe.contains(aRecipe))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRecipe()) { index = numberOfRecipe() - 1; }
-      recipe.remove(aRecipe);
-      recipe.add(index, aRecipe);
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = addRecipeAt(aRecipe, index);
-    }
-    return wasAdded;
   }
 
   public boolean setRecipeSystem(RecipeSystem aRecipeSystem)
@@ -188,8 +90,8 @@ public class Category
 
   public void delete()
   {
-    ArrayList<Recipe> copyOfRecipe = new ArrayList<Recipe>(recipe);
-    recipe.clear();
+    ArrayList<Recipe> copyOfRecipe = new ArrayList<Recipe>(recipes);
+    recipes.clear();
     for(Recipe aRecipe : copyOfRecipe)
     {
       aRecipe.removeCategory(this);
@@ -199,9 +101,7 @@ public class Category
     placeholderRecipeSystem.removeCategory(this);
   }
 
-
-  public String toString()
-  {
-    return getName();
-  }
+    public AttributeType getAttributeType(){
+        return AttributeType.Category;
+    }
 }

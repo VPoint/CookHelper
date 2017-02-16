@@ -9,210 +9,106 @@ import java.util.*;
 
 import java.util.*;
 
-public class Ingredient
-{
+public class Ingredient extends Attribute {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+    //------------------------
+    // MEMBER VARIABLES
+    //------------------------
 
-  //Ingredient Attributes
-  private String name;
+    //Ingredient Attributes
+    private String name;
 
-  //Ingredient Associations
-  private RecipeSystem recipeSystem;
-  private List<Recipe> recipes;
+    //Ingredient Associations
+    private RecipeSystem recipeSystem;
+    private List<Recipe> recipes;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+    //------------------------
+    // CONSTRUCTOR
+    //------------------------
 
-  public Ingredient(String aName, RecipeSystem aRecipeSystem)
-  {
-    name = aName.toLowerCase();
-    boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
-    if (!didAddRecipeSystem)
-    {
-      throw new RuntimeException("Unable to create ingredient due to recipeSystem");
-    }
-    recipes = new ArrayList<Recipe>();
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName.toLowerCase();
-    wasSet = true;
-    return wasSet;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public RecipeSystem getRecipeSystem()
-  {
-    return recipeSystem;
-  }
-
-  public Recipe getRecipe(int index)
-  {
-    Recipe aRecipe = recipes.get(index);
-    return aRecipe;
-  }
-
-  public List<Recipe> getRecipes()
-  {
-    List<Recipe> newRecipes = Collections.unmodifiableList(recipes);
-    return newRecipes;
-  }
-
-  public int numberOfRecipes()
-  {
-    int number = recipes.size();
-    return number;
-  }
-
-  public boolean hasRecipes()
-  {
-    boolean has = recipes.size() > 0;
-    return has;
-  }
-
-  public int indexOfRecipe(Recipe aRecipe)
-  {
-    int index = recipes.indexOf(aRecipe);
-    return index;
-  }
-
-  public boolean setRecipeSystem(RecipeSystem aRecipeSystem)
-  {
-    boolean wasSet = false;
-    if (aRecipeSystem == null)
-    {
-      return wasSet;
+    public Ingredient(String aName, RecipeSystem aRecipeSystem) {
+        super(aName, aRecipeSystem);
+        recipes = new ArrayList<Recipe>();
     }
 
-    RecipeSystem existingRecipeSystem = recipeSystem;
-    recipeSystem = aRecipeSystem;
-    if (existingRecipeSystem != null && !existingRecipeSystem.equals(aRecipeSystem))
+    //------------------------
+    // INTERFACE
+    //------------------------
+    public boolean addRecipe(Recipe aRecipe)
     {
-      existingRecipeSystem.removeIngredient(this);
-    }
-    recipeSystem.addIngredient(this);
-    wasSet = true;
-    return wasSet;
-  }
-
-  public static int minimumNumberOfRecipes()
-  {
-    return 0;
-  }
-
-  public boolean addRecipe(Recipe aRecipe)
-  {
-    boolean wasAdded = false;
-    if (recipes.contains(aRecipe)) { return false; }
-    recipes.add(aRecipe);
-    if (aRecipe.indexOfIngredient(this) != -1)
-    {
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = aRecipe.addIngredient(this);
-      if (!wasAdded)
-      {
-        recipes.remove(aRecipe);
-      }
-    }
-    return wasAdded;
-  }
-
-  public boolean removeRecipe(Recipe aRecipe)
-  {
-    boolean wasRemoved = false;
-    if (!recipes.contains(aRecipe))
-    {
-      return wasRemoved;
+        boolean wasAdded = false;
+        if (recipes.contains(aRecipe)) { return false; }
+        recipes.add(aRecipe);
+        if (aRecipe.indexOfIngredient(this) != -1)
+        {
+            wasAdded = true;
+        }
+        else
+        {
+            wasAdded = aRecipe.addIngredient(this);
+            if (!wasAdded)
+            {
+                recipes.remove(aRecipe);
+            }
+        }
+        return wasAdded;
     }
 
-    int oldIndex = recipes.indexOf(aRecipe);
-    recipes.remove(oldIndex);
-    if (aRecipe.indexOfIngredient(this) == -1)
+    public boolean removeRecipe(Recipe aRecipe)
     {
-      wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aRecipe.removeIngredient(this);
-      if (!wasRemoved)
-      {
-        recipes.add(oldIndex,aRecipe);
-      }
-    }
-    return wasRemoved;
-  }
+        boolean wasRemoved = false;
+        if (!recipes.contains(aRecipe))
+        {
+            return wasRemoved;
+        }
 
-  public boolean addRecipeAt(Recipe aRecipe, int index)
-  {
-    boolean wasAdded = false;
-    if(addRecipe(aRecipe))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRecipes()) { index = numberOfRecipes() - 1; }
-      recipes.remove(aRecipe);
-      recipes.add(index, aRecipe);
-      wasAdded = true;
+        int oldIndex = recipes.indexOf(aRecipe);
+        recipes.remove(oldIndex);
+        if (aRecipe.indexOfIngredient(this) == -1)
+        {
+            wasRemoved = true;
+        }
+        else
+        {
+            wasRemoved = aRecipe.removeIngredient(this);
+            if (!wasRemoved)
+            {
+                recipes.add(oldIndex,aRecipe);
+            }
+        }
+        return wasRemoved;
     }
-    return wasAdded;
-  }
 
-  public boolean addOrMoveRecipeAt(Recipe aRecipe, int index)
-  {
-    boolean wasAdded = false;
-    if(recipes.contains(aRecipe))
+    public boolean setRecipeSystem(RecipeSystem aRecipeSystem)
     {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRecipes()) { index = numberOfRecipes() - 1; }
-      recipes.remove(aRecipe);
-      recipes.add(index, aRecipe);
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = addRecipeAt(aRecipe, index);
-    }
-    return wasAdded;
-  }
+        if (aRecipeSystem == null) {
+            return false;
+        }
 
-  public void delete()
-  {
-    RecipeSystem placeholderRecipeSystem = recipeSystem;
-    this.recipeSystem = null;
-    placeholderRecipeSystem.removeIngredient(this);
-    ArrayList<Recipe> copyOfRecipes = new ArrayList<Recipe>(recipes);
-    recipes.clear();
-    for(Recipe aRecipe : copyOfRecipes)
-    {
-      if (aRecipe.numberOfIngredient() <= Recipe.minimumNumberOfIngredient())
-      {
-        aRecipe.delete();
-      }
-      else
-      {
-        aRecipe.removeIngredient(this);
-      }
+        RecipeSystem existingRecipeSystem = recipeSystem;
+        recipeSystem = aRecipeSystem;
+        if (existingRecipeSystem != null && !existingRecipeSystem.equals(aRecipeSystem))
+        {
+            existingRecipeSystem.removeIngredient(this);
+        }
+        recipeSystem.addIngredient(this);
+        return true;
     }
-  }
 
-  public String toString()
-  {
-    return getName();
-  }
+    public void delete()
+    {
+        ArrayList<Recipe> copyOfRecipe = new ArrayList<Recipe>(recipes);
+        recipes.clear();
+        for(Recipe aRecipe : copyOfRecipe)
+        {
+            aRecipe.removeIngredient(this);
+        }
+        RecipeSystem placeholderRecipeSystem = recipeSystem;
+        this.recipeSystem = null;
+        placeholderRecipeSystem.removeIngredient(this);
+    }
+
+    public AttributeType getAttributeType(){
+        return AttributeType.Ingredient;
+    }
 }
