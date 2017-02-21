@@ -128,39 +128,40 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <TextView
+                android:text="Recipe Name:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/formTitleLabel" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/formTitle" />
+
+            <TextView
+                android:text="Description:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/formDescriptionLabel" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="114dp"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/formDescription" />
+
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:alignmentMode="alignMargins">
-
-                <TextView
-                    android:text="Recipe Name:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/formTitleLabel" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="27dp"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/formTitle" />
-
-                <TextView
-                    android:text="Description:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/formDescriptionLabel" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="29dp"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/formDescription" />
+                android:alignmentMode="alignMargins"
+                android:textAlignment="gravity">
 
                 <TextView
                     android:text="Number of Calories:"
@@ -176,23 +177,35 @@
                     android:inputType="number" />
 
                 <TextView
-                    android:text="Cooking Time: "
+                    android:text="@string/timeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView23" />
+                    android:id="@+id/formCookingLabel" />
 
-                <EditText
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="27dp"
-                    android:ems="10"
-                    android:id="@+id/formCookingTime"
-                    android:inputType="number" />
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:layout_width="102dp"
+                        android:layout_height="31dp"
+                        android:ems="10"
+                        android:id="@+id/formCookingTime"
+                        android:inputType="number" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/formCookingUnits"
+                        android:entries="@array/unit_time_array" />
+                </LinearLayout>
 
                 <TextView
-                    android:text="Servings:"
+                    android:text="@string/servingLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView26" />
+                    android:id="@+id/formServingLabel" />
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -205,43 +218,29 @@
                     android:text="Add Category:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView4"
+                    android:id="@+id/formCategoryLabel"
                     android:layout_alignBottom="@+id/formType"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"/>
 
-                <EditText
+                <Spinner
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/formCategory"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/formCategory" />
 
                 <TextView
                     android:text="Add Type:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView2"
+                    android:id="@+id/formTypeLabel"
                     android:layout_above="@+id/formCategory"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
-                <EditText
+                <Spinner
                     android:layout_width="wrap_content"
-                    android:layout_height="29dp"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/formType"
-                    android:layout_above="@+id/textView2"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/formType" />
 
             </GridLayout>
 
@@ -287,6 +286,12 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
+                <Button
+                    android:text="Add Ingredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button" />
+
                 <!--<Button
                     android:text="Add Ingredient(s)"
                     android:layout_width="match_parent"
@@ -320,6 +325,12 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:inputType="textMultiLine" />
+
+                <Button
+                    android:text="Add Step"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button2" />
 
                 <!--<Button
                     android:text="Add Step"

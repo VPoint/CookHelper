@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -44,8 +45,8 @@ public class EditRecipeActivity extends AppCompatActivity {
         EditText desc = (EditText) findViewById(R.id.formDescription);
         EditText cooking = (EditText) findViewById(R.id.formCookingTime);
         EditText serving = (EditText) findViewById(R.id.formServing);
-        EditText type = (EditText) findViewById(R.id.formType);
-        EditText category = (EditText) findViewById(R.id.formCategory);
+        Spinner type = (Spinner) findViewById(R.id.formType);
+        Spinner category = (Spinner) findViewById(R.id.formCategory);
         EditText calories = (EditText) findViewById(R.id.formCalories);
         EditText ingred = (EditText) findViewById(R.id.addIngredientInput);
         EditText recStep = (EditText) findViewById(R.id.addRecipeStepInput);
@@ -55,8 +56,8 @@ public class EditRecipeActivity extends AppCompatActivity {
         desc.setText("" + r.getDescription());
         cooking.setText(r.getCookingTime() + "");
         serving.setText("" + r.getServing());
-        type.setText("" + r.getRecipeType(0).getName());
-        category.setText("" + r.getCategory(0).getName());
+        //type.set("" + r.getRecipeType(0).getName());
+        //category.setText("" + r.getCategory(0).getName());
         calories.setText("" + r.getCalories());
         rating.setRating(r.getRating());
         ingred.setText("" + r.getIngredient(0).getName());
@@ -68,8 +69,8 @@ public class EditRecipeActivity extends AppCompatActivity {
         EditText desc = (EditText) findViewById(R.id.formDescription);
         EditText cooking = (EditText) findViewById(R.id.formCookingTime);
         EditText serving = (EditText) findViewById(R.id.formServing);
-        EditText type = (EditText) findViewById(R.id.formType);
-        EditText category = (EditText) findViewById(R.id.formCategory);
+        Spinner type = (Spinner) findViewById(R.id.formType);
+        Spinner category = (Spinner) findViewById(R.id.formCategory);
         EditText calories = (EditText) findViewById(R.id.formCalories);
         EditText ingred = (EditText) findViewById(R.id.addIngredientInput);
         EditText recStep = (EditText) findViewById(R.id.addRecipeStepInput);
@@ -81,8 +82,8 @@ public class EditRecipeActivity extends AppCompatActivity {
 
         Recipe temp = new Recipe(title.getText()+"", desc.getText()+"", Double.parseDouble(cooking.getText()+""), "",
                 Integer.parseInt(serving.getText() + ""), Integer.parseInt(calories.getText() + ""), system,new Ingredient(ingredients[0], system));
-        temp.addCategory(new Category(category.getText()+"", system));
-        temp.addRecipeType(new RecipeType(type.getText()+"", system));
+        //temp.addCategory(new Category(category.getText()+"", system));
+        //temp.addRecipeType(new RecipeType(type.getText()+"", system));
         //temp.addRecipeStep(0);
         temp.setRating(rating.getRating());
 

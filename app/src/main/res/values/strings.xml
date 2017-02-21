@@ -1,12 +1,29 @@
 <resources>
     <string name="app_name">CookHelper</string>
 
+    <string name = "feature_title">Recipe of the Day</string>
+    <string name = "search">Search</string>
+
+    <!--Recipe Form -->
+    <string name = "servingLabel">Servings:</string>
+    <string name = "timeLabel">Cooking Time:</string>
+
     <string-array name="search_type_array">
         <item>By Ingredient</item>
         <item>By Category</item>
         <item>By Type</item>
     </string-array>
 
-    <string name = "feature_title">Recipe of the Day</string>
-    <string name = "search">Search</string>
+    <string-array name="unit_time_array">
+        <item>Days</item>
+        <item>Hours</item>
+        <item>Minutes</item>
+        <item>Seconds</item>
+    </string-array>
+
+    <string-array name="unit_serving_array">
+        <item>per unit</item>
+        <item>per 100 grams</item>
+        <item>per 1 L</item>
+    </string-array>
 </resources>

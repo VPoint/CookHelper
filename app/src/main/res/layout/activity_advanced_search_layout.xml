@@ -15,18 +15,20 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:weightSum="1">
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/categoryQuery" />
+            android:id="@+id/categoryQuery"
+            android:layout_weight="1.02" />
 
         <ToggleButton
             android:text="ToggleButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/toggleCategory"
             android:textOff="AND"
@@ -47,17 +49,20 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/typeQuery" />
+        android:layout_height="wrap_content"
+        android:weightSum="1">
 
-            <ToggleButton
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/typeQuery"
+            android:layout_weight="1.01" />
+
+        <ToggleButton
                 android:text="ToggleButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/toggleType"
                 android:textOff="AND"
