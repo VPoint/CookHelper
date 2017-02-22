@@ -1,5 +1,6 @@
 package com.seg2105a.esther.cookhelper;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -67,6 +68,8 @@ public class EditRecipeActivity extends AppCompatActivity {
     }
 
     private void populateInfo(Recipe r){
+        //ArrayList<String> timeUnits = R.id.unit_time_array;//{"Days","Hours", "Minutes", "Seconds"};
+
         EditText title = (EditText) findViewById(R.id.formTitle);
         EditText desc = (EditText) findViewById(R.id.formDescription);
         EditText cooking = (EditText) findViewById(R.id.formCookingTime);
@@ -82,7 +85,9 @@ public class EditRecipeActivity extends AppCompatActivity {
         title.setText("" + r.getTitle());
         desc.setText("" + r.getDescription());
         cooking.setText(r.getCookingTime() + "");
-        cookingUnits.setSelection(r.getCookingTimeUnits().);
+        Context context=getApplicationContext();
+        //'ArrayList<S>[] rt = context.getResources().getStringArray(R.array.unit_time_array);
+        //cookingUnits.setSelection(r.getCookingTimeUnits());
         serving.setText("" + r.getServing());
         type.setSelection(system.indexOfRecipeType(r.getRecipeType(0)));
         category.setSelection(system.indexOfCategory(r.getCategory(0)));
