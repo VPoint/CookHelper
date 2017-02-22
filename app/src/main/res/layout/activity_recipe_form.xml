@@ -136,10 +136,10 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="27dp"
-                android:inputType="textPersonName"
+                android:layout_height="wrap_content"
                 android:ems="10"
-                android:id="@+id/formTitle" />
+                android:id="@+id/formTitle"
+                android:inputType="text" />
 
             <TextView
                 android:text="Description:"
@@ -152,7 +152,8 @@
                 android:layout_height="114dp"
                 android:inputType="textMultiLine"
                 android:ems="10"
-                android:id="@+id/formDescription" />
+                android:id="@+id/formDescription"
+                android:textAlignment="viewStart" />
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -171,7 +172,7 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/formCalories"
                     android:inputType="number" />
@@ -189,7 +190,7 @@
 
                     <EditText
                         android:layout_width="102dp"
-                        android:layout_height="31dp"
+                        android:layout_height="wrap_content"
                         android:ems="10"
                         android:id="@+id/formCookingTime"
                         android:inputType="number" />
@@ -209,7 +210,7 @@
 
                 <EditText
                     android:layout_width="wrap_content"
-                    android:layout_height="24dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/formServing"
                     android:inputType="number" />
@@ -279,7 +280,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
+                    android:inputType="text"
                     android:ems="10"
                     android:id="@+id/addIngredientInput"
                     android:layout_below="@+id/titleFeatured"
@@ -318,7 +319,7 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="58dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:id="@+id/addRecipeStepInput"
                     android:layout_above="@+id/saveButton"

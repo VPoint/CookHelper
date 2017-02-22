@@ -415,7 +415,7 @@ public class RecipeSystem
     List<Ingredient> in = getIngredients();
     int ingr;
     for ( ingr = 0; ingr < in.size(); ingr++){
-      if(in.get(ingr).getName().equals(n.toLowerCase().trim())){
+      if(in.get(ingr).getName().contains(n.toLowerCase().trim())){
         return ingr;
       }
     }
@@ -429,7 +429,7 @@ public class RecipeSystem
     List<RecipeType> in = getRecipeTypes();
     int ingr;
     for ( ingr = 0; ingr < in.size(); ingr++){
-      if(in.get(ingr).getName().equals(n.toLowerCase().trim())){
+      if(in.get(ingr).getName().contains(n.toLowerCase().trim())){
         return ingr;
       }
     }
@@ -443,7 +443,7 @@ public class RecipeSystem
     List<Category> in = getCategories();
     int ingr;
     for ( ingr = 0; ingr < in.size(); ingr++){
-      if(in.get(ingr).getName().equals(n.toLowerCase().trim())){
+      if(in.get(ingr).getName().contains(n.toLowerCase().trim())){
         return ingr;
       }
     }
@@ -477,7 +477,7 @@ public class RecipeSystem
               if (dx == -1) {
                   return new ArrayList<Recipe>();
               } else {
-                  list = getIngredient(dx).getRecipes();
+                  list = getIngredient(dx).getRecipe();
               }
               break;
 

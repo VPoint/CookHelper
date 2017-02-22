@@ -15,6 +15,7 @@
         private String title;
         private String description;
         private double cookingTime;
+        private String cookingTimeUnits;
         private String image;
         private int serving;
         private int id;
@@ -100,6 +101,14 @@
             return wasSet;
         }
 
+        public boolean setCookingTimeUnits(String units)
+        {
+            boolean wasSet = false;
+            cookingTimeUnits = units;
+            wasSet = true;
+            return wasSet;
+        }
+
         public boolean setImage(String aImage)
         {
             boolean wasSet = false;
@@ -145,6 +154,11 @@
         public double getCookingTime()
         {
             return cookingTime;
+        }
+
+        public String getCookingTimeUnits()
+        {
+            return cookingTimeUnits;
         }
 
         public String getImage()

@@ -103,7 +103,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         calories.setText("Calories: " +r.getCalories());
         type.setText("Type: " + r.getRecipeType(0).getName());
         category.setText("Category: " +r.getCategory(0).getName());
-        cookTime.setText("Time Needed: " + r.getCookingTime() + " min");
+        cookTime.setText("Time Needed: " + r.getCookingTime() + " " + r.getCookingTimeUnits());
         serving.setText("Serves: " + r.getServing());
         description.setText(r.getDescription());
 

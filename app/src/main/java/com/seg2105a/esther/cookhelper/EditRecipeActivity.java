@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +29,29 @@ public class EditRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_form);
 
         system = system.getInstance();
+
+        // build the category and recipe type spinners
+        Spinner type = (Spinner) findViewById(R.id.formType);
+        Spinner category = (Spinner) findViewById(R.id.formCategory);
+
+        String[] categoryArray = new String[system.numberOfCategories()];
+        for(Category c: system.getCategories()){
+            categoryArray[system.indexOfCategory(c)] = c.getName();
+        }
+
+        String[] typeArray = new String[system.numberOfRecipeTypes()];
+        for(RecipeType rt: system.getRecipeTypes()){
+            typeArray[system.indexOfRecipeType(rt)] = rt.getName();
+        }
+
+        ArrayAdapter<String> adapterCategory = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, categoryArray);
+        category.setAdapter(adapterCategory);
+
+        ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, typeArray);
+        type.setAdapter(adapterType);
+
         // if information is being edited, first populate fields
         Intent i = getIntent();
 
@@ -44,6 +70,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         EditText title = (EditText) findViewById(R.id.formTitle);
         EditText desc = (EditText) findViewById(R.id.formDescription);
         EditText cooking = (EditText) findViewById(R.id.formCookingTime);
+        Spinner cookingUnits = (Spinner) findViewById(R.id.formCookingUnits);
         EditText serving = (EditText) findViewById(R.id.formServing);
         Spinner type = (Spinner) findViewById(R.id.formType);
         Spinner category = (Spinner) findViewById(R.id.formCategory);
@@ -55,9 +82,10 @@ public class EditRecipeActivity extends AppCompatActivity {
         title.setText("" + r.getTitle());
         desc.setText("" + r.getDescription());
         cooking.setText(r.getCookingTime() + "");
+        cookingUnits.setSelection(r.getCookingTimeUnits().);
         serving.setText("" + r.getServing());
-        //type.set("" + r.getRecipeType(0).getName());
-        //category.setText("" + r.getCategory(0).getName());
+        type.setSelection(system.indexOfRecipeType(r.getRecipeType(0)));
+        category.setSelection(system.indexOfCategory(r.getCategory(0)));
         calories.setText("" + r.getCalories());
         rating.setRating(r.getRating());
         ingred.setText("" + r.getIngredient(0).getName());
@@ -68,6 +96,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         EditText title = (EditText) findViewById(R.id.formTitle);
         EditText desc = (EditText) findViewById(R.id.formDescription);
         EditText cooking = (EditText) findViewById(R.id.formCookingTime);
+        Spinner cookingUnits = (Spinner) findViewById(R.id.formCookingUnits);
         EditText serving = (EditText) findViewById(R.id.formServing);
         Spinner type = (Spinner) findViewById(R.id.formType);
         Spinner category = (Spinner) findViewById(R.id.formCategory);
@@ -82,11 +111,11 @@ public class EditRecipeActivity extends AppCompatActivity {
 
         Recipe temp = new Recipe(title.getText()+"", desc.getText()+"", Double.parseDouble(cooking.getText()+""), "",
                 Integer.parseInt(serving.getText() + ""), Integer.parseInt(calories.getText() + ""), system,new Ingredient(ingredients[0], system));
-        //temp.addCategory(new Category(category.getText()+"", system));
-        //temp.addRecipeType(new RecipeType(type.getText()+"", system));
+        temp.addCategory(new Category(category.getSelectedItem()+"", system));
+        temp.addRecipeType(new RecipeType(type.getSelectedItem()+"", system));
         //temp.addRecipeStep(0);
         temp.setRating(rating.getRating());
-
+        temp.setCookingTimeUnits(cookingUnits.getSelectedItem()+"");
         int inc = 1;
         while(inc < ingredients.length){
             temp.addIngredient(new Ingredient(ingredients[inc].trim(), system));

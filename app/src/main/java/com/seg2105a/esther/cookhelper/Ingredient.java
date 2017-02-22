@@ -14,21 +14,14 @@ public class Ingredient extends Attribute {
     //------------------------
     // MEMBER VARIABLES
     //------------------------
-
-    //Ingredient Attributes
-    private String name;
-
-    //Ingredient Associations
-    private RecipeSystem recipeSystem;
-    private List<Recipe> recipes;
-
+    private float quantity;
+    private String units;
     //------------------------
     // CONSTRUCTOR
     //------------------------
 
     public Ingredient(String aName, RecipeSystem aRecipeSystem) {
         super(aName, aRecipeSystem);
-        recipes = new ArrayList<Recipe>();
     }
 
     //------------------------

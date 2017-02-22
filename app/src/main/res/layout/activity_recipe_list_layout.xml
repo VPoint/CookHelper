@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="291dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp">
 
         <TextView
@@ -38,13 +38,5 @@
             android:text="Category, Type" />
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/configImage"
-        android:minHeight="60dp"
-        android:minWidth="30dp"
-        android:background="?android:attr/floatingToolbarOpenDrawable" />
 
 </LinearLayout>

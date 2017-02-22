@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public abstract class Attribute {
-    private String name;
+    protected String name;
     protected List<Recipe> recipes;
     protected RecipeSystem recipeSystem;
 

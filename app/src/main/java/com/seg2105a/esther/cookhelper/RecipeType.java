@@ -7,8 +7,6 @@ import java.util.*;
 
 public class RecipeType extends Attribute {
 
-    private List<Recipe> recipes;
-
     public RecipeType(String aName, RecipeSystem aRecipeSystem) {
         super(aName, aRecipeSystem);
     }
