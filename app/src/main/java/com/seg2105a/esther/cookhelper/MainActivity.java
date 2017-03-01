@@ -16,8 +16,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -35,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
 
     private ActionBar actionBar;
-    private RecipeSystem system;
-    private Recipe feature;
+    private Recipe featured;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,42 +45,8 @@ public class MainActivity extends AppCompatActivity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
 
-        system = system.getInstance();
+        TestData.generate();
 
-        system.addCategory("mexican");
-        system.addCategory("canadian");
-        system.addCategory("japanese");
-        system.addCategory("italian");
-
-        system.addRecipeType("main dish");
-        system.addRecipeType("dessert");
-        system.addRecipeType("brunch");
-        system.addRecipeType("appetizer");
-
-        system.addIngredient("kale");
-        system.addIngredient("candy");
-        system.addIngredient("cheese");
-        system.addIngredient("tomatos");
-
-        system.addRecipe("Chili Salsa", "There needs to be something here..", 4.5, "", 6, 900, system.getIngredient(0));
-        system.getRecipe(0).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
-        system.getRecipe(0).addCategory(system.getCategory(1));
-        system.getRecipe(0).addRecipeType(system.getRecipeType(2));
-        system.getRecipe(0).setRating(3);
-
-        system.addRecipe("Pasta", "There needs to be something here..", 7.2, "", 234, 99838, system.getIngredient(3));
-        system.getRecipe(1).addRecipeStep(0, "Test Stuff Up", 6.0, false);
-        system.getRecipe(1).addCategory(system.getCategory(0));
-        system.getRecipe(1).addRecipeType(system.getRecipeType(3));
-        system.getRecipe(1).setRating(43/5);
-
-        system.addRecipe("Cake", "There needs to be something here..", 33.4, "", 1234, 77, system.getIngredient(1));
-        system.getRecipe(2).addRecipeStep(0, "Eat Stuff Up", 6.0, false);
-        system.getRecipe(2).addCategory(system.getCategory(0));
-        system.getRecipe(2).addRecipeType(system.getRecipeType(2));
-        system.getRecipe(2).setRating(1);
-
-        //feature = system.getRecipe(0).addCategory(system.getCategory(1));
         Button search = (Button) findViewById(R.id.searchButton);
         Button searchADV = (Button) findViewById(R.id.advancedSearchButton);
 
@@ -96,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setFeatured();
+
         changeSwitch();
-        //search();
         helpButton();
         recipeSelect();
     }
@@ -162,6 +130,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFeatured(){
         // set the featured item information
+        TextView feature = (TextView) findViewById(R.id.titleFeatured);
+        ImageView featureImage = (ImageView) findViewById(R.id.imageFeatured);
+        RatingBar featureRating = (RatingBar) findViewById(R.id.ratingFeatured);
+        RecipeSystem currentSystem = RecipeSystem.getInstance();
+        featured = currentSystem.getRecipe((int)Math.floor(Math.random()*currentSystem.numberOfRecipes()));
+
+        feature.setText(featured.getTitle());
+        //featureImage.setImageURI(//);
+        featureRating.setRating(featured.getRating());
     }
 
     private void helpButton(){
@@ -215,10 +192,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout featureSection = (LinearLayout) findViewById(R.id.layoutFeatured);
         featureSection.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                TextView feature = (TextView) findViewById(R.id.titleFeatured);
+            public void onClick(View v){
                 Intent recipeView = new Intent(getApplicationContext(), ViewRecipeActivity.class);
-                recipeView.putExtra("recipe_id", 0);
+                recipeView.putExtra("recipe_id", featured.getId());
                 startActivity(recipeView);
                 finish();
             }

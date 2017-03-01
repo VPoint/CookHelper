@@ -9,8 +9,21 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class RecipeUnitTest {
+    static private RecipeSystem rs;
+
+    // assigning the values
+    protected void setUp(){
+        RecipeSystem rs = new RecipeSystem("Sample");
+    }
+
+    // test method to add two values
+    public void tearDown(){
+        //
+    }
+
     @Test
     public void addRecipeTest() throws Exception {
+        Recipe r = new Recipe("title", "description", 0.0, "test/img", 0, 0, rs, new Ingredient("test", rs));
         assertEquals(4, 2 + 2);
     }
 
