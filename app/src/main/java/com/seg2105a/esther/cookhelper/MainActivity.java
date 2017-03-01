@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent recipeView = new Intent(getApplicationContext(), ViewRecipeActivity.class);
                 recipeView.putExtra("recipe_id", featured.getId());
                 startActivity(recipeView);
-                finish();
             }
         });
     }
