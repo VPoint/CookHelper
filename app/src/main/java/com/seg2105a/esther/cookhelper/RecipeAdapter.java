@@ -29,8 +29,12 @@ public class RecipeAdapter extends ArrayAdapter<String> {
         TextView textView = (TextView) rowView.findViewById(R.id.itemName);
         TextView textTag = (TextView) rowView.findViewById(R.id.itemTag);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        textView.setText(values[position]);
-        textTag.setText(other[position]);
+
+        if(values[position] != null)
+            textView.setText(values[position]);
+
+        if(other[position] != null)
+            textTag.setText(other[position]);
         // Change the icon for Windows and iPhone
         String s = values[position];
         /*if (s == null || s.isEmpty() || s.equals("empty")) {

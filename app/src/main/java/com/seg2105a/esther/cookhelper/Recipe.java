@@ -158,7 +158,10 @@
 
         public String getCookingTimeUnits()
         {
-            return cookingTimeUnits;
+            if(cookingTimeUnits != null){
+                return cookingTimeUnits;
+            }
+            return "Min";
         }
 
         public String getImage()

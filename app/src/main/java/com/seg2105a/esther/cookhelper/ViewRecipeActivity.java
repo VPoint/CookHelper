@@ -36,6 +36,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         //loads the activity and populates the text view with information from the Recipe object
 
         system = system.getInstance();
+
         Intent i = getIntent();
         if(i.hasExtra("recipe_id")) {
             int index = i.getIntExtra("recipe_id", 0);
@@ -101,8 +102,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
         title.setText(r.getTitle());
         //image.setImageDrawable(null);
         calories.setText("Calories: " +r.getCalories());
-        type.setText("Type: " + r.getRecipeType(0).getName());
-        category.setText("Category: " +r.getCategory(0).getName());
+
+        if(!r.getRecipeTypes().isEmpty()){
+            type.setText("Type: " + r.getRecipeType(0).getName());
+        }
+
+        if(!r.getCategories().isEmpty()){
+            category.setText("Category: " +r.getCategory(0).getName());
+        }
         cookTime.setText("Time Needed: " + r.getCookingTime() + " " + r.getCookingTimeUnits());
         serving.setText("Serves: " + r.getServing());
         description.setText(r.getDescription());

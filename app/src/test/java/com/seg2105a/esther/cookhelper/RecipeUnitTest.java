@@ -13,7 +13,7 @@ public class RecipeUnitTest {
 
     // assigning the values
     protected void setUp(){
-        RecipeSystem rs = new RecipeSystem("Sample");
+        RecipeSystem rs = new RecipeSystem();
     }
 
     // test method to add two values

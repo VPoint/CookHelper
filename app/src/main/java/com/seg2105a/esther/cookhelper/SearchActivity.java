@@ -121,15 +121,22 @@ public class SearchActivity extends AppCompatActivity {
             list = system.getRecipes();
         }
 
+        if(list == null || list.isEmpty()){
+            finish();
+        };
+
         String[] values = new String[list.size()];
         recipe_id = new Integer[list.size()];
         String[] tagline = new String[list.size()];
 
-        for (int i = 0; i < values.length; ++i) {
+        int i = 0;
+        while(i < values.length && !list.get(i).getCategories().isEmpty() && !list.get(i).getRecipeTypes().isEmpty()) {
             values[i] = list.get(i).getTitle();
             tagline[i] = list.get(i).getCategory(0).toString() + " , " + list.get(i).getRecipeType(0).toString();
             recipe_id[i] = list.get(i).getId();
+            i++;
         }
+
         //Create an ArrayAdapter and Set it on the ListView
         ArrayAdapter adapter = new RecipeAdapter(this, values, tagline);
         listView.setAdapter(adapter);
