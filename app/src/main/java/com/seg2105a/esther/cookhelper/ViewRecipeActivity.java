@@ -38,7 +38,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         system = system.getInstance();
 
         Intent i = getIntent();
-        if(i.hasExtra("recipe_id")) {
+        if (i.hasExtra("recipe_id")) {
             int index = i.getIntExtra("recipe_id", 0);
             recipe = system.getRecipe(index);
             recipe.setRecipeSystem(system);
@@ -58,10 +58,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.addCategory:
                 Intent addCategory = new Intent(getApplicationContext(), EditAttributeActivity.class);
                 addCategory.putExtra("typeAttr", "category");
@@ -86,7 +84,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         }
     }
 
-    private void populateInfo(Recipe r){
+    private void populateInfo(Recipe r) {
         TextView title = (TextView) findViewById(R.id.recipeTitle);
         ImageView image = (ImageView) findViewById(R.id.recipeImage);
         TextView calories = (TextView) findViewById(R.id.recipeCalories);
@@ -101,14 +99,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
         title.setText(r.getTitle());
         //image.setImageDrawable(null);
-        calories.setText("Calories: " +r.getCalories());
+        calories.setText("Calories: " + r.getCalories());
 
-        if(!r.getRecipeTypes().isEmpty()){
+        if (!r.getRecipeTypes().isEmpty()) {
             type.setText("Type: " + r.getRecipeType(0).getName());
         }
 
-        if(!r.getCategories().isEmpty()){
-            category.setText("Category: " +r.getCategory(0).getName());
+        if (!r.getCategories().isEmpty()) {
+            category.setText("Category: " + r.getCategory(0).getName());
         }
         cookTime.setText("Time Needed: " + r.getCookingTime() + " " + r.getCookingTimeUnits());
         serving.setText("Serves: " + r.getServing());
@@ -119,25 +117,25 @@ public class ViewRecipeActivity extends AppCompatActivity {
         rating.setRating(r.getRating());
     }
 
-    private String displayList(List l){
+    private String displayList(List l) {
         int inc = 0;
         String output = "";
 
-        while(inc < l.size()){
-            output += l.get(inc).toString()+ "\n";
+        while (inc < l.size()) {
+            output += l.get(inc).toString() + "\n";
             inc++;
         }
 
         return output;
     }
 
-    public void editRecipe(){
+    public void editRecipe() {
         // edits the valuesin the recipe by first going to the recipe forma and changing the values
         FloatingActionButton editButton = (FloatingActionButton) findViewById(R.id.editButton);
-        editButton.setOnClickListener(new View.OnClickListener(){
+        editButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 Intent editRecipe = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
                 editRecipe.putExtra("recipe_id", system.indexOfRecipe(recipe));
                 startActivityForResult(editRecipe, 100);
@@ -146,14 +144,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
         });
     }
 
-    public void deleteRecipe(){
+    public void deleteRecipe() {
         // deletes the recipe from the Business Logic as well as the database
 
         FloatingActionButton deleteButton = (FloatingActionButton) findViewById(R.id.deleteButton);
-        deleteButton.setOnClickListener(new View.OnClickListener(){
+        deleteButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 //delete Recipe
                 system.removeRecipe(recipe);
                 Toast.makeText(getApplicationContext(), "Your recipe has been safely deleted.", Toast.LENGTH_LONG).show();

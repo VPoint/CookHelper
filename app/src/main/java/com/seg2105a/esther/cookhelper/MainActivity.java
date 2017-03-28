@@ -99,11 +99,10 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.addCategory:
                 Intent addCategory = new Intent(getApplicationContext(), EditAttributeActivity.class);
                 addCategory.putExtra("typeAttr", "category");
@@ -128,38 +127,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setFeatured(){
+    private void setFeatured() {
         // set the featured item information
         TextView feature = (TextView) findViewById(R.id.titleFeatured);
         ImageView featureImage = (ImageView) findViewById(R.id.imageFeatured);
         RatingBar featureRating = (RatingBar) findViewById(R.id.ratingFeatured);
         RecipeSystem currentSystem = RecipeSystem.getInstance();
-        featured = currentSystem.getRecipe((int)Math.floor(Math.random()*currentSystem.numberOfRecipes()));
+        featured = currentSystem.getRecipe((int) Math.floor(Math.random() * currentSystem.numberOfRecipes()));
 
         feature.setText(featured.getTitle());
         //featureImage.setImageURI(//);
         featureRating.setRating(featured.getRating());
     }
 
-    private void helpButton(){
+    private void helpButton() {
         // Jessica Zhan
 
         help = (FloatingActionButton) findViewById(R.id.helpButton);
         linearLayout = (LinearLayout) findViewById(R.id.linear);
-        help.setOnClickListener(new View.OnClickListener(){
+        help.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.activity_help_popup, null);
-                popUpWindow = new PopupWindow(container,880,1100,true);
-                popUpWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 100,400);
+                popUpWindow = new PopupWindow(container, 880, 1100, true);
+                popUpWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 100, 400);
 
                 //Tapping outside of popup window closes it
-                container.setOnTouchListener(new View.OnTouchListener(){
+                container.setOnTouchListener(new View.OnTouchListener() {
 
                     @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent){
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
                         popUpWindow.dismiss();
                         return true;
                     }
@@ -168,14 +167,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void changeSwitch(){
+    private void changeSwitch() {
         // this should inflate the advanced search page with all the components
         Switch advancedSearch = (Switch) findViewById(R.id.searchSwitch);
-        advancedSearch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+        advancedSearch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 LinearLayout advanced = (LinearLayout) findViewById(R.id.advancedSearch);
                 LinearLayout basic = (LinearLayout) findViewById(R.id.basicSearch);
-                if(isChecked){
+                if (isChecked) {
                     advanced.setVisibility(View.VISIBLE);
                     basic.setVisibility(View.GONE);
                 } else {
@@ -186,13 +185,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void recipeSelect(){
+    public void recipeSelect() {
         // this is the action that represents the "Recipe" of the day being selected. The unique ID of the recipe is sent
         // to the recipe view page directly
         LinearLayout featureSection = (LinearLayout) findViewById(R.id.layoutFeatured);
         featureSection.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent recipeView = new Intent(getApplicationContext(), ViewRecipeActivity.class);
                 recipeView.putExtra("recipe_id", featured.getId());
                 startActivity(recipeView);

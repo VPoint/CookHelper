@@ -16,12 +16,14 @@ public class RecipeAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
     private final String[] other;
+
     public RecipeAdapter(Context context, String[] values, String[] other) {
         super(context, R.layout.activity_recipe_list_layout, values);
         this.context = context;
         this.values = values;
         this.other = other;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -30,10 +32,10 @@ public class RecipeAdapter extends ArrayAdapter<String> {
         TextView textTag = (TextView) rowView.findViewById(R.id.itemTag);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
-        if(values[position] != null)
+        if (values[position] != null)
             textView.setText(values[position]);
 
-        if(other[position] != null)
+        if (other[position] != null)
             textTag.setText(other[position]);
         // Change the icon for Windows and iPhone
         String s = values[position];

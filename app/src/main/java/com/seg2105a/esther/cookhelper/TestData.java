@@ -10,25 +10,25 @@ public class TestData {
 
     private static RecipeSystem system;
 
-    public static void generate(){
+    public static void generate() {
         system = system.getInstance();
 
         String[] categoryNames = {"mexican", "canadian", "japanese", "italian"};
-        String[] recipeTypeNames = {"main dish", "dessert","brunch","appetizer"};
-        String[] ingredientNames = {"kale","candy","cheese","tomatoes"};
-        String[] recipeNames = {"Chili Salsa","Pasta","Cake"};
+        String[] recipeTypeNames = {"main dish", "dessert", "brunch", "appetizer"};
+        String[] ingredientNames = {"kale", "candy", "cheese", "tomatoes"};
+        String[] recipeNames = {"Chili Salsa", "Pasta", "Cake"};
 
         Random random = new Random();
 
-        for(String name: categoryNames){
+        for (String name : categoryNames) {
             system.addCategory(name);
         }
 
-        for(String name: recipeTypeNames){
+        for (String name : recipeTypeNames) {
             system.addRecipeType(name);
         }
 
-        for(String name: ingredientNames){
+        for (String name : ingredientNames) {
             system.addIngredient(name);
         }
 
@@ -52,7 +52,7 @@ public class TestData {
         system.getRecipe(1).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
         system.getRecipe(1).addCategory(system.getCategory(0));
         system.getRecipe(1).addRecipeType(system.getRecipeType(3));
-        system.getRecipe(1).setRating(43/5);
+        system.getRecipe(1).setRating(43 / 5);
 
         system.addRecipe("Cake", "There needs to be something here..", 33.4, "", 1234, 77, system.getIngredient(1));
         system.getRecipe(2).addRecipeStep(0, "Cut Stuff Up", 6.0, false);
@@ -65,7 +65,7 @@ public class TestData {
         //system.addRecipe("Pastry","khjhkhjkhjkh aaasaasnnsadad adadka da a da hjkhkjkh", 8.2, "");
     }
 
-    public static RecipeSystem getSystem(){
+    public static RecipeSystem getSystem() {
         return system;
     }
 }

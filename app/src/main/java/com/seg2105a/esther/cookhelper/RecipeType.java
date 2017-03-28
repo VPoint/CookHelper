@@ -11,85 +11,71 @@ public class RecipeType extends Attribute {
         super(aName, aRecipeSystem);
     }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-  public boolean addRecipe(Recipe aRecipe)
-  {
-    boolean wasAdded = false;
-    if (recipes.contains(aRecipe)) { return false; }
-    recipes.add(aRecipe);
-    if (aRecipe.indexOfRecipeType(this) != -1)
-    {
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = aRecipe.addRecipeType(this);
-      if (!wasAdded)
-      {
-        recipes.remove(aRecipe);
-      }
-    }
-    return wasAdded;
-  }
-
-  public boolean removeRecipe(Recipe aRecipe)
-  {
-    boolean wasRemoved = false;
-    if (!recipes.contains(aRecipe))
-    {
-      return wasRemoved;
+    //------------------------
+    // INTERFACE
+    //------------------------
+    public boolean addRecipe(Recipe aRecipe) {
+        boolean wasAdded = false;
+        if (recipes.contains(aRecipe)) {
+            return false;
+        }
+        recipes.add(aRecipe);
+        if (aRecipe.indexOfRecipeType(this) != -1) {
+            wasAdded = true;
+        } else {
+            wasAdded = aRecipe.addRecipeType(this);
+            if (!wasAdded) {
+                recipes.remove(aRecipe);
+            }
+        }
+        return wasAdded;
     }
 
-    int oldIndex = recipes.indexOf(aRecipe);
-    recipes.remove(oldIndex);
-    if (aRecipe.indexOfRecipeType(this) == -1)
-    {
-      wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aRecipe.removeRecipeType(this);
-      if (!wasRemoved)
-      {
-        recipes.add(oldIndex,aRecipe);
-      }
-    }
-    return wasRemoved;
-  }
+    public boolean removeRecipe(Recipe aRecipe) {
+        boolean wasRemoved = false;
+        if (!recipes.contains(aRecipe)) {
+            return wasRemoved;
+        }
 
-  public boolean setRecipeSystem(RecipeSystem aRecipeSystem)
-  {
-    if (aRecipeSystem == null)
-    {
-      return false;
+        int oldIndex = recipes.indexOf(aRecipe);
+        recipes.remove(oldIndex);
+        if (aRecipe.indexOfRecipeType(this) == -1) {
+            wasRemoved = true;
+        } else {
+            wasRemoved = aRecipe.removeRecipeType(this);
+            if (!wasRemoved) {
+                recipes.add(oldIndex, aRecipe);
+            }
+        }
+        return wasRemoved;
     }
 
-    RecipeSystem existingRecipeSystem = recipeSystem;
-    recipeSystem = aRecipeSystem;
-    if (existingRecipeSystem != null && !existingRecipeSystem.equals(aRecipeSystem))
-    {
-      existingRecipeSystem.removeRecipeType(this);
-    }
-    recipeSystem.addRecipeType(this);
-    return true;
-  }
+    public boolean setRecipeSystem(RecipeSystem aRecipeSystem) {
+        if (aRecipeSystem == null) {
+            return false;
+        }
 
-  public void delete()
-  {
-    ArrayList<Recipe> copyOfRecipe = new ArrayList<Recipe>(recipes);
-    recipes.clear();
-    for(Recipe aRecipe : copyOfRecipe)
-    {
-      aRecipe.removeRecipeType(this);
+        RecipeSystem existingRecipeSystem = recipeSystem;
+        recipeSystem = aRecipeSystem;
+        if (existingRecipeSystem != null && !existingRecipeSystem.equals(aRecipeSystem)) {
+            existingRecipeSystem.removeRecipeType(this);
+        }
+        recipeSystem.addRecipeType(this);
+        return true;
     }
-    RecipeSystem placeholderRecipeSystem = recipeSystem;
-    this.recipeSystem = null;
-    placeholderRecipeSystem.removeRecipeType(this);
-  }
 
-    public AttributeType getAttributeType(){
+    public void delete() {
+        ArrayList<Recipe> copyOfRecipe = new ArrayList<Recipe>(recipes);
+        recipes.clear();
+        for (Recipe aRecipe : copyOfRecipe) {
+            aRecipe.removeRecipeType(this);
+        }
+        RecipeSystem placeholderRecipeSystem = recipeSystem;
+        this.recipeSystem = null;
+        placeholderRecipeSystem.removeRecipeType(this);
+    }
+
+    public AttributeType getAttributeType() {
         return AttributeType.RecipeType;
     }
 

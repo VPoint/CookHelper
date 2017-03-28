@@ -17,64 +17,56 @@ public abstract class Attribute {
         Unknown, Ingredient, Category, RecipeType
     }
 
-    protected Attribute(String aName, RecipeSystem aRecipeSystem){
+    protected Attribute(String aName, RecipeSystem aRecipeSystem) {
         name = aName;
         boolean didAddRecipeSystem = setRecipeSystem(aRecipeSystem);
-        if (!didAddRecipeSystem)
-        {
+        if (!didAddRecipeSystem) {
             throw new RuntimeException("Unable to create ingredient due to recipeSystem");
         }
         recipes = new ArrayList<Recipe>();
     }
 
-    public boolean setName(String aName){
+    public boolean setName(String aName) {
         boolean wasSet = false;
         name = aName.toLowerCase();
         wasSet = true;
         return wasSet;
     }
-    public String getName()
-    {
+
+    public String getName() {
         return name;
     }
 
-    public Recipe getRecipe(int index)
-    {
+    public Recipe getRecipe(int index) {
         Recipe aRecipe = recipes.get(index);
         return aRecipe;
     }
 
-    public List<Recipe> getRecipe()
-    {
+    public List<Recipe> getRecipe() {
         List<Recipe> newRecipe = Collections.unmodifiableList(recipes);
         return newRecipe;
     }
 
-    public int numberOfRecipe()
-    {
+    public int numberOfRecipe() {
         int number = recipes.size();
         return number;
     }
 
-    public boolean hasRecipe()
-    {
+    public boolean hasRecipe() {
         boolean has = recipes.size() > 0;
         return has;
     }
 
-    public int indexOfRecipe(Recipe aRecipe)
-    {
+    public int indexOfRecipe(Recipe aRecipe) {
         int index = recipes.indexOf(aRecipe);
         return index;
     }
 
-    public RecipeSystem getRecipeSystem()
-    {
+    public RecipeSystem getRecipeSystem() {
         return recipeSystem;
     }
 
-    public static int minimumNumberOfRecipe()
-    {
+    public static int minimumNumberOfRecipe() {
         return 0;
     }
 
@@ -84,13 +76,15 @@ public abstract class Attribute {
     // TODO: Maybe? Add an index of Attribute
     abstract public boolean removeRecipe(Recipe aRecipe);
 
-    public boolean addRecipeAt(Recipe aRecipe, int index)
-    {
+    public boolean addRecipeAt(Recipe aRecipe, int index) {
         boolean wasAdded = false;
-        if(addRecipe(aRecipe))
-        {
-            if(index < 0 ) { index = 0; }
-            if(index > numberOfRecipe()) { index = numberOfRecipe() - 1; }
+        if (addRecipe(aRecipe)) {
+            if (index < 0) {
+                index = 0;
+            }
+            if (index > numberOfRecipe()) {
+                index = numberOfRecipe() - 1;
+            }
             recipes.remove(aRecipe);
             recipes.add(index, aRecipe);
             wasAdded = true;
@@ -98,19 +92,19 @@ public abstract class Attribute {
         return wasAdded;
     }
 
-    public boolean addOrMoveRecipeAt(Recipe aRecipe, int index)
-    {
+    public boolean addOrMoveRecipeAt(Recipe aRecipe, int index) {
         boolean wasAdded;
-        if(recipes.contains(aRecipe))
-        {
-            if(index < 0 ) { index = 0; }
-            if(index > numberOfRecipe()) { index = numberOfRecipe() - 1; }
+        if (recipes.contains(aRecipe)) {
+            if (index < 0) {
+                index = 0;
+            }
+            if (index > numberOfRecipe()) {
+                index = numberOfRecipe() - 1;
+            }
             recipes.remove(aRecipe);
             recipes.add(index, aRecipe);
             wasAdded = true;
-        }
-        else
-        {
+        } else {
             wasAdded = addRecipeAt(aRecipe, index);
         }
         return wasAdded;
@@ -122,12 +116,11 @@ public abstract class Attribute {
     //TODO: Standardize this
     abstract public void delete();
 
-    public AttributeType getAttributeType(){
+    public AttributeType getAttributeType() {
         return AttributeType.Unknown;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return getName();
     }
 }

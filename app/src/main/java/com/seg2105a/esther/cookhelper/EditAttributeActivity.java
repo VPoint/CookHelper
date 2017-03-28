@@ -18,13 +18,14 @@ import java.util.List;
 
 /**
  * Created by Esther on 2016-11-29.
- *
+ * <p>
  * Generic Attribute page, changes depending on incoming data. Allows the user to add and delete attributes...
  */
 
 public class EditAttributeActivity extends AppCompatActivity {
     private RecipeSystem system;
     private String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class EditAttributeActivity extends AppCompatActivity {
         int num;
         String label, buttonText;
         final List<?> list;
-        switch(type){
+        switch (type) {
             case "type":
                 num = system.numberOfRecipeTypes();
                 list = system.getRecipeTypes();
@@ -103,9 +104,9 @@ public class EditAttributeActivity extends AppCompatActivity {
         save();
     }
 
-    public void delete(String name){
+    public void delete(String name) {
         // This method deletes an attribute, but was never implemetented due to some problems with the layout
-        switch(type){
+        switch (type) {
             case "type":
                 system.removeRecipeType(system.getRecipeType(system.findRecipeType(name)));
                 recreate();
@@ -128,31 +129,31 @@ public class EditAttributeActivity extends AppCompatActivity {
         }
     }
 
-    public void save(){
+    public void save() {
         // this changes the data in the business logic & therefore the database....
         Button saveButton = (Button) findViewById(R.id.addAttribute);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText input = (EditText) findViewById(R.id.attributeInput);
-                switch(type){
+                switch (type) {
                     case "type":
-                        system.addRecipeType(input.getText()+"");
+                        system.addRecipeType(input.getText() + "");
                         recreate();
                         break;
 
                     case "category":
-                        system.addCategory(input.getText()+"");
+                        system.addCategory(input.getText() + "");
                         recreate();
                         break;
 
                     case "ingredient":
-                        system.addIngredient(input.getText()+"");
+                        system.addIngredient(input.getText() + "");
                         recreate();
                         break;
 
                     default:
-                        system.addCategory(input.getText()+"");
+                        system.addCategory(input.getText() + "");
                         recreate();
                         break;
                 }

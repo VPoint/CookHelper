@@ -12,12 +12,12 @@ public class RecipeUnitTest {
     static private RecipeSystem rs;
 
     // assigning the values
-    protected void setUp(){
+    protected void setUp() {
         RecipeSystem rs = new RecipeSystem();
     }
 
     // test method to add two values
-    public void tearDown(){
+    public void tearDown() {
         //
     }
 

@@ -67,10 +67,10 @@ public class SearchActivity extends AppCompatActivity {
             String type = intent.getStringExtra("type");
             String queryBasic = intent.getStringExtra("query");
 
-            switch(type) {
+            switch (type) {
                 case "By Type":
                     list = system.searchQuery(null, queryBasic, null);
-                    if(list.isEmpty()){
+                    if (list.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
                         finish();
                     }
@@ -78,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 case "By Category":
                     list = system.searchQuery(queryBasic, null, null);
-                    if(list.isEmpty()){
+                    if (list.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
                         finish();
                     }
@@ -86,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 case "By Ingredient":
                     list = system.searchQuery(null, null, queryBasic);
-                    if(list.isEmpty()){
+                    if (list.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
                         finish();
                     }
@@ -94,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 default:
                     list = system.searchQuery(null, null, null);
-                    if(list.isEmpty()){
+                    if (list.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
                         finish();
                     }
@@ -102,35 +102,39 @@ public class SearchActivity extends AppCompatActivity {
             }
         } else if ((intent.hasExtra("queryCategory") && intent.hasExtra("queryIngredient") && intent.hasExtra("queryType")) &&
                 (!intent.getStringExtra("queryCategory").isEmpty() || !intent.getStringExtra("queryIngredient").isEmpty() ||
-                 !intent.getStringExtra("queryType").isEmpty())){
-            String queryCategory = intent.getStringExtra("queryCategory");;
-            String queryType = intent.getStringExtra("queryType");;
-            String queryIngredient = intent.getStringExtra("queryIngredient");;
+                        !intent.getStringExtra("queryType").isEmpty())) {
+            String queryCategory = intent.getStringExtra("queryCategory");
+            ;
+            String queryType = intent.getStringExtra("queryType");
+            ;
+            String queryIngredient = intent.getStringExtra("queryIngredient");
+            ;
 
             //Toast.makeText(getApplicationContext(), queryCategory + " : " + queryType + " : " + queryIngredient, Toast.LENGTH_LONG).show();
 
             list = system.searchQuery(queryCategory, queryType, queryIngredient);
-            if(list.isEmpty() && !queryCategory.equals(" AND") && !queryCategory.equals(" OR")
-                    && !queryType.equals(" AND") && !queryType.equals(" OR")){
+            if (list.isEmpty() && !queryCategory.equals(" AND") && !queryCategory.equals(" OR")
+                    && !queryType.equals(" AND") && !queryType.equals(" OR")) {
                 Toast.makeText(getApplicationContext(), "Your query was not found", Toast.LENGTH_LONG).show();
                 finish();
-            } else if(list.isEmpty()){
+            } else if (list.isEmpty()) {
                 list = system.getRecipes();
             }
         } else {
             list = system.getRecipes();
         }
 
-        if(list == null || list.isEmpty()){
+        if (list == null || list.isEmpty()) {
             finish();
-        };
+        }
+        ;
 
         String[] values = new String[list.size()];
         recipe_id = new Integer[list.size()];
         String[] tagline = new String[list.size()];
 
         int i = 0;
-        while(i < values.length && !list.get(i).getCategories().isEmpty() && !list.get(i).getRecipeTypes().isEmpty()) {
+        while (i < values.length && !list.get(i).getCategories().isEmpty() && !list.get(i).getRecipeTypes().isEmpty()) {
             values[i] = list.get(i).getTitle();
             tagline[i] = list.get(i).getCategory(0).toString() + " , " + list.get(i).getRecipeType(0).toString();
             recipe_id[i] = list.get(i).getId();
@@ -147,7 +151,7 @@ public class SearchActivity extends AppCompatActivity {
                 //Do something with the string that you just got!
                 Intent viewRecipe = new Intent(SearchActivity.this, ViewRecipeActivity.class);
 
-                viewRecipe.putExtra("recipe_id" , recipe_id[position]);
+                viewRecipe.putExtra("recipe_id", recipe_id[position]);
                 startActivity(viewRecipe);
                 finish();
             }
@@ -165,11 +169,10 @@ public class SearchActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.addCategory:
                 Intent addCategory = new Intent(getApplicationContext(), EditAttributeActivity.class);
                 addCategory.putExtra("typeAttr", "category");
@@ -194,14 +197,14 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void changeSwitch(){
+    private void changeSwitch() {
         // this should inflate the advanced search page with all the components
         Switch advancedSearch = (Switch) findViewById(R.id.searchSwitch);
-        advancedSearch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+        advancedSearch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 LinearLayout advanced = (LinearLayout) findViewById(R.id.advancedSearch);
                 LinearLayout basic = (LinearLayout) findViewById(R.id.basicSearch);
-                if(isChecked){
+                if (isChecked) {
                     advanced.setVisibility(View.VISIBLE);
                     basic.setVisibility(View.GONE);
                 } else {
@@ -219,7 +222,7 @@ public class SearchActivity extends AppCompatActivity {
         Intent goSearch = new Intent(getApplicationContext(), SearchActivity.class);
 
         goSearch.putExtra("type", type.getSelectedItem().toString());
-        goSearch.putExtra("query", query.getText()+ "");
+        goSearch.putExtra("query", query.getText() + "");
         startActivity(goSearch);
         finish();
     }
@@ -241,12 +244,12 @@ public class SearchActivity extends AppCompatActivity {
         finish();
     }
 
-    public void addRecipe(){
+    public void addRecipe() {
         FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.addRecipeButton);
-        addButton.setOnClickListener(new View.OnClickListener(){
+        addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 Intent addRecipe = new Intent(SearchActivity.this, EditRecipeActivity.class);
                 startActivity(addRecipe);
                 finish();

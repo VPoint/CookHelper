@@ -24,6 +24,7 @@ public class EditRecipeActivity extends AppCompatActivity {
     private RecipeSystem system;
     private Recipe recipe;
     private int index;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +37,12 @@ public class EditRecipeActivity extends AppCompatActivity {
         Spinner category = (Spinner) findViewById(R.id.formCategory);
 
         String[] categoryArray = new String[system.numberOfCategories()];
-        for(Category c: system.getCategories()){
+        for (Category c : system.getCategories()) {
             categoryArray[system.indexOfCategory(c)] = c.getName();
         }
 
         String[] typeArray = new String[system.numberOfRecipeTypes()];
-        for(RecipeType rt: system.getRecipeTypes()){
+        for (RecipeType rt : system.getRecipeTypes()) {
             typeArray[system.indexOfRecipeType(rt)] = rt.getName();
         }
 
@@ -56,7 +57,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         // if information is being edited, first populate fields
         Intent i = getIntent();
 
-        if(i.hasExtra("recipe_id")) {
+        if (i.hasExtra("recipe_id")) {
             index = i.getIntExtra("recipe_id", 0);
             recipe = system.getRecipe(index);
             recipe.setRecipeSystem(system);
@@ -67,7 +68,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         save();
     }
 
-    private void populateInfo(Recipe r){
+    private void populateInfo(Recipe r) {
         //ArrayList<String> timeUnits = R.id.unit_time_array;//{"Days","Hours", "Minutes", "Seconds"};
 
         EditText title = (EditText) findViewById(R.id.formTitle);
@@ -85,7 +86,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         title.setText("" + r.getTitle());
         desc.setText("" + r.getDescription());
         cooking.setText(r.getCookingTime() + "");
-        Context context=getApplicationContext();
+        Context context = getApplicationContext();
         //'ArrayList<S>[] rt = context.getResources().getStringArray(R.array.unit_time_array);
         //cookingUnits.setSelection(r.getCookingTimeUnits());
         serving.setText("" + r.getServing());
@@ -97,7 +98,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         recStep.setText("" + r.getRecipeStep(0).getDescription());
     }
 
-    private Recipe retrieveRecipeInfo(){
+    private Recipe retrieveRecipeInfo() {
         EditText title = (EditText) findViewById(R.id.formTitle);
         EditText desc = (EditText) findViewById(R.id.formDescription);
         EditText cooking = (EditText) findViewById(R.id.formCookingTime);
@@ -114,21 +115,21 @@ public class EditRecipeActivity extends AppCompatActivity {
         String[] ingredients = ingred.getText().toString().split(",");
         String[] recipeSteps = recStep.getText().toString().split(",");
 
-        Recipe temp = new Recipe(title.getText()+"", desc.getText()+"", Double.parseDouble(cooking.getText()+""), "",
-                Integer.parseInt(serving.getText() + ""), Integer.parseInt(calories.getText() + ""), system,new Ingredient(ingredients[0], system));
-        temp.addCategory(new Category(category.getSelectedItem()+"", system));
-        temp.addRecipeType(new RecipeType(type.getSelectedItem()+"", system));
+        Recipe temp = new Recipe(title.getText() + "", desc.getText() + "", Double.parseDouble(cooking.getText() + ""), "",
+                Integer.parseInt(serving.getText() + ""), Integer.parseInt(calories.getText() + ""), system, new Ingredient(ingredients[0], system));
+        temp.addCategory(new Category(category.getSelectedItem() + "", system));
+        temp.addRecipeType(new RecipeType(type.getSelectedItem() + "", system));
         //temp.addRecipeStep(0);
         temp.setRating(rating.getRating());
-        temp.setCookingTimeUnits(cookingUnits.getSelectedItem()+"");
+        temp.setCookingTimeUnits(cookingUnits.getSelectedItem() + "");
         int inc = 1;
-        while(inc < ingredients.length){
+        while (inc < ingredients.length) {
             temp.addIngredient(new Ingredient(ingredients[inc].trim(), system));
             inc++;
         }
 
         int incr = 0;
-        while(incr < recipeSteps.length){
+        while (incr < recipeSteps.length) {
             temp.addRecipeStep(incr, recipeSteps[incr], 8, false);
             incr++;
         }
@@ -143,7 +144,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recipe != null && index != -1){
+                if (recipe != null && index != -1) {
                     system.removeRecipe(recipe);
                     recipe = retrieveRecipeInfo();
                     system.addRecipeAt(recipe, index);
